@@ -238,5 +238,37 @@
     "Internet of Things (IoT)",
     "Cloud & DevOps"
   ],
-  "teams": []
+  "teams": [
+    {
+      "id": "team_1791142993016_rw5m",
+      "teamId": "1234",
+      "teamName": "aaaa",
+      "githubLink": "",
+      "registeredAt": "2026-10-04T19:43:13.016Z",
+      "sessionTokens": [
+        "sess_1791142993016_8t9xj4b",
+        "sess_1791143584209_7cbwgq8"
+      ],
+      "spins": [
+        {
+          "domain": "Web & Mobile Development",
+          "id": "ps_web_04",
+          "problemId": "ps_web_04",
+          "title": "Accessible Voice & Eye-Tracking Web Navigator for Motor Impairments",
+          "problemTitle": "Accessible Voice & Eye-Tracking Web Navigator for Motor Impairments",
+          "description": "Engineer an in-browser assistive overlay using TensorFlow.js face landmark detection that allows users with mobility restrictions to scroll, select, and type using head gestures and gaze dwell time.",
+          "problemDescription": "Engineer an in-browser assistive overlay using TensorFlow.js face landmark detection that allows users with mobility restrictions to scroll, select, and type using head gestures and gaze dwell time.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "Default Seed",
+          "tags": [
+            "Accessibility",
+            "Webcam AI",
+            "Assistive Tech"
+          ],
+          "spunAt": "2026-10-04T19:43:45.572Z"
+        }
+      ]
+    }
+  ]
 }
