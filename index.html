@@ -16,6 +16,11 @@
   <!-- TEAM ENTRY GATE (shown first, before main app)             -->
   <!-- ═══════════════════════════════════════════════════════════ -->
   <div id="entryGate" class="entry-gate-overlay">
+    <!-- Top-Right Admin Badge for direct organizer access -->
+    <a href="/admin" class="entry-top-admin-badge" title="Go to Admin Dashboard">
+      <span class="badge-icon">🔐</span> Admin Portal
+    </a>
+
     <div class="entry-gate-card">
       <div class="entry-gate-logo">
         <div class="entry-logo-icon">🎯</div>
@@ -58,6 +63,16 @@
       </form>
 
       <p class="entry-footer-note">Your team's spin history will be tracked and available to event organizers.</p>
+
+      <!-- Organizer / Admin Access on First Page -->
+      <div class="entry-admin-access">
+        <div class="entry-admin-divider">
+          <span>EVENT ORGANIZER</span>
+        </div>
+        <a href="/admin" class="entry-admin-btn" title="Open Admin Login Portal">
+          <span class="btn-icon">🔐</span> Admin / Organizer Login
+        </a>
+      </div>
     </div>
   </div>
 
@@ -85,7 +100,7 @@
         </div>
       </div>
 
-      <!-- Nav Right: Team Info + Explore -->
+      <!-- Nav Right: Team Info + Explore + Admin -->
       <div class="nav-actions">
         <div class="team-nav-pill" id="teamNavPill">
           <span class="team-nav-icon">👥</span>
@@ -97,6 +112,9 @@
         <button id="switchTeamBtn" class="btn btn-outline btn-sm" title="Switch or re-register team">
           🔄 Switch Team
         </button>
+        <a href="/admin" class="btn btn-outline btn-sm admin-nav-link" title="Open Admin Portal">
+          🔐 Admin
+        </a>
       </div>
     </header>
 
