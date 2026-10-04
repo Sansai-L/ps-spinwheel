@@ -1580,3 +1580,84 @@ kbd {
   border-color: var(--accent-cyan);
   background: var(--bg-card);
 }
+
+/* Assigned Problem Card (Center Stage) */
+.assigned-problem-card {
+  margin-top: 24px;
+  background: linear-gradient(135deg, rgba(24, 34, 52, 0.95), rgba(18, 24, 38, 0.98));
+  border: 1px solid rgba(6, 182, 212, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6), 0 0 30px rgba(6, 182, 212, 0.15);
+  animation: entryPop 0.4s ease-out;
+  text-align: left;
+}
+
+.assigned-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.assigned-lock-pill {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.assigned-domain-tag {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--accent-purple);
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.assigned-card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.assigned-card-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 18px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.assigned-card-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-locked {
+  background: #243044 !important;
+  color: #94a3b8 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  border: 1px solid #3b4d6b !important;
+  transform: none !important;
+}
+
+.center-btn-locked {
+  pointer-events: none !important;
+  opacity: 0.65 !important;
+  filter: grayscale(0.5);
+}
