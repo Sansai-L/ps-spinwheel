@@ -175,7 +175,25 @@
               <span>SPIN PROBLEM WHEEL</span>
             </button>
           </div>
-          <p class="keyboard-hint">Tip: Press <kbd>Spacebar</kbd> anytime to spin!</p>
+          <p class="keyboard-hint" id="keyboardHint">Tip: Press <kbd>Spacebar</kbd> anytime to spin!</p>
+        </div>
+
+        <!-- Assigned Problem Card (Revealed after the 1 allowed spin is used) -->
+        <div id="assignedProblemCard" class="assigned-problem-card hidden">
+          <div class="assigned-card-header">
+            <span class="assigned-lock-pill">🔒 Your Allocated Challenge (1/1 Spin Completed)</span>
+            <span class="assigned-domain-tag" id="assignedCardDomain">Artificial Intelligence &amp; ML</span>
+          </div>
+          <h3 class="assigned-card-title" id="assignedCardTitle">Problem Statement Title</h3>
+          <p class="assigned-card-desc" id="assignedCardDesc">Challenge description...</p>
+          <div class="assigned-card-actions">
+            <button id="assignedCardDownloadPdfBtn" class="btn btn-accent btn-md">
+              📄 Download Problem Statement (PDF)
+            </button>
+            <button id="assignedCardViewBtn" class="btn btn-secondary btn-md">
+              🔍 View Full Statement
+            </button>
+          </div>
         </div>
       </section>
 
@@ -208,8 +226,14 @@
               <a class="team-info-link" id="teamInfoGithub" href="#" target="_blank" rel="noopener">—</a>
             </div>
             <div class="team-info-row">
-              <span class="team-info-label">Total Spins</span>
-              <span class="team-info-value team-spin-counter" id="teamInfoSpins">0</span>
+              <span class="team-info-label">Spin Status</span>
+              <span class="team-info-value team-spin-counter" id="teamSpinStatusBadge" style="color:var(--accent-emerald);">0 / 1 Available</span>
+            </div>
+            <!-- Quick Download Box in sidebar once spun -->
+            <div id="teamSidebarPdfBox" class="hidden" style="margin-top:6px;">
+              <button id="teamSidebarDownloadPdfBtn" class="btn btn-accent btn-full btn-sm">
+                📄 Download Problem PDF
+              </button>
             </div>
           </div>
         </div>
@@ -220,13 +244,13 @@
             <div class="panel-title-group">
               <span class="panel-icon">🕒</span>
               <div>
-                <h3>Recent Draws</h3>
-                <p class="panel-sub">Your previous spins this session</p>
+                <h3>Assigned Problem</h3>
+                <p class="panel-sub">Your team allocation</p>
               </div>
             </div>
           </div>
           <div class="history-list" id="recentSpinsList">
-            <div class="empty-state">No spins yet. Choose a domain and spin!</div>
+            <div class="empty-state">No spins yet. Choose a domain and spin! (1 spin allowed)</div>
           </div>
         </div>
       </aside>
@@ -241,13 +265,13 @@
       <button class="modal-close" id="closeProblemModal">&times;</button>
 
       <div id="cycleCompletionAlert" class="cycle-banner hidden">
-        🎉 <strong>Cycle Completed!</strong> All problem statements in this domain were drawn. The cycle has been reset for you!
+        🎉 <strong>Problem Statement Assigned!</strong> This is your team's official challenge.
       </div>
 
       <div class="modal-badge-row">
         <span class="domain-tag" id="modalDomainTag">Artificial Intelligence &amp; ML</span>
         <span class="difficulty-tag" id="modalDifficultyTag">Advanced</span>
-        <span class="source-tag" id="modalSourceTag">Source: Default</span>
+        <span class="source-tag" id="modalSourceTag">1/1 Spin Allocated</span>
       </div>
 
       <h2 class="problem-title" id="modalProblemTitle">Problem Statement Title</h2>
@@ -260,11 +284,14 @@
       <div class="tags-container" id="modalTagsContainer"></div>
 
       <div class="modal-cycle-indicator">
-        <span class="indicator-icon">📊</span>
-        <span id="modalCycleStatusText">Problem 1 of 4 in this cycle</span>
+        <span class="indicator-icon">🔒</span>
+        <span id="modalCycleStatusText">Permanent Team Allocation (1/1 Spin Used)</span>
       </div>
 
       <div class="modal-footer-actions">
+        <button id="modalDownloadPdfBtn" class="btn btn-accent">
+          📄 Download Problem PDF
+        </button>
         <button id="copyProblemBtn" class="btn btn-secondary">
           📋 Copy Statement
         </button>
