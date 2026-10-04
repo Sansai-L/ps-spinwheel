@@ -1,13 +1,17 @@
 {
   "name": "problem-spin-wheel",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "SpinQuest PS - Problem Statement Roulette",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "node test_app.js"
+    "start": "node server.js"
   },
-  "keywords": [],
+  "keywords": [
+    "hackathon",
+    "problem-statements",
+    "roulette",
+    "spinwheel"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
