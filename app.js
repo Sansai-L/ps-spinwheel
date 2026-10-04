@@ -8,7 +8,8 @@
   let seenProblems = JSON.parse(localStorage.getItem('spinquest_seen_problems') || '{}');
   let recentSpins = JSON.parse(localStorage.getItem('spinquest_recent_spins') || '[]');
   let teamSession = JSON.parse(localStorage.getItem('spinquest_team_session') || 'null');
-  let teamSpinCount = 0;
+  let teamHasSpun = false;
+  let assignedProblem = null;
   let isSpinning = false;
   let currentAngle = 0;
   let spinAnimationFrame = null;
@@ -69,6 +70,14 @@
   const spinMainBtn = document.getElementById('spinMainBtn');
   const wheelCanvas = document.getElementById('wheelCanvas');
   const wheelPointer = document.querySelector('.wheel-pointer');
+  const keyboardHint = document.getElementById('keyboardHint');
+
+  const assignedProblemCard = document.getElementById('assignedProblemCard');
+  const assignedCardDomain = document.getElementById('assignedCardDomain');
+  const assignedCardTitle = document.getElementById('assignedCardTitle');
+  const assignedCardDesc = document.getElementById('assignedCardDesc');
+  const assignedCardDownloadPdfBtn = document.getElementById('assignedCardDownloadPdfBtn');
+  const assignedCardViewBtn = document.getElementById('assignedCardViewBtn');
 
   const cycleProgressBar = document.getElementById('cycleProgressBar');
   const cycleCountText = document.getElementById('cycleCountText');
@@ -82,7 +91,9 @@
   const teamInfoName = document.getElementById('teamInfoName');
   const teamInfoGithub = document.getElementById('teamInfoGithub');
   const teamGithubRow = document.getElementById('teamGithubRow');
-  const teamInfoSpins = document.getElementById('teamInfoSpins');
+  const teamSpinStatusBadge = document.getElementById('teamSpinStatusBadge');
+  const teamSidebarPdfBox = document.getElementById('teamSidebarPdfBox');
+  const teamSidebarDownloadPdfBtn = document.getElementById('teamSidebarDownloadPdfBtn');
 
   const recentSpinsList = document.getElementById('recentSpinsList');
   const viewProblemsBtn = document.getElementById('viewProblemsBtn');
@@ -98,6 +109,7 @@
   const modalCycleStatusText = document.getElementById('modalCycleStatusText');
   const cycleCompletionAlert = document.getElementById('cycleCompletionAlert');
   const copyProblemBtn = document.getElementById('copyProblemBtn');
+  const modalDownloadPdfBtn = document.getElementById('modalDownloadPdfBtn');
   const dismissProblemModalBtn = document.getElementById('dismissProblemModalBtn');
 
   const exploreModal = document.getElementById('exploreModal');
@@ -113,10 +125,35 @@
     drawWheel();
 
     if (teamSession && teamSession.sessionToken && teamSession.team) {
-      // Resume existing session
-      showMainApp(teamSession.team);
+      // Resume existing session & verify status
+      await verifyAndResumeSession();
     } else {
       showEntryGate();
+    }
+  }
+
+  async function verifyAndResumeSession() {
+    try {
+      const res = await fetch(`/api/team/status?sessionToken=${encodeURIComponent(teamSession.sessionToken)}`);
+      if (res.ok) {
+        const data = await res.json();
+        teamSession.team = data.team;
+        teamHasSpun = data.hasSpun;
+        assignedProblem = data.assignedProblem;
+        teamSession.hasSpun = teamHasSpun;
+        teamSession.assignedProblem = assignedProblem;
+        localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
+        showMainApp(data.team);
+      } else {
+        // Fallback to local session
+        teamHasSpun = Boolean(teamSession.hasSpun);
+        assignedProblem = teamSession.assignedProblem || null;
+        showMainApp(teamSession.team);
+      }
+    } catch (e) {
+      teamHasSpun = Boolean(teamSession.hasSpun);
+      assignedProblem = teamSession.assignedProblem || null;
+      showMainApp(teamSession.team);
     }
   }
 
@@ -131,21 +168,34 @@
     mainApp.classList.remove('hidden');
     renderTeamInfo(team);
     fetchDomains();
-    renderRecentSpins();
+
+    if (teamHasSpun && assignedProblem) {
+      lockWheelForAssignedProblem(assignedProblem);
+    } else {
+      unlockWheel();
+    }
   }
 
   function renderTeamInfo(team) {
     teamNavName.textContent = team.teamName;
     teamInfoId.textContent = team.teamId;
     teamInfoName.textContent = team.teamName;
-    teamSpinCount = parseInt(localStorage.getItem('spinquest_team_spin_count') || '0', 10);
-    teamInfoSpins.textContent = teamSpinCount;
     if (team.githubLink) {
       teamInfoGithub.textContent = team.githubLink;
       teamInfoGithub.href = team.githubLink;
       teamGithubRow.style.display = 'flex';
     } else {
       teamGithubRow.style.display = 'none';
+    }
+
+    if (teamHasSpun) {
+      teamSpinStatusBadge.textContent = '1 / 1 (Used)';
+      teamSpinStatusBadge.style.color = '#38bdf8';
+      teamSidebarPdfBox.classList.remove('hidden');
+    } else {
+      teamSpinStatusBadge.textContent = '0 / 1 (Available)';
+      teamSpinStatusBadge.style.color = 'var(--accent-emerald)';
+      teamSidebarPdfBox.classList.add('hidden');
     }
   }
 
@@ -174,12 +224,26 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Registration failed');
 
-      teamSession = { sessionToken: data.sessionToken, team: data.team };
-      localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
-      localStorage.setItem('spinquest_team_spin_count', '0');
+      teamHasSpun = Boolean(data.hasSpun);
+      assignedProblem = data.assignedProblem || null;
 
-      if (data.isReturning) showToast(`Welcome back, ${data.team.teamName}! 👋`, 'info');
-      else showToast(`Welcome, ${data.team.teamName}! 🚀 Let's spin!`, 'success');
+      teamSession = {
+        sessionToken: data.sessionToken,
+        team: data.team,
+        hasSpun: teamHasSpun,
+        assignedProblem: assignedProblem
+      };
+      localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
+
+      if (data.isReturning) {
+        if (teamHasSpun) {
+          showToast(`Welcome back, ${data.team.teamName}! Your assigned problem statement is ready. 📄`, 'info');
+        } else {
+          showToast(`Welcome back, ${data.team.teamName}! You have 1 spin available. ⚡`, 'info');
+        }
+      } else {
+        showToast(`Welcome, ${data.team.teamName}! 🚀 You have 1 spin to draw your challenge.`, 'success');
+      }
 
       showMainApp(data.team);
     } catch (err) {
@@ -198,12 +262,13 @@
   function handleSwitchTeam() {
     if (!confirm('Are you sure you want to switch teams? Your current session will end.')) return;
     localStorage.removeItem('spinquest_team_session');
-    localStorage.removeItem('spinquest_team_spin_count');
     teamSession = null;
-    teamSpinCount = 0;
+    teamHasSpun = false;
+    assignedProblem = null;
     entryTeamId.value = '';
     entryTeamName.value = '';
     entryGithubLink.value = '';
+    unlockWheel();
     showEntryGate();
   }
 
@@ -242,7 +307,13 @@
           <span class="domain-count-badge">${d.count} PS</span>
         </div>
       `;
-      item.addEventListener('click', () => selectDomain(d.name));
+      item.addEventListener('click', () => {
+        if (teamHasSpun) {
+          showToast('Domain is locked because your team has already drawn a problem statement.', 'info');
+          return;
+        }
+        selectDomain(d.name);
+      });
       domainListContainer.appendChild(item);
     });
   }
@@ -258,7 +329,9 @@
   function updateActiveDomainUI() {
     navActiveDomainText.textContent = activeDomain;
     spinDomainTarget.textContent = activeDomain;
-    spinStatusMessage.innerHTML = `Ready to spin for <strong>${escapeHTML(activeDomain)}</strong>`;
+    if (!teamHasSpun) {
+      spinStatusMessage.innerHTML = `Ready to spin for <strong>${escapeHTML(activeDomain)}</strong> (1 spin limit)`;
+    }
   }
 
   function populateExploreFilter() {
@@ -288,6 +361,10 @@
   }
 
   function resetCycle(domain) {
+    if (teamHasSpun) {
+      showToast('Cycle is locked. Your team has already drawn its challenge.', 'info');
+      return;
+    }
     seenProblems[domain] = [];
     localStorage.setItem('spinquest_seen_problems', JSON.stringify(seenProblems));
     updateCycleDisplay();
@@ -353,31 +430,108 @@
     ctx.restore();
   }
 
+  // ─── LOCK / UNLOCK 1-SPIN SYSTEM ──────────────────────────────────────────
+  function lockWheelForAssignedProblem(problem) {
+    teamHasSpun = true;
+    assignedProblem = problem;
+
+    // Center Stage Controls Lock
+    spinMainBtn.disabled = true;
+    spinMainBtn.classList.add('btn-locked');
+    spinMainBtn.innerHTML = `<span>🔒 PROBLEM ASSIGNED (1/1 SPIN USED)</span>`;
+    spinCenterBtn.classList.add('center-btn-locked');
+    spinStatusMessage.innerHTML = `🔒 Official Allocation: <strong>${escapeHTML(problem.title)}</strong>`;
+    keyboardHint.textContent = '🔒 Spin completed. Each team receives strictly 1 problem statement.';
+
+    // Show Allocated Challenge Card
+    assignedCardDomain.textContent = problem.domain;
+    assignedCardTitle.textContent = problem.title;
+    assignedCardDesc.textContent = problem.description;
+    assignedProblemCard.classList.remove('hidden');
+
+    // Sidebar Team Info
+    teamSpinStatusBadge.textContent = '1 / 1 (Used)';
+    teamSpinStatusBadge.style.color = '#38bdf8';
+    teamSidebarPdfBox.classList.remove('hidden');
+
+    // Show in Assigned Problem List
+    renderAssignedProblemList(problem);
+  }
+
+  function unlockWheel() {
+    teamHasSpun = false;
+    assignedProblem = null;
+    spinMainBtn.disabled = false;
+    spinMainBtn.classList.remove('btn-locked');
+    spinMainBtn.innerHTML = `<span class="btn-icon">⚡</span><span>SPIN PROBLEM WHEEL</span>`;
+    spinCenterBtn.classList.remove('center-btn-locked');
+    keyboardHint.innerHTML = 'Tip: Press <kbd>Spacebar</kbd> anytime to spin! (1 spin allowed)';
+    assignedProblemCard.classList.add('hidden');
+    teamSpinStatusBadge.textContent = '0 / 1 (Available)';
+    teamSpinStatusBadge.style.color = 'var(--accent-emerald)';
+    teamSidebarPdfBox.classList.add('hidden');
+    recentSpinsList.innerHTML = `<div class="empty-state">No spins yet. Choose a domain and spin! (1 spin allowed)</div>`;
+  }
+
+  function renderAssignedProblemList(problem) {
+    recentSpinsList.innerHTML = `
+      <div class="history-item" style="border-left: 3px solid var(--accent-cyan); background: rgba(6,182,212,0.06);">
+        <div class="history-item-top">
+          <span class="history-domain">${escapeHTML(problem.domain)}</span>
+          <span class="history-time" style="color:#38bdf8;">Assigned</span>
+        </div>
+        <div class="history-title" style="font-weight:700;">${escapeHTML(problem.title)}</div>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+          Difficulty: ${escapeHTML(problem.difficulty || 'Intermediate')}
+        </div>
+      </div>
+    `;
+  }
+
   // ─── SPIN LOGIC ─────────────────────────────────────────────────────────────
   async function triggerSpin() {
     if (isSpinning) return;
+    if (teamHasSpun) {
+      showToast('Your team has already completed its 1 allowed spin! 🔒', 'info');
+      if (assignedProblem) openProblemModal(assignedProblem);
+      return;
+    }
+
     const seenIds = getSeenList(activeDomain);
     spinStatusMessage.innerHTML = `🎲 Rolling problem statement from <strong>${escapeHTML(activeDomain)}</strong>...`;
     isSpinning = true;
     spinMainBtn.disabled = true;
     spinCenterBtn.style.pointerEvents = 'none';
+
     try {
       const response = await fetch('/api/spin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ domain: activeDomain, seenIds })
+        body: JSON.stringify({
+          domain: activeDomain,
+          seenIds,
+          sessionToken: teamSession ? teamSession.sessionToken : null
+        })
       });
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error || 'Failed to draw problem statement');
-      }
+
       const spinResult = await response.json();
+
+      if (!response.ok) {
+        if (spinResult.alreadySpun && spinResult.problem) {
+          lockWheelForAssignedProblem(spinResult.problem);
+          throw new Error(spinResult.error || 'Your team has already drawn a problem statement.');
+        }
+        throw new Error(spinResult.error || 'Failed to draw problem statement');
+      }
+
       startWheelAnimation(() => onSpinComplete(spinResult));
     } catch (err) {
       isSpinning = false;
-      spinMainBtn.disabled = false;
-      spinCenterBtn.style.pointerEvents = 'auto';
-      spinStatusMessage.innerHTML = `⚠️ Error: ${err.message}`;
+      if (!teamHasSpun) {
+        spinMainBtn.disabled = false;
+        spinCenterBtn.style.pointerEvents = 'auto';
+        spinStatusMessage.innerHTML = `⚠️ Error: ${err.message}`;
+      }
       showToast(err.message, 'error');
     }
   }
@@ -410,8 +564,6 @@
         spinAnimationFrame = requestAnimationFrame(animate);
       } else {
         isSpinning = false;
-        spinMainBtn.disabled = false;
-        spinCenterBtn.style.pointerEvents = 'auto';
         if (onFinish) onFinish();
       }
     }
@@ -422,7 +574,7 @@
     const { problem, cycleCompleted, totalInDomain, remainingInCycle } = result;
 
     if (window.confetti) {
-      window.confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+      window.confetti({ particleCount: 90, spread: 80, origin: { y: 0.6 } });
     }
 
     if (cycleCompleted) {
@@ -435,7 +587,7 @@
     localStorage.setItem('spinquest_seen_problems', JSON.stringify(seenProblems));
     updateCycleDisplay();
 
-    // Log spin to team session
+    // Log spin permanently to team record
     if (teamSession && teamSession.sessionToken) {
       try {
         await fetch('/api/team/log-spin', {
@@ -443,20 +595,30 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ sessionToken: teamSession.sessionToken, domain: activeDomain, problem })
         });
-        teamSpinCount++;
-        localStorage.setItem('spinquest_team_spin_count', String(teamSpinCount));
-        teamInfoSpins.textContent = teamSpinCount;
       } catch (e) {
-        // Non-fatal: spin still shows
+        // Non-fatal
       }
     }
 
-    addRecentSpin(problem);
+    // Lock permanently to 1 spin
+    teamHasSpun = true;
+    assignedProblem = problem;
+    if (teamSession) {
+      teamSession.hasSpun = true;
+      teamSession.assignedProblem = problem;
+      localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
+    }
 
-    // Populate modal
+    lockWheelForAssignedProblem(problem);
+    openProblemModal(problem);
+    showToast('Challenge officially allocated! You can now download your PDF. 📄', 'success');
+  }
+
+  // ─── PROBLEM MODAL ──────────────────────────────────────────────────────────
+  function openProblemModal(problem) {
     modalDomainTag.textContent = problem.domain;
     modalDifficultyTag.textContent = problem.difficulty || 'Intermediate';
-    modalSourceTag.textContent = `Source: ${problem.source || 'Default'}`;
+    modalSourceTag.textContent = `1/1 Spin Allocated`;
     modalProblemTitle.textContent = problem.title;
     modalProblemDescription.textContent = problem.description;
 
@@ -470,42 +632,45 @@
       });
     }
 
-    const currentSeenCount = getSeenList(activeDomain).length;
-    modalCycleStatusText.textContent = `Cycle Progress: ${currentSeenCount} of ${totalInDomain} drawn (${remainingInCycle} remaining)`;
-
+    modalCycleStatusText.textContent = `Official Hackathon Allocation for ${teamSession?.team?.teamName || 'Your Team'}`;
     openModal(problemModal);
-    spinStatusMessage.innerHTML = `Result: <strong>${escapeHTML(problem.title)}</strong>`;
   }
 
-  // ─── RECENT SPINS ───────────────────────────────────────────────────────────
-  function addRecentSpin(problem) {
-    recentSpins.unshift({
-      id: problem.id, title: problem.title, domain: problem.domain,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    });
-    if (recentSpins.length > 10) recentSpins.pop();
-    localStorage.setItem('spinquest_recent_spins', JSON.stringify(recentSpins));
-    renderRecentSpins();
-  }
-
-  function renderRecentSpins() {
-    if (recentSpins.length === 0) {
-      recentSpinsList.innerHTML = `<div class="empty-state">No spins yet. Choose a domain and spin!</div>`;
+  // ─── VISITOR PDF DOWNLOAD ──────────────────────────────────────────────────
+  function downloadProblemPdf() {
+    if (!teamSession || !teamSession.sessionToken) {
+      showToast('Session expired. Please register your team first.', 'error');
       return;
     }
-    recentSpinsList.innerHTML = '';
-    recentSpins.forEach(item => {
-      const el = document.createElement('div');
-      el.className = 'history-item';
-      el.innerHTML = `
-        <div class="history-item-top">
-          <span class="history-domain">${escapeHTML(item.domain)}</span>
-          <span class="history-time">${item.time}</span>
-        </div>
-        <div class="history-title">${escapeHTML(item.title)}</div>
-      `;
-      recentSpinsList.appendChild(el);
-    });
+    if (!teamHasSpun && !assignedProblem) {
+      showToast('Please spin the wheel first to receive a problem statement!', 'info');
+      return;
+    }
+
+    showToast('Generating official Problem Statement PDF... 📄', 'info');
+
+    const downloadUrl = `/api/team/problem-pdf?sessionToken=${encodeURIComponent(teamSession.sessionToken)}`;
+    const teamIdClean = (teamSession.team?.teamId || 'Team').replace(/[^a-zA-Z0-9_-]/g, '_');
+
+    fetch(downloadUrl)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to generate PDF. Make sure you have completed your spin.');
+        return res.blob();
+      })
+      .then(blob => {
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = `Problem-Statement-${teamIdClean}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(blobUrl);
+        showToast('PDF downloaded successfully! 📥 Good luck with your project!', 'success');
+      })
+      .catch(err => {
+        showToast(err.message, 'error');
+      });
   }
 
   // ─── EXPLORE MODAL ──────────────────────────────────────────────────────────
@@ -565,11 +730,21 @@
 
     resetCycleBtn.addEventListener('click', () => resetCycle(activeDomain));
 
+    // PDF Download handlers
+    modalDownloadPdfBtn.addEventListener('click', downloadProblemPdf);
+    assignedCardDownloadPdfBtn.addEventListener('click', downloadProblemPdf);
+    teamSidebarDownloadPdfBtn.addEventListener('click', downloadProblemPdf);
+
+    // View full statement from card
+    assignedCardViewBtn.addEventListener('click', () => {
+      if (assignedProblem) openProblemModal(assignedProblem);
+    });
+
     closeProblemModal.addEventListener('click', () => closeModal(problemModal));
     if (dismissProblemModalBtn) dismissProblemModalBtn.addEventListener('click', () => closeModal(problemModal));
 
     copyProblemBtn.addEventListener('click', () => {
-      const text = `[${activeDomain}] ${modalProblemTitle.textContent}\n\n${modalProblemDescription.textContent}`;
+      const text = `[${modalDomainTag.textContent}] ${modalProblemTitle.textContent}\n\n${modalProblemDescription.textContent}`;
       navigator.clipboard.writeText(text)
         .then(() => showToast('Problem statement copied to clipboard! 📋', 'success'))
         .catch(() => showToast('Could not copy to clipboard', 'error'));
