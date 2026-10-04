@@ -72,6 +72,9 @@ function loadDB() {
     } catch (e) {}
   }
 
+  // Ensure teams array always exists
+  if (!loaded.teams) loaded.teams = [];
+
   return loaded;
 }
 
@@ -120,7 +123,7 @@ const upload = multer({
 });
 
 // Auth Endpoints
-app.post('/api/admin/login', (req, res) => {
+const handleAdminLogin = (req, res) => {
   const { username, password } = req.body;
   if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
     const token = 'admin-token-' + Date.now() + '-' + Math.random().toString(36).substring(2, 9);
@@ -133,9 +136,12 @@ app.post('/api/admin/login', (req, res) => {
     });
   }
   return res.status(401).json({ error: 'Invalid username or password' });
-});
+};
 
-app.get('/api/admin/verify', (req, res) => {
+app.post('/api/admin/login', handleAdminLogin);
+app.post('/api/login', handleAdminLogin);
+
+const handleAdminVerify = (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.split(' ')[1];
@@ -144,7 +150,10 @@ app.get('/api/admin/verify', (req, res) => {
     }
   }
   return res.json({ valid: false });
-});
+};
+
+app.get('/api/admin/verify', handleAdminVerify);
+app.get('/api/verify', handleAdminVerify);
 
 // Domain Endpoints
 app.get('/api/domains', (req, res) => {
@@ -518,6 +527,184 @@ app.delete('/api/documents/:id', adminAuthMiddleware, (req, res) => {
 
   saveDB(db);
   res.json({ success: true, message: `Removed document "${doc.filename}" and its problem statements.` });
+});
+
+// ─── TEAM REGISTRATION & TRACKING ────────────────────────────────────────────
+
+// Register a new team (or re-session an existing one)
+app.post('/api/team/register', (req, res) => {
+  const { teamId, teamName, githubLink } = req.body;
+  if (!teamId || !teamId.trim()) return res.status(400).json({ error: 'Team ID is required' });
+  if (!teamName || !teamName.trim()) return res.status(400).json({ error: 'Team Name is required' });
+
+  if (!db.teams) db.teams = [];
+  const sessionToken = 'sess_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+
+  const existing = db.teams.find(t => t.teamId.toLowerCase() === teamId.trim().toLowerCase());
+  if (existing) {
+    if (!existing.sessionTokens) existing.sessionTokens = [];
+    existing.sessionTokens.push(sessionToken);
+    saveDB(db);
+    return res.json({ success: true, sessionToken, team: { teamId: existing.teamId, teamName: existing.teamName, githubLink: existing.githubLink }, isReturning: true });
+  }
+
+  const newTeam = {
+    id: 'team_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+    teamId: teamId.trim(),
+    teamName: teamName.trim(),
+    githubLink: githubLink ? githubLink.trim() : '',
+    registeredAt: new Date().toISOString(),
+    sessionTokens: [sessionToken],
+    spins: []
+  };
+  db.teams.unshift(newTeam);
+  saveDB(db);
+  res.json({ success: true, sessionToken, team: { teamId: newTeam.teamId, teamName: newTeam.teamName, githubLink: newTeam.githubLink }, isReturning: false });
+});
+
+// Log a spin result for a team
+app.post('/api/team/log-spin', (req, res) => {
+  const { sessionToken, domain, problem } = req.body;
+  if (!sessionToken) return res.status(401).json({ error: 'Session token required' });
+  if (!db.teams) db.teams = [];
+
+  const team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
+  if (!team) return res.status(404).json({ error: 'Team session not found or expired' });
+
+  team.spins.push({
+    domain,
+    problemId: problem.id,
+    problemTitle: problem.title,
+    problemDescription: problem.description,
+    problemDifficulty: problem.difficulty,
+    source: problem.source,
+    tags: problem.tags || [],
+    spunAt: new Date().toISOString()
+  });
+  saveDB(db);
+  res.json({ success: true, spinCount: team.spins.length });
+});
+
+// ─── ADMIN: TEAMS DASHBOARD ───────────────────────────────────────────────────
+
+// Get all teams with activity data
+app.get('/api/admin/teams', adminAuthMiddleware, (req, res) => {
+  const teams = (db.teams || []).map(t => ({
+    id: t.id,
+    teamId: t.teamId,
+    teamName: t.teamName,
+    githubLink: t.githubLink,
+    registeredAt: t.registeredAt,
+    spinCount: (t.spins || []).length,
+    spins: t.spins || []
+  }));
+  res.json({ teams, total: teams.length, totalSpins: teams.reduce((a, t) => a + t.spinCount, 0) });
+});
+
+// Generate & download PDF report of all team activity
+app.get('/api/admin/teams/pdf', adminAuthMiddleware, (req, res) => {
+  try {
+    const PDFDocument = require('pdfkit');
+    const doc = new PDFDocument({ margin: 50, size: 'A4', bufferPages: true });
+
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="SpinQuest-Teams-Report.pdf"');
+    doc.pipe(res);
+
+    const teams = db.teams || [];
+    const totalSpins = teams.reduce((a, t) => a + (t.spins || []).length, 0);
+    const now = new Date().toLocaleString();
+
+    // Header Banner
+    doc.rect(0, 0, doc.page.width, 90).fill('#0a0d14');
+    doc.fill('#06b6d4').fontSize(22).font('Helvetica-Bold').text('🎯 SpinQuest PS', 50, 22, { align: 'center', width: doc.page.width - 100 });
+    doc.fill('#94a3b8').fontSize(11).font('Helvetica').text('Team Activity Report', 50, 50, { align: 'center', width: doc.page.width - 100 });
+    doc.fill('#475569').fontSize(9).text('Generated: ' + now, 50, 68, { align: 'center', width: doc.page.width - 100 });
+
+    doc.y = 108; doc.fill('#1e293b');
+
+    // Summary Box
+    doc.roundedRect(50, doc.y, doc.page.width - 100, 58, 6).fill('#f0f9ff').stroke('#bae6fd');
+    const sumY = doc.y + 10;
+    doc.fill('#0c4a6e').fontSize(12).font('Helvetica-Bold').text('Summary', 70, sumY);
+    doc.fill('#1e40af').fontSize(10).font('Helvetica')
+       .text(`Total Teams Registered: ${teams.length}`, 70, sumY + 18)
+       .text(`Total Problem Draws: ${totalSpins}`, 70, sumY + 32);
+    doc.fill('#1e40af').fontSize(10)
+       .text(`Domains Active: ${[...new Set(teams.flatMap(t => (t.spins||[]).map(s => s.domain)))].length}`, 310, sumY + 18)
+       .text(`Avg Spins/Team: ${teams.length ? (totalSpins / teams.length).toFixed(1) : '0'}`, 310, sumY + 32);
+    doc.y += 70; doc.fill('#000000');
+
+    if (teams.length === 0) {
+      doc.fontSize(12).font('Helvetica').fill('#64748b').text('No teams have registered yet.', { align: 'center' });
+    } else {
+      teams.forEach((team, idx) => {
+        if (doc.y > doc.page.height - 180) doc.addPage();
+        const hY = doc.y;
+        doc.rect(50, hY, doc.page.width - 100, 28).fill('#1e3a5f');
+        doc.fill('#ffffff').fontSize(11).font('Helvetica-Bold')
+           .text(`${idx + 1}.  ${team.teamName}  (Team ID: ${team.teamId})`, 62, hY + 8);
+        doc.y = hY + 36;
+
+        doc.fill('#334155').fontSize(9.5).font('Helvetica');
+        doc.text(`Registered: ${new Date(team.registeredAt).toLocaleString()}`, 62, doc.y);
+        if (team.githubLink) { doc.y += 13; doc.text(`GitHub: ${team.githubLink}`, 62, doc.y); }
+        doc.y += 13;
+        doc.fill('#0369a1').fontSize(9.5).font('Helvetica-Bold')
+           .text(`Total Problem Draws: ${(team.spins||[]).length}`, 62, doc.y);
+        doc.y += 16;
+
+        if (team.spins && team.spins.length > 0) {
+          doc.fill('#1e40af').fontSize(10).font('Helvetica-Bold').text('Drawn Problem Statements:', 62, doc.y);
+          doc.y += 14;
+
+          team.spins.forEach((spin, sIdx) => {
+            if (doc.y > doc.page.height - 100) doc.addPage();
+            doc.rect(62, doc.y, doc.page.width - 124, 13).fill(sIdx % 2 === 0 ? '#f8fafc' : '#f1f5f9');
+            doc.fill('#0f172a').fontSize(9.5).font('Helvetica-Bold')
+               .text(`  ${sIdx + 1}. [${spin.domain}]  ${spin.problemTitle}`, 68, doc.y + 2);
+            doc.y += 15;
+            doc.fill('#334155').fontSize(8.5).font('Helvetica')
+               .text(`     Difficulty: ${spin.problemDifficulty}  •  Drawn: ${new Date(spin.spunAt).toLocaleString()}`, 68, doc.y);
+            doc.y += 12;
+            const desc = (spin.problemDescription || '').substring(0, 220);
+            doc.fill('#475569').fontSize(8)
+               .text(`     ${desc}${spin.problemDescription.length > 220 ? '…' : ''}`, 68, doc.y, { width: doc.page.width - 140 });
+            doc.y += doc.currentLineHeight() + 6;
+          });
+        } else {
+          doc.fill('#94a3b8').fontSize(9.5).font('Helvetica').text('  No spins recorded for this team.', 62, doc.y);
+          doc.y += 14;
+        }
+
+        doc.y += 4;
+        if (idx < teams.length - 1) {
+          doc.moveTo(50, doc.y).lineTo(doc.page.width - 50, doc.y).strokeColor('#cbd5e1').stroke();
+          doc.y += 12;
+        }
+      });
+    }
+
+    // Page footers
+    const range = doc.bufferedPageRange();
+    for (let i = 0; i < range.count; i++) {
+      doc.switchToPage(range.start + i);
+      doc.fill('#94a3b8').fontSize(8).font('Helvetica')
+         .text(`SpinQuest PS – Confidential Team Report  •  Page ${i + 1} of ${range.count}`,
+               50, doc.page.height - 28, { align: 'center', width: doc.page.width - 100 });
+    }
+    doc.end();
+  } catch (err) {
+    console.error('PDF generation error:', err);
+    if (!res.headersSent) res.status(500).json({ error: 'Failed to generate PDF: ' + err.message });
+  }
+});
+
+// Serve Admin Page
+app.get('/admin', (req, res) => {
+  const adminFile = path.join(staticDir, 'admin.html');
+  if (fs.existsSync(adminFile)) res.sendFile(adminFile);
+  else res.status(404).send('Admin page not found');
 });
 
 // Restore Sample Data Endpoint (Admin Only)
