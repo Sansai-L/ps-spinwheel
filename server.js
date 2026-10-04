@@ -57,8 +57,6 @@ function loadDB() {
         "Cybersecurity & Privacy",
         "Web & Mobile Development",
         "Internet of Things (IoT)",
-        "FinTech & Blockchain",
-        "Healthcare & BioTech",
         "Cloud & DevOps"
       ]
     };
@@ -522,8 +520,6 @@ app.post('/api/reset-data', adminAuthMiddleware, (req, res) => {
       "Cybersecurity & Privacy",
       "Web & Mobile Development",
       "Internet of Things (IoT)",
-      "FinTech & Blockchain",
-      "Healthcare & BioTech",
       "Cloud & DevOps"
     ]
   };
