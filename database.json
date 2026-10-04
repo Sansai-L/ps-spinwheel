@@ -270,5 +270,8 @@
         }
       ]
     }
+  ],
+  "adminTokens": [
+    "admin-token-1791143989602-4fzw8tx"
   ]
 }
