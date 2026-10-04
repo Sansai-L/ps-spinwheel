@@ -739,32 +739,70 @@ app.post('/api/team/log-spin', (req, res) => {
   res.json({ success: true, spinCount: 1, assignedProblem: assignedRecord });
 });
 
-// Visitor Endpoint: Download assigned problem statement as PDF
-app.get('/api/team/problem-pdf', (req, res) => {
+// Visitor Endpoint: Download assigned problem statement as PDF (Supports GET and POST with payload fallback)
+app.all('/api/team/problem-pdf', (req, res) => {
   try {
-    const { sessionToken, teamId } = req.query;
+    const sessionToken = req.query.sessionToken || (req.body && req.body.sessionToken);
+    const teamIdParam = req.query.teamId || (req.body && req.body.teamId);
+    const teamNameParam = (req.body && req.body.teamName) || req.query.teamName;
+    const githubLinkParam = (req.body && req.body.githubLink) || req.query.githubLink;
+    const problemPayload = (req.body && req.body.problem) || null;
+
     if (!db.teams) db.teams = [];
 
     let team = null;
     if (sessionToken) {
       team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
     }
-    if (!team && teamId) {
-      team = db.teams.find(t => t.teamId.toLowerCase() === teamId.trim().toLowerCase());
+    if (!team && teamIdParam) {
+      team = db.teams.find(t => t.teamId && t.teamId.toLowerCase() === teamIdParam.trim().toLowerCase());
+    }
+
+    // Serverless fallback: if lambda instance does not have team in memory, reconstruct from payload
+    if (!team && (teamIdParam || (problemPayload && (problemPayload.title || problemPayload.problemTitle)))) {
+      team = {
+        teamId: teamIdParam || 'TEAM',
+        teamName: teamNameParam || teamIdParam || 'Participating Team',
+        githubLink: githubLinkParam || '',
+        sessionTokens: sessionToken ? [sessionToken] : [],
+        spins: []
+      };
+      db.teams.push(team);
+      saveDB(db);
     }
 
     if (!team) {
-      return res.status(404).send('Team not found or session expired. Please re-register.');
+      return res.status(404).send('Team details not found. Please ensure you are registered.');
     }
+
+    // If team has no spin in memory on this instance, restore spin from payload
+    if ((!team.spins || team.spins.length === 0) && problemPayload) {
+      const restoredSpin = {
+        id: problemPayload.id || problemPayload.problemId || 'ps_assigned',
+        problemId: problemPayload.id || problemPayload.problemId || 'ps_assigned',
+        domain: problemPayload.domain || 'Hackathon Challenge',
+        title: problemPayload.title || problemPayload.problemTitle || 'Assigned Problem Statement',
+        problemTitle: problemPayload.title || problemPayload.problemTitle || 'Assigned Problem Statement',
+        description: problemPayload.description || problemPayload.problemDescription || '',
+        problemDescription: problemPayload.description || problemPayload.problemDescription || '',
+        difficulty: problemPayload.difficulty || problemPayload.problemDifficulty || 'Intermediate',
+        problemDifficulty: problemPayload.difficulty || problemPayload.problemDifficulty || 'Intermediate',
+        tags: problemPayload.tags || [],
+        spunAt: problemPayload.spunAt || new Date().toISOString()
+      };
+      team.spins = [restoredSpin];
+      saveDB(db);
+    }
+
     if (!team.spins || team.spins.length === 0) {
       return res.status(400).send('Your team has not spun for a problem statement yet.');
     }
 
     const spin = team.spins[0];
-    const PDFDocument = require('pdfkit');
-    const doc = new PDFDocument({ margin: 40, size: 'A4' });
+    const PDFLib = PDFDocument || require('pdfkit');
+    const doc = new PDFLib({ margin: 40, size: 'A4' });
 
-    const safeTeamId = team.teamId.replace(/[^a-zA-Z0-9_-]/g, '_');
+    const safeTeamId = (team.teamId || 'TEAM').replace(/[^a-zA-Z0-9_-]/g, '_');
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="Problem-Statement-${safeTeamId}.pdf"`);
     doc.pipe(res);
@@ -788,14 +826,14 @@ app.get('/api/team/problem-pdf', (req, res) => {
     // ── Team Information Box ──
     doc.roundedRect(40, doc.y, contentWidth, 75, 6).fill('#f8fafc').stroke('#cbd5e1');
     const tBoxY = doc.y + 10;
-    doc.fill('#0f172a').fontSize(13).font('Helvetica-Bold').text(team.teamName, 55, tBoxY);
-    doc.fill('#0284c7').fontSize(10).font('Helvetica-Bold').text(`Team ID: ${team.teamId}`, 55, tBoxY + 18);
+    doc.fill('#0f172a').fontSize(13).font('Helvetica-Bold').text(team.teamName || 'Team', 55, tBoxY);
+    doc.fill('#0284c7').fontSize(10).font('Helvetica-Bold').text(`Team ID: ${team.teamId || 'N/A'}`, 55, tBoxY + 18);
     if (team.githubLink) {
       doc.fill('#475569').fontSize(9).font('Helvetica').text(`GitHub: ${team.githubLink}`, 55, tBoxY + 34);
     } else {
       doc.fill('#94a3b8').fontSize(9).font('Helvetica').text('GitHub: Not provided at registration', 55, tBoxY + 34);
     }
-    doc.fill('#64748b').fontSize(8.5).font('Helvetica').text(`Allocated on: ${new Date(spin.spunAt).toLocaleString()}`, 55, tBoxY + 49);
+    doc.fill('#64748b').fontSize(8.5).font('Helvetica').text(`Allocated on: ${new Date(spin.spunAt || Date.now()).toLocaleString()}`, 55, tBoxY + 49);
 
     doc.y += 92;
 
@@ -803,7 +841,7 @@ app.get('/api/team/problem-pdf', (req, res) => {
     doc.roundedRect(40, doc.y, contentWidth, 32, 4).fill('#1e293b');
     const bY = doc.y + 8;
     doc.fill('#38bdf8').fontSize(11).font('Helvetica-Bold').text(`Domain: ${spin.domain}`, 55, bY);
-    doc.fill('#f1f5f9').fontSize(10).font('Helvetica').text(`Difficulty: ${spin.problemDifficulty || 'Intermediate'}`, 360, bY, { align: 'right', width: contentWidth - 320 });
+    doc.fill('#f1f5f9').fontSize(10).font('Helvetica').text(`Difficulty: ${spin.problemDifficulty || spin.difficulty || 'Intermediate'}`, 360, bY, { align: 'right', width: contentWidth - 320 });
 
     doc.y += 44;
 
@@ -812,7 +850,7 @@ app.get('/api/team/problem-pdf', (req, res) => {
     doc.roundedRect(40, psBoxTop, contentWidth, 235, 6).fill('#ffffff').stroke('#94a3b8');
     
     doc.fill('#0f172a').fontSize(14).font('Helvetica-Bold')
-       .text(spin.problemTitle, 55, psBoxTop + 14, { width: contentWidth - 30 });
+       .text(spin.problemTitle || spin.title, 55, psBoxTop + 14, { width: contentWidth - 30 });
     
     doc.moveTo(55, doc.y + 8).lineTo(pageWidth - 55, doc.y + 8).strokeColor('#e2e8f0').stroke();
     doc.y += 16;
@@ -821,12 +859,12 @@ app.get('/api/team/problem-pdf', (req, res) => {
     doc.y += 8;
 
     doc.fill('#334155').fontSize(9.5).font('Helvetica')
-       .text(spin.problemDescription, 55, doc.y, { width: contentWidth - 30, lineGap: 3.5 });
+       .text(spin.problemDescription || spin.description, 55, doc.y, { width: contentWidth - 30, lineGap: 3.5 });
 
     doc.y += 12;
 
     if (spin.tags && spin.tags.length > 0) {
-      doc.fill('#64748b').fontSize(8.5).font('Helvetica-Oblique')
+      doc.fill('#64748b').fontSize(8.5).font('Helvetica')
          .text('Recommended Tech / Tags:  #' + spin.tags.join('   #'), 55, doc.y);
       doc.y += 16;
     }
