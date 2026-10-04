@@ -3,16 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SpinQuest | Problem Statement Roulette</title>
+  <title>SpinQuest PS | Problem Statement Roulette</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <!-- Canvas Confetti library for celebration -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-  <div class="app-container">
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- TEAM ENTRY GATE (shown first, before main app)             -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div id="entryGate" class="entry-gate-overlay">
+    <div class="entry-gate-card">
+      <div class="entry-gate-logo">
+        <div class="entry-logo-icon">🎯</div>
+        <h1 class="entry-title">SpinQuest <span class="brand-accent">PS</span></h1>
+        <p class="entry-subtitle">Problem Statement Roulette — Hackathon Edition</p>
+      </div>
+
+      <div class="entry-divider"></div>
+
+      <h3 class="entry-form-heading">Register Your Team to Continue</h3>
+
+      <form id="teamEntryForm" class="entry-form" autocomplete="off">
+        <div class="form-group">
+          <label class="form-label" for="entryTeamId">
+            <span class="label-icon">🏷️</span> Team ID
+          </label>
+          <input type="text" id="entryTeamId" class="form-input" placeholder="e.g. TEAM001" required maxlength="30">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="entryTeamName">
+            <span class="label-icon">👥</span> Team Name
+          </label>
+          <input type="text" id="entryTeamName" class="form-input" placeholder="e.g. Circuit Breakers" required maxlength="60">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="entryGithubLink">
+            <span class="label-icon">🔗</span> GitHub Repository
+          </label>
+          <input type="url" id="entryGithubLink" class="form-input" placeholder="https://github.com/your-team/repo">
+        </div>
+
+        <div id="entryErrorMsg" class="form-error hidden"></div>
+
+        <button type="submit" id="entrySubmitBtn" class="btn btn-accent btn-full btn-lg entry-submit-btn">
+          <span class="btn-icon">🚀</span>
+          <span id="entrySubmitLabel">Enter Competition</span>
+        </button>
+      </form>
+
+      <p class="entry-footer-note">Your team's spin history will be tracked and available to event organizers.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- MAIN APPLICATION (revealed after team registration)        -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="app-container hidden" id="mainApp">
+
     <!-- Top Navigation Bar -->
     <header class="navbar">
       <div class="nav-brand">
@@ -23,28 +76,33 @@
         </div>
       </div>
 
-      <!-- Quick Domain Active Status Indicator -->
+      <!-- Active Domain Pill -->
       <div class="nav-center">
         <div class="active-domain-pill" id="navActiveDomainBadge">
           <span class="pill-dot"></span>
           <span class="pill-label">Domain:</span>
-          <strong id="navActiveDomainText">Artificial Intelligence & ML</strong>
+          <strong id="navActiveDomainText">Artificial Intelligence &amp; ML</strong>
         </div>
       </div>
 
-      <!-- Right Action Controls & Admin Authentication -->
+      <!-- Nav Right: Team Info + Explore -->
       <div class="nav-actions">
+        <div class="team-nav-pill" id="teamNavPill">
+          <span class="team-nav-icon">👥</span>
+          <span id="teamNavName">Team</span>
+        </div>
         <button id="viewProblemsBtn" class="btn btn-secondary btn-sm" title="Explore available problem statements">
           📚 Explore Pool
         </button>
-        <div id="authStatusContainer" class="auth-status">
-          <!-- Injected via JS: Admin login button or Admin active badge -->
-        </div>
+        <button id="switchTeamBtn" class="btn btn-outline btn-sm" title="Switch or re-register team">
+          🔄 Switch Team
+        </button>
       </div>
     </header>
 
-    <!-- Main Workspace Layout: Side Left | Center Wheel | Side Right -->
+    <!-- Main Workspace: Left | Center | Right -->
     <main class="main-layout">
+
       <!-- LEFT SIDEBAR: Domain Selector & Cycle Tracker -->
       <aside class="sidebar sidebar-left">
         <div class="panel-card domain-panel">
@@ -56,34 +114,14 @@
                 <p class="panel-sub">Select category to spin from</p>
               </div>
             </div>
-            <!-- Admin Add Domain Button -->
-            <button id="showAddDomainBtn" class="btn btn-outline btn-sm hidden" title="Add a new domain">
-              + New Domain
-            </button>
           </div>
 
-          <!-- Inline New Domain Creator Form (Hidden by default) -->
-          <div id="newDomainInlineForm" class="new-domain-box hidden">
-            <div class="form-group mb-2">
-              <input type="text" id="newDomainInput" class="form-input form-input-sm" placeholder="e.g. Robotics & Automation">
-            </div>
-            <div class="new-domain-actions">
-              <button id="saveDomainBtn" class="btn btn-primary btn-sm">Save Domain</button>
-              <button id="cancelDomainBtn" class="btn btn-secondary btn-sm">Cancel</button>
-            </div>
-          </div>
-
-          <!-- Domain Selection List -->
+          <!-- Domain List -->
           <div class="domains-scroll" id="domainListContainer">
             <!-- Rendered by JS -->
           </div>
 
-          <!-- Quick Add Problem Statement Button for Active Domain (Admin Only) -->
-          <button id="quickAddProblemBtn" class="btn btn-outline btn-full btn-sm mb-3 hidden" title="Add a problem statement to this domain">
-            ➕ Add Problem Statement
-          </button>
-
-          <!-- Cycle Tracker Card for Active Domain -->
+          <!-- Cycle Tracker -->
           <div class="cycle-card">
             <div class="cycle-header">
               <div class="cycle-title">
@@ -110,14 +148,12 @@
         </div>
       </aside>
 
-      <!-- CENTER: Spin Wheel & Action Stage -->
+      <!-- CENTER: Spin Wheel -->
       <section class="center-stage">
-        <!-- Wheel Outer Glow and Frame -->
         <div class="wheel-wrapper">
           <div class="wheel-pointer">
             <div class="pointer-arrow"></div>
           </div>
-          
           <div class="canvas-container">
             <canvas id="wheelCanvas" width="520" height="520"></canvas>
             <div class="wheel-center-overlay" id="spinCenterBtn">
@@ -129,12 +165,10 @@
           </div>
         </div>
 
-        <!-- Spin Trigger Controls -->
         <div class="spin-controls">
           <div class="spin-info-pill" id="spinStatusMessage">
-            Ready to spin for <strong id="spinDomainTarget">Artificial Intelligence & ML</strong>
+            Ready to spin for <strong id="spinDomainTarget">Artificial Intelligence &amp; ML</strong>
           </div>
-          
           <div class="action-btn-row">
             <button id="spinMainBtn" class="btn btn-primary btn-xl">
               <span class="btn-icon">⚡</span>
@@ -145,110 +179,49 @@
         </div>
       </section>
 
-      <!-- RIGHT SIDEBAR: Document Upload & Admin Control Center -->
+      <!-- RIGHT SIDEBAR: Team Info + Recent Draws -->
       <aside class="sidebar sidebar-right">
-        <!-- Document Upload Panel (Admin Protected) -->
-        <div class="panel-card upload-panel">
+
+        <!-- Team Info Card -->
+        <div class="panel-card team-info-panel">
           <div class="panel-header">
             <div class="panel-title-group">
-              <span class="panel-icon">📄</span>
+              <span class="panel-icon">👥</span>
               <div>
-                <h2>Document Upload</h2>
-                <p class="panel-sub">Upload PDF, DOCX, TXT, CSV, JSON</p>
+                <h2>Your Team</h2>
+                <p class="panel-sub">Session active</p>
               </div>
             </div>
-            <span class="admin-lock-badge" id="uploadLockBadge">🔒 Admin Only</span>
+            <span class="team-session-badge">🟢 Live</span>
           </div>
-
-          <!-- Non-Admin View (Locked with Quick Login Prompt) -->
-          <div id="uploadLockedView" class="locked-placeholder">
-            <div class="lock-graphic">
-              <span class="lock-big-icon">🛡️</span>
+          <div class="team-info-body">
+            <div class="team-info-row">
+              <span class="team-info-label">Team ID</span>
+              <span class="team-info-value" id="teamInfoId">—</span>
             </div>
-            <h3>Admin Access Required</h3>
-            <p>
-              Only administrators can upload documents or delete problem statements. Regular users can select any domain and spin the wheel.
-            </p>
-            <button id="triggerAdminLoginFromLock" class="btn btn-accent btn-md">
-              🔑 Admin Login to Upload
-            </button>
-          </div>
-
-          <!-- Admin Unlocked View (File Drag & Drop + Domain Assignment) -->
-          <div id="uploadUnlockedView" class="unlocked-upload-form hidden">
-            <form id="fileUploadForm">
-              <!-- Domain Picker for Upload -->
-              <div class="form-group">
-                <label for="uploadDomainSelect" class="form-label">
-                  <span>Target Domain</span>
-                  <span class="label-hint">Associate problems to</span>
-                </label>
-                <div class="domain-picker-input-wrap">
-                  <select id="uploadDomainSelect" class="form-select" required>
-                    <!-- Populated by JS -->
-                  </select>
-                </div>
-              </div>
-
-              <!-- Drag and Drop Area -->
-              <div class="drop-zone-container">
-                <div class="drop-zone" id="dropZone">
-                  <input type="file" id="fileInput" name="file" accept=".pdf,.doc,.docx,.txt,.csv,.json,.md" class="file-input-hidden">
-                  <div class="drop-zone-content">
-                    <div class="drop-icon">📤</div>
-                    <p class="drop-primary-text">Drag & drop your document here</p>
-                    <p class="drop-secondary-text">or <span class="browse-link">browse files</span></p>
-                    <div class="supported-formats-pills">
-                      <span class="format-pill">PDF</span>
-                      <span class="format-pill">DOCX</span>
-                      <span class="format-pill">TXT</span>
-                      <span class="format-pill">CSV</span>
-                      <span class="format-pill">JSON</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Cancelable Selected File Card (Displayed when a file is dropped or chosen) -->
-                <div id="selectedFileInfo" class="selected-file-card hidden">
-                  <div class="selected-file-info-left">
-                    <span class="file-card-icon">📄</span>
-                    <div class="selected-file-texts">
-                      <strong id="selectedFileName">filename.pdf</strong>
-                      <span id="selectedFileSize" class="file-size-sub">0 KB</span>
-                    </div>
-                  </div>
-                  <button type="button" id="removeFileBtn" class="btn-cancel-file" title="Cancel upload and remove file">
-                    ✕ Cancel
-                  </button>
-                </div>
-              </div>
-
-              <!-- Upload Submit Button -->
-              <button type="submit" id="uploadSubmitBtn" class="btn btn-accent btn-full mt-3" disabled>
-                <span>Extract & Add Problem Statements</span>
-              </button>
-            </form>
-
-            <!-- Admin Management Quick Links -->
-            <div class="admin-quick-links">
-              <button id="openAdminManagerBtn" class="btn btn-outline btn-full btn-sm">
-                ⚙️ Manage & Delete Uploaded Files & Problems
-              </button>
-              <button id="resetSampleDataBtn" class="btn-text-subtle" title="Revert to original sample dataset">
-                ↺ Restore Default Problem Statements
-              </button>
+            <div class="team-info-row">
+              <span class="team-info-label">Team Name</span>
+              <span class="team-info-value" id="teamInfoName">—</span>
+            </div>
+            <div class="team-info-row" id="teamGithubRow" style="display:none;">
+              <span class="team-info-label">GitHub</span>
+              <a class="team-info-link" id="teamInfoGithub" href="#" target="_blank" rel="noopener">—</a>
+            </div>
+            <div class="team-info-row">
+              <span class="team-info-label">Total Spins</span>
+              <span class="team-info-value team-spin-counter" id="teamInfoSpins">0</span>
             </div>
           </div>
         </div>
 
-        <!-- Recent Draws History Widget -->
+        <!-- Recent Draws History -->
         <div class="panel-card history-panel">
           <div class="panel-header">
             <div class="panel-title-group">
               <span class="panel-icon">🕒</span>
               <div>
                 <h3>Recent Draws</h3>
-                <p class="panel-sub">Your previous spins</p>
+                <p class="panel-sub">Your previous spins this session</p>
               </div>
             </div>
           </div>
@@ -260,20 +233,21 @@
     </main>
   </div>
 
-  <!-- MODAL: Problem Statement Popup (Revealed upon Spin Complete) -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- MODAL: Problem Statement Popup                             -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
   <div class="modal-overlay hidden" id="problemModal">
     <div class="modal-card problem-card-modal">
       <button class="modal-close" id="closeProblemModal">&times;</button>
-      
-      <!-- Cycle Completion Banner -->
+
       <div id="cycleCompletionAlert" class="cycle-banner hidden">
         🎉 <strong>Cycle Completed!</strong> All problem statements in this domain were drawn. The cycle has been reset for you!
       </div>
 
       <div class="modal-badge-row">
-        <span class="domain-tag" id="modalDomainTag">Artificial Intelligence & ML</span>
+        <span class="domain-tag" id="modalDomainTag">Artificial Intelligence &amp; ML</span>
         <span class="difficulty-tag" id="modalDifficultyTag">Advanced</span>
-        <span class="source-tag" id="modalSourceTag">Source: Uploaded</span>
+        <span class="source-tag" id="modalSourceTag">Source: Default</span>
       </div>
 
       <h2 class="problem-title" id="modalProblemTitle">Problem Statement Title</h2>
@@ -291,9 +265,6 @@
       </div>
 
       <div class="modal-footer-actions">
-        <button id="modalDeleteProblemBtn" class="btn btn-danger-subtle hidden" title="Delete this problem statement from database (Admin Only)">
-          🗑️ Delete PS
-        </button>
         <button id="copyProblemBtn" class="btn btn-secondary">
           📋 Copy Statement
         </button>
@@ -304,139 +275,48 @@
     </div>
   </div>
 
-  <!-- MODAL: Admin Login -->
-  <div class="modal-overlay hidden" id="adminLoginModal">
-    <div class="modal-card auth-modal">
-      <button class="modal-close" id="closeLoginModal">&times;</button>
-      <div class="auth-header">
-        <div class="auth-icon-circle">🔐</div>
-        <h2>Admin Authentication</h2>
-        <p>Login to upload documents, manage domains, and delete problem statements.</p>
-      </div>
-
-      <form id="adminLoginForm">
-        <div class="form-group">
-          <label for="loginUsername" class="form-label">Admin Username</label>
-          <input type="text" id="loginUsername" class="form-input" placeholder="Enter username" required autocomplete="username">
-        </div>
-        <div class="form-group">
-          <label for="loginPassword" class="form-label">Admin Password</label>
-          <div class="password-input-wrap">
-            <input type="password" id="loginPassword" class="form-input" placeholder="Enter password" required autocomplete="current-password">
-            <button type="button" id="togglePasswordVisibilityBtn" class="btn-toggle-eye" title="Toggle password visibility">👁️</button>
-          </div>
-        </div>
-
-        <div id="loginErrorMsg" class="form-error hidden"></div>
-
-        <button type="submit" class="btn btn-accent btn-full btn-lg">
-          Sign In as Admin
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- MODAL: Admin Data Management & Explorer Modal (View & Delete Problems & Files) -->
-  <div class="modal-overlay hidden" id="adminManagerModal">
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- MODAL: Explore Problem Pool (read-only view)               -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay hidden" id="exploreModal">
     <div class="modal-card manager-modal">
       <div class="manager-modal-header">
         <div>
-          <h2>Problem Statement & File Management</h2>
-          <p class="panel-sub">Inspect, filter, or delete uploaded files and problem statements</p>
+          <h2>📚 Problem Statement Pool</h2>
+          <p class="panel-sub">Browse all available problem statements</p>
         </div>
-        <button class="modal-close" id="closeManagerModal">&times;</button>
+        <button class="modal-close" id="closeExploreModal">&times;</button>
       </div>
 
-      <!-- Tabs: Problem Statements | Uploaded Documents | Add Custom PS -->
-      <div class="tabs-nav">
-        <button class="tab-btn active" data-tab="tabProblems">Problem Statements (<span id="totalProblemsBadge">0</span>)</button>
-        <button class="tab-btn" data-tab="tabDocuments">Uploaded Documents (<span id="totalDocumentsBadge">0</span>)</button>
-        <button class="tab-btn" data-tab="tabAddManual">+ Add Custom Problem</button>
+      <div class="filter-bar">
+        <input type="text" id="exploreSearchInput" class="form-input" placeholder="Search by title, description, or tag...">
+        <select id="exploreDomainFilter" class="form-select">
+          <option value="All">All Domains</option>
+        </select>
       </div>
-
-      <!-- Tab 1: Problems List -->
-      <div class="tab-content" id="tabProblems">
-        <div class="filter-bar">
-          <input type="text" id="managerSearchInput" class="form-input" placeholder="Search by title, description, or tag...">
-          <select id="managerDomainFilter" class="form-select">
-            <option value="All">All Domains</option>
-          </select>
-        </div>
-        <div class="table-container">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Domain</th>
-                <th>Title & Description</th>
-                <th>Difficulty</th>
-                <th>Source</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="managerProblemsTableBody">
-              <!-- Rendered by JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Tab 2: Uploaded Documents List -->
-      <div class="tab-content hidden" id="tabDocuments">
-        <div class="table-container">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Filename</th>
-                <th>Target Domain</th>
-                <th>Problems Extracted</th>
-                <th>Uploaded At</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="managerDocumentsTableBody">
-              <!-- Rendered by JS -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Tab 3: Add Manual Problem Statement -->
-      <div class="tab-content hidden" id="tabAddManual">
-        <form id="manualProblemForm" class="manual-form">
-          <div class="form-row">
-            <div class="form-group flex-1">
-              <label class="form-label">Domain</label>
-              <select id="manualDomainSelect" class="form-select" required></select>
-            </div>
-            <div class="form-group flex-1">
-              <label class="form-label">Difficulty</label>
-              <select id="manualDifficultySelect" class="form-select">
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate" selected>Intermediate</option>
-                <option value="Advanced">Advanced</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Problem Statement Title</label>
-            <input type="text" id="manualTitleInput" class="form-input" placeholder="e.g. AI-Powered Smart Grid Load Balancer" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Detailed Challenge Description</label>
-            <textarea id="manualDescInput" class="form-textarea" rows="4" placeholder="Detail the problem statement requirements, constraints, and objectives..." required></textarea>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Tags (comma-separated)</label>
-            <input type="text" id="manualTagsInput" class="form-input" placeholder="AI, Smart Grid, IoT, Python">
-          </div>
-          <button type="submit" class="btn btn-accent btn-md">Add Problem Statement</button>
-        </form>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Title &amp; Description</th>
+              <th>Difficulty</th>
+              <th>Source</th>
+            </tr>
+          </thead>
+          <tbody id="exploreProblemsTableBody">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification Container -->
+  <!-- Toast Notifications -->
   <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Subtle Admin Access Link -->
+  <a href="/admin" class="admin-corner-link" title="Admin Dashboard">⚙️ Admin</a>
 
   <script src="app.js"></script>
 </body>
