@@ -131,6 +131,51 @@ const staticDir = fs.existsSync(path.join(__dirname, 'public', 'index.html'))
   : __dirname;
 app.use(express.static(staticDir));
 
+function findFile(filename) {
+  const candidates = [
+    path.join(__dirname, filename),
+    path.join(process.cwd(), filename),
+    path.join(__dirname, '..', filename),
+    path.join(__dirname, 'public', filename)
+  ];
+  for (const c of candidates) {
+    if (fs.existsSync(c)) return path.resolve(c);
+  }
+  return null;
+}
+
+// Explicit Root & HTML Route Handlers (Resolves Vercel "Cannot GET /" permanently)
+app.get(['/', '/index.html'], (req, res) => {
+  const f = findFile('index.html');
+  if (f) return res.sendFile(f);
+  res.status(404).send('index.html not found');
+});
+
+app.get(['/admin', '/admin.html'], (req, res) => {
+  const f = findFile('admin.html');
+  if (f) return res.sendFile(f);
+  res.status(404).send('admin.html not found');
+});
+
+// Explicit Static Asset Handlers
+app.get('/style.css', (req, res) => {
+  const f = findFile('style.css');
+  if (f) return res.type('text/css').sendFile(f);
+  res.status(404).send('style.css not found');
+});
+
+app.get('/app.js', (req, res) => {
+  const f = findFile('app.js');
+  if (f) return res.type('application/javascript').sendFile(f);
+  res.status(404).send('app.js not found');
+});
+
+app.get('/admin-app.js', (req, res) => {
+  const f = findFile('admin-app.js');
+  if (f) return res.type('application/javascript').sendFile(f);
+  res.status(404).send('admin-app.js not found');
+});
+
 // Admin Auth Token Store
 const ADMIN_CREDENTIALS = {
   username: process.env.ADMIN_USER || 'admin',
@@ -920,13 +965,6 @@ app.get('/api/admin/teams/pdf', adminAuthMiddleware, (req, res) => {
     console.error('PDF generation error:', err);
     if (!res.headersSent) res.status(500).json({ error: 'Failed to generate PDF: ' + err.message });
   }
-});
-
-// Serve Admin Page
-app.get('/admin', (req, res) => {
-  const adminFile = path.join(staticDir, 'admin.html');
-  if (fs.existsSync(adminFile)) res.sendFile(adminFile);
-  else res.status(404).send('Admin page not found');
 });
 
 // Restore Sample Data Endpoint (Admin Only)
