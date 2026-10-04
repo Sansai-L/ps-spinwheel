@@ -1,0 +1,11 @@
+Problem Statement 1: Autonomous Micro-Grid Power Redistribution
+Design an intelligent edge node for urban micro-grids that balances solar energy storage and EV charging stations during peak load hours to prevent transformer overload.
+
+Problem Statement 2: AI Traffic Light Synchronization for Emergency Convoys
+Implement an acoustic and visual detection system on traffic lights that detects sirens and emergency beacons 500 meters ahead, creating a dynamic green wave corridor for ambulances.
+
+Problem Statement 3: Underground Storm Drain Overflow & Toxic Gas Monitoring
+Create an ATEX-certified, solar-charged sensor array deployed in municipal sewage ducts that measures methane concentrations and water surge levels, alerting storm control centers before street flooding occurs.
+
+Problem Statement 4: Drone Landing Pad Beacon for Medical Supply Drops
+Develop an encrypted infrared and radio beacon protocol allowing delivery drones carrying organs or medication to safely identify rooftop drop zones in heavy wind and rain.

@@ -1,0 +1,4 @@
+Title,Description,Domain,Difficulty
+"BGP Route Hijack Early Warning System","Build a network observatory that monitors internet routing tables (BGP feeds) for rogue route announcements targeting critical financial gateways and initiates automated route re-announcements within 30 seconds.","Cybersecurity & Privacy","Advanced"
+"Automated API Token Leakage Revocation Bot","Design a continuous scanner that detects accidentally committed secrets in public code repositories and initiates instant invalidation hooks with major cloud and SaaS providers.","Cybersecurity & Privacy","Intermediate"
+"Post-Mortem Memory Dump Forensic Analyzer","Create a browser-based visualization tool that parses raw RAM dumps from compromised Linux servers to trace kernel rootkits and inject processes.","Cybersecurity & Privacy","Advanced"

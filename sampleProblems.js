@@ -1,0 +1,213 @@
+module.exports = [
+  // --- Artificial Intelligence & ML ---
+  {
+    id: "ps_ai_01",
+    domain: "Artificial Intelligence & ML",
+    title: "Real-time Deforestation & Wildfire Detection via Satellite Imagery",
+    description: "Develop a computer vision pipeline that processes multi-spectral satellite imagery to detect early signs of illegal deforestation and active wildfire spread in near real-time, alerting forestry officials via automated alerts.",
+    difficulty: "Advanced",
+    source: "Default Seed",
+    tags: ["Computer Vision", "Satellite Data", "Conservation", "PyTorch"]
+  },
+  {
+    id: "ps_ai_02",
+    domain: "Artificial Intelligence & ML",
+    title: "Low-Resource Language Conversational Healthcare Assistant",
+    description: "Build an offline-capable multilingual NLP voice & text bot providing triage and maternal health recommendations in regional dialects with low training corpus availability.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["NLP", "Healthcare", "Speech-to-Text", "Transformers"]
+  },
+  {
+    id: "ps_ai_03",
+    domain: "Artificial Intelligence & ML",
+    title: "Adaptive Synthetic Data Generator for Medical Rare Disease Imaging",
+    description: "Design a conditional GAN or diffusion model that synthesizes high-fidelity, privacy-preserving radiological scans of rare respiratory conditions to balance training datasets without patient data leaks.",
+    difficulty: "Advanced",
+    source: "Default Seed",
+    tags: ["Generative AI", "Diffusion", "Privacy", "Radiology"]
+  },
+  {
+    id: "ps_ai_04",
+    domain: "Artificial Intelligence & ML",
+    title: "Context-Aware Smart Code Reviewer with Security Hallucination Guardrails",
+    description: "Create an LLM-assisted developer agent that inspects pull requests, identifies logical edge-case bugs and CWE vulnerabilities, and verifies its own suggestions using static analysis execution tests.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["LLM", "DevSecOps", "Code Analysis"]
+  },
+
+  // --- Cybersecurity & Privacy ---
+  {
+    id: "ps_sec_01",
+    domain: "Cybersecurity & Privacy",
+    title: "Autonomous Honeypot Network for Zero-Day IoT Exploit Harvesting",
+    description: "Deploy an adaptive decoy infrastructure mimicking industrial IoT devices to capture novel firmware exploits, log behavioral attack chains, and automatically generate Snort/Suricata defense signatures.",
+    difficulty: "Advanced",
+    source: "Default Seed",
+    tags: ["Honeypot", "Threat Intelligence", "IoT Security"]
+  },
+  {
+    id: "ps_sec_02",
+    domain: "Cybersecurity & Privacy",
+    title: "Zero-Knowledge Credential Verification for University Hackathons",
+    description: "Implement a privacy-preserving authentication protocol using zk-SNARKs that enables students to prove enrollment and eligibility without revealing their personal student IDs, grades, or names.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["Zero-Knowledge", "Cryptography", "Identity"]
+  },
+  {
+    id: "ps_sec_03",
+    domain: "Cybersecurity & Privacy",
+    title: "Automated Ransomware Canary & In-Memory Encryption Canary Guard",
+    description: "Create a lightweight kernel-level endpoint detection agent that plants deceptive decoy files and monitors file entropy spikes to kill encryptor processes within 200 milliseconds of anomalous activity.",
+    difficulty: "Advanced",
+    source: "Default Seed",
+    tags: ["Ransomware Defense", "Endpoint Security", "Kernel Monitoring"]
+  },
+  {
+    id: "ps_sec_04",
+    domain: "Cybersecurity & Privacy",
+    title: "Phishing Resistance Sandbox for Corporate Email Attachments",
+    description: "Build an automated micro-VM detonation chamber that inspects incoming suspicious emails, renders macros safely in isolated browser containers, and extracts obfuscated credential harvesting links.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["Phishing", "Sandboxing", "Email Security"]
+  },
+
+  // --- Web & Mobile Development ---
+  {
+    id: "ps_web_01",
+    domain: "Web & Mobile Development",
+    title: "Peer-to-Peer Disaster Relief Communication Mesh WebApp",
+    description: "Develop a progressive web app (PWA) operating over WebRTC and local Wi-Fi direct mesh, enabling community members to exchange emergency resource needs and medical alerts when cellular towers are down.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["PWA", "WebRTC", "Offline-First", "Local Mesh"]
+  },
+  {
+    id: "ps_web_02",
+    domain: "Web & Mobile Development",
+    title: "Collaborative Real-time 3D CAD Architecture Whiteboard",
+    description: "Build a multiplayer WebGL/Three.js interactive drafting canvas with CRDT-based synchronized edits (Yjs) allowing remote engineers to co-design blueprints without state divergence.",
+    difficulty: "Advanced",
+    source: "Default Seed",
+    tags: ["WebGL", "Three.js", "CRDT", "WebSockets"]
+  },
+  {
+    id: "ps_web_03",
+    domain: "Web & Mobile Development",
+    title: "Micro-Frontend Analytics Dashboard with Zero-Latency Client Caching",
+    description: "Design an enterprise web dashboard utilizing Module Federation and service worker streaming to assemble widgets independently with sub-50ms paint times and offline historical caching.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["Microfrontends", "Performance", "Service Worker"]
+  },
+  {
+    id: "ps_web_04",
+    domain: "Web & Mobile Development",
+    title: "Accessible Voice & Eye-Tracking Web Navigator for Motor Impairments",
+    description: "Engineer an in-browser assistive overlay using TensorFlow.js face landmark detection that allows users with mobility restrictions to scroll, select, and type using head gestures and gaze dwell time.",
+    difficulty: "Advanced",
+    source: "Default Seed",
+    tags: ["Accessibility", "Webcam AI", "Assistive Tech"]
+  },
+
+  // --- Internet of Things (IoT) ---
+  {
+    id: "ps_iot_01",
+    domain: "Internet of Things (IoT)",
+    title: "Solar-Powered Smart Agriculture Water Allocation Sensor Grid",
+    description: "Build an ESP32 LoRaWAN-connected soil telemetry unit combining capacitive moisture readings with weather forecast APIs to automate micro-drip irrigation valves and curb water waste by 40%.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["ESP32", "LoRaWAN", "AgriTech", "Sensors"]
+  },
+  {
+    id: "ps_iot_02",
+    domain: "Internet of Things (IoT)",
+    title: "Edge Acoustic Sensor for Predictive Factory Motor Failure",
+    description: "Design an ultra-low power vibration and acoustic edge sensor running TinyML that classifies bearing wear patterns and broadcasts maintenance alerts before mechanical seizure occurs.",
+    difficulty: "Advanced",
+    source: "Default Seed",
+    tags: ["TinyML", "Predictive Maintenance", "Embedded C"]
+  },
+  {
+    id: "ps_iot_03",
+    domain: "Internet of Things (IoT)",
+    title: "Cold-Chain Vaccine Temperature Integrity Blackbox Tracker",
+    description: "Create a tamper-evident GPS & BLE thermal logger with cryptographic audit logs that records temperature fluctuations during vaccine transit and triggers instant QA rejection upon threshold violation.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["Hardware", "BLE", "Supply Chain", "Logistics"]
+  },
+
+  // --- FinTech & Blockchain ---
+  {
+    id: "ps_fin_01",
+    domain: "FinTech & Blockchain",
+    title: "Micro-Lending Protocol with On-Chain Behavioral Credit Scoring",
+    description: "Develop a decentralized lending dApp that computes non-collateral creditworthiness using historical transaction velocity, community endorsements, and utility bill attestations.",
+    difficulty: "Advanced",
+    source: "Default Seed",
+    tags: ["Smart Contracts", "Credit Scoring", "Solidity"]
+  },
+  {
+    id: "ps_fin_02",
+    domain: "FinTech & Blockchain",
+    title: "High-Frequency Flash Loan Arbitrage Detection & Transparency Dashboard",
+    description: "Build an event-streaming pipeline tracking DEX liquidity pool rebalances in real-time, visualizing MEV extraction vectors and front-running slippage impacting retail traders.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["MEV", "DEX", "Analytics", "WebSockets"]
+  },
+  {
+    id: "ps_fin_03",
+    domain: "FinTech & Blockchain",
+    title: "Carbon Offset Verification Ledger for Cross-Border Cargo Shipping",
+    description: "Implement a transparent tokenized registry linking maritime AIS satellite transit logs with bunker fuel consumption metrics to mint verifiable carbon offset credits.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["Green Finance", "Ledger", "Maritime"]
+  },
+
+  // --- Healthcare & BioTech ---
+  {
+    id: "ps_med_01",
+    domain: "Healthcare & BioTech",
+    title: "Wearable Continuous ECG Arrhythmia Warning System",
+    description: "Construct a wearable streaming filter that suppresses motion artifacts from photoplethysmography/ECG signals and raises immediate alerts upon detecting atrial fibrillation.",
+    difficulty: "Advanced",
+    source: "Default Seed",
+    tags: ["Signal Processing", "Cardiology", "Wearables"]
+  },
+  {
+    id: "ps_med_02",
+    domain: "Healthcare & BioTech",
+    title: "Medication Interaction Cross-Checker with Dynamic Genetic Profile Rules",
+    description: "Create a clinical decision support API that ingests prescription drug lists and pharmacogenomics markers to flag life-threatening drug-drug interactions and dosage adjustments.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["Clinical Informatics", "Pharmacology", "FHIR"]
+  },
+
+  // --- Cloud & DevOps ---
+  {
+    id: "ps_cloud_01",
+    domain: "Cloud & DevOps",
+    title: "Self-Healing Kubernetes Controller for Cascading Microservice Outages",
+    description: "Build an autonomous Kubernetes operator that detects circuit-breaker trip storms and dynamically scales fallback mock responses while throttling upstream dependencies.",
+    difficulty: "Advanced",
+    source: "Default Seed",
+    tags: ["Kubernetes", "Golang", "SRE", "Resilience"]
+  },
+  {
+    id: "ps_cloud_02",
+    domain: "Cloud & DevOps",
+    title: "FinOps Multi-Cloud Spot Instance Auto-Migrator with Zero-Downtime",
+    description: "Develop an agent that orchestrates zero-interruption container migration across AWS Spot and GCP Preemptible VMs upon receiving 2-minute pre-termination signals.",
+    difficulty: "Intermediate",
+    source: "Default Seed",
+    tags: ["FinOps", "Cloud Cost", "Spot Instances"]
+  }
+];

@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Quantum-Resistant Signature Bridge for Cross-Chain Swaps",
+    "description": "Construct a post-quantum cryptographic bridge utilizing Falcon or Dilithium lattice signatures to secure high-value atomic swaps between disparate layer-1 blockchains.",
+    "domain": "FinTech & Blockchain",
+    "difficulty": "Advanced",
+    "tags": ["Cryptography", "Post-Quantum", "Cross-Chain", "Security"]
+  },
+  {
+    "title": "Real-Time Payroll Streaming with Dynamic Tax Withholding",
+    "description": "Build an employer payroll protocol where employees receive compensation per second worked, with automated split routing to government tax escrows and retirement savings pots.",
+    "domain": "FinTech & Blockchain",
+    "difficulty": "Intermediate",
+    "tags": ["Streaming Payments", "Payroll", "FinTech"]
+  },
+  {
+    "title": "Decentralized Green Bond Verification via IoT Carbon Sensors",
+    "description": "Develop a smart contract registry that validates carbon reduction claims by streaming certified IoT power-meter telemetry before disbursing green bond coupon payouts.",
+    "domain": "FinTech & Blockchain",
+    "difficulty": "Advanced",
+    "tags": ["Green Finance", "IoT", "Smart Contracts"]
+  }
+]
