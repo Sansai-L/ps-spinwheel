@@ -14,6 +14,10 @@ try {
 let PDFDocument = null;
 try {
   PDFDocument = require('pdfkit');
+  // Explicitly require font modules so Vercel's NFT bundler includes them in serverless output
+  try { require('pdfkit/js/standard-fonts/Helvetica.cjs'); } catch (err) {}
+  try { require('pdfkit/js/standard-fonts/HelveticaBold.cjs'); } catch (err) {}
+  try { require('pdfkit/js/standard-fonts/chunks/standardGlyphNames-DNHAb7rp.cjs'); } catch (err) {}
 } catch (e) {
   console.warn('pdfkit module warning:', e.message);
 }
