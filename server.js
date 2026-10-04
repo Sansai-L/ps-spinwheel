@@ -74,6 +74,7 @@ function loadDB() {
 
   // Ensure teams array always exists
   if (!loaded.teams) loaded.teams = [];
+  if (!loaded.adminTokens) loaded.adminTokens = [];
 
   return loaded;
 }
@@ -101,7 +102,7 @@ const ADMIN_CREDENTIALS = {
   username: process.env.ADMIN_USER || 'admin',
   password: process.env.ADMIN_PASSWORD || 'admin123'
 };
-const VALID_TOKENS = new Set(['demo-admin-token-2026']);
+const VALID_TOKENS = new Set(['demo-admin-token-2026', ...(db.adminTokens || [])]);
 
 function adminAuthMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
@@ -128,6 +129,9 @@ const handleAdminLogin = (req, res) => {
   if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
     const token = 'admin-token-' + Date.now() + '-' + Math.random().toString(36).substring(2, 9);
     VALID_TOKENS.add(token);
+    if (!db.adminTokens) db.adminTokens = [];
+    db.adminTokens.push(token);
+    saveDB(db);
     return res.json({
       success: true,
       token,
@@ -149,7 +153,7 @@ const handleAdminVerify = (req, res) => {
       return res.json({ valid: true, username: ADMIN_CREDENTIALS.username });
     }
   }
-  return res.json({ valid: false });
+  return res.status(401).json({ valid: false, error: 'Token invalid or expired' });
 };
 
 app.get('/api/admin/verify', handleAdminVerify);
