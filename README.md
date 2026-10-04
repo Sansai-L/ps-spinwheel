@@ -14,7 +14,7 @@ A modern, interactive web application featuring an animated spinning wheel in th
    - Keyboard accessibility: hit <kbd>Spacebar</kbd> anytime to spin!
 
 2. **Domain Selector**:
-   - Dedicated side panel with visual category badges (Artificial Intelligence & ML, Cybersecurity & Privacy, Web & Mobile, IoT, FinTech & Blockchain, Healthcare & BioTech, Cloud & DevOps).
+   - Dedicated side panel with visual category badges (Artificial Intelligence & ML, Cybersecurity & Privacy, Web & Mobile, IoT, Cloud & DevOps).
    - Real-time count of available problem statements per domain.
    - Clicking a domain instantly updates the center wheel and active pool.
 
