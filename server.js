@@ -131,6 +131,13 @@ const staticDir = fs.existsSync(path.join(__dirname, 'public', 'index.html'))
   : __dirname;
 app.use(express.static(staticDir));
 
+let staticAssets = {};
+try {
+  staticAssets = require('./staticAssets');
+} catch (e) {
+  staticAssets = {};
+}
+
 function findFile(filename) {
   const candidates = [
     path.join(__dirname, filename),
@@ -144,36 +151,37 @@ function findFile(filename) {
   return null;
 }
 
+function sendAsset(res, filename, contentType) {
+  const filePath = findFile(filename);
+  if (filePath && fs.existsSync(filePath)) {
+    return res.type(contentType).sendFile(filePath);
+  }
+  if (staticAssets && staticAssets[filename]) {
+    return res.type(contentType).send(staticAssets[filename]);
+  }
+  res.status(404).send(filename + ' not found');
+}
+
 // Explicit Root & HTML Route Handlers (Resolves Vercel "Cannot GET /" permanently)
 app.get(['/', '/index.html'], (req, res) => {
-  const f = findFile('index.html');
-  if (f) return res.sendFile(f);
-  res.status(404).send('index.html not found');
+  sendAsset(res, 'index.html', 'text/html; charset=utf-8');
 });
 
 app.get(['/admin', '/admin.html'], (req, res) => {
-  const f = findFile('admin.html');
-  if (f) return res.sendFile(f);
-  res.status(404).send('admin.html not found');
+  sendAsset(res, 'admin.html', 'text/html; charset=utf-8');
 });
 
 // Explicit Static Asset Handlers
 app.get('/style.css', (req, res) => {
-  const f = findFile('style.css');
-  if (f) return res.type('text/css').sendFile(f);
-  res.status(404).send('style.css not found');
+  sendAsset(res, 'style.css', 'text/css; charset=utf-8');
 });
 
 app.get('/app.js', (req, res) => {
-  const f = findFile('app.js');
-  if (f) return res.type('application/javascript').sendFile(f);
-  res.status(404).send('app.js not found');
+  sendAsset(res, 'app.js', 'application/javascript; charset=utf-8');
 });
 
 app.get('/admin-app.js', (req, res) => {
-  const f = findFile('admin-app.js');
-  if (f) return res.type('application/javascript').sendFile(f);
-  res.status(404).send('admin-app.js not found');
+  sendAsset(res, 'admin-app.js', 'application/javascript; charset=utf-8');
 });
 
 // Admin Auth Token Store
