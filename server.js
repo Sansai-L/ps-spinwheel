@@ -11,18 +11,33 @@ try {
   console.warn('pdf-parse module warning:', e.message);
 }
 
-const sampleProblemsPath = fs.existsSync(path.join(__dirname, 'data', 'sampleProblems.js'))
-  ? './data/sampleProblems'
-  : './sampleProblems';
-const sampleProblems = require(sampleProblemsPath);
+let PDFDocument = null;
+try {
+  PDFDocument = require('pdfkit');
+} catch (e) {
+  console.warn('pdfkit module warning:', e.message);
+}
+
+let sampleProblems = [];
+try {
+  sampleProblems = require('./sampleProblems');
+} catch (e) {
+  try {
+    sampleProblems = require('./data/sampleProblems');
+  } catch (err) {
+    sampleProblems = [];
+  }
+}
 
 const app = express();
 const isVercel = process.env.VERCEL === '1' || Boolean(process.env.NOW_REGION);
 const DB_FILE = isVercel
   ? path.join('/tmp', 'database.json')
-  : (fs.existsSync(path.join(__dirname, 'data', 'database.json'))
-      ? path.join(__dirname, 'data', 'database.json')
-      : path.join(__dirname, 'database.json'));
+  : (fs.existsSync(path.join(__dirname, 'database.json'))
+      ? path.join(__dirname, 'database.json')
+      : (fs.existsSync(path.join(__dirname, 'data', 'database.json'))
+          ? path.join(__dirname, 'data', 'database.json')
+          : path.join(__dirname, 'database.json')));
 const UPLOADS_DIR = isVercel ? path.join('/tmp', 'uploads') : path.join(__dirname, 'uploads');
 
 try {
@@ -36,15 +51,23 @@ try {
 // In-memory + persistent DB helper
 function loadDB() {
   let loaded = null;
+  const candidateSeeds = [
+    path.join(__dirname, 'database.json'),
+    path.join(process.cwd(), 'database.json'),
+    path.join(__dirname, 'data', 'database.json')
+  ];
+
   if (isVercel && !fs.existsSync(DB_FILE)) {
-    const seedPath = path.join(__dirname, 'data', 'database.json');
-    if (fs.existsSync(seedPath)) {
-      try {
-        const seedContent = fs.readFileSync(seedPath, 'utf-8');
-        fs.writeFileSync(DB_FILE, seedContent);
-        loaded = JSON.parse(seedContent);
-      } catch (err) {
-        console.warn('Could not copy seed to /tmp:', err.message);
+    for (const seedPath of candidateSeeds) {
+      if (fs.existsSync(seedPath)) {
+        try {
+          const seedContent = fs.readFileSync(seedPath, 'utf-8');
+          fs.writeFileSync(DB_FILE, seedContent);
+          loaded = JSON.parse(seedContent);
+          break;
+        } catch (err) {
+          console.warn('Could not copy seed to /tmp:', err.message);
+        }
       }
     }
   }
@@ -53,6 +76,17 @@ function loadDB() {
     try {
       loaded = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
     } catch (e) {}
+  }
+
+  if (!loaded) {
+    for (const seedPath of candidateSeeds) {
+      if (fs.existsSync(seedPath)) {
+        try {
+          loaded = JSON.parse(fs.readFileSync(seedPath, 'utf-8'));
+          break;
+        } catch (e) {}
+      }
+    }
   }
 
   if (!loaded || !loaded.problems || loaded.problems.length === 0) {
@@ -1060,7 +1094,7 @@ function parseStatementsFromText(text, targetDomain, sourceName) {
 }
 
 const PORT = process.env.PORT || 3000;
-if (require.main === module || !isVercel) {
+if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
   });
