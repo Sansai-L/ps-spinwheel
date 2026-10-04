@@ -47,8 +47,6 @@
     { name: 'Cybersecurity & Privacy', icon: '🛡️', color: '#f43f5e', dark: '#4c0519' },
     { name: 'Web & Mobile Development', icon: '🌐', color: '#8b5cf6', dark: '#2e1065' },
     { name: 'Internet of Things (IoT)', icon: '📡', color: '#10b981', dark: '#022c22' },
-    { name: 'FinTech & Blockchain', icon: '💳', color: '#f59e0b', dark: '#451a03' },
-    { name: 'Healthcare & BioTech', icon: '🧬', color: '#ec4899', dark: '#500724' },
     { name: 'Cloud & DevOps', icon: '☁️', color: '#3b82f6', dark: '#172554' }
   ];
 
