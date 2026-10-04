@@ -142,54 +142,6 @@ module.exports = [
     tags: ["Hardware", "BLE", "Supply Chain", "Logistics"]
   },
 
-  // --- FinTech & Blockchain ---
-  {
-    id: "ps_fin_01",
-    domain: "FinTech & Blockchain",
-    title: "Micro-Lending Protocol with On-Chain Behavioral Credit Scoring",
-    description: "Develop a decentralized lending dApp that computes non-collateral creditworthiness using historical transaction velocity, community endorsements, and utility bill attestations.",
-    difficulty: "Advanced",
-    source: "Default Seed",
-    tags: ["Smart Contracts", "Credit Scoring", "Solidity"]
-  },
-  {
-    id: "ps_fin_02",
-    domain: "FinTech & Blockchain",
-    title: "High-Frequency Flash Loan Arbitrage Detection & Transparency Dashboard",
-    description: "Build an event-streaming pipeline tracking DEX liquidity pool rebalances in real-time, visualizing MEV extraction vectors and front-running slippage impacting retail traders.",
-    difficulty: "Intermediate",
-    source: "Default Seed",
-    tags: ["MEV", "DEX", "Analytics", "WebSockets"]
-  },
-  {
-    id: "ps_fin_03",
-    domain: "FinTech & Blockchain",
-    title: "Carbon Offset Verification Ledger for Cross-Border Cargo Shipping",
-    description: "Implement a transparent tokenized registry linking maritime AIS satellite transit logs with bunker fuel consumption metrics to mint verifiable carbon offset credits.",
-    difficulty: "Intermediate",
-    source: "Default Seed",
-    tags: ["Green Finance", "Ledger", "Maritime"]
-  },
-
-  // --- Healthcare & BioTech ---
-  {
-    id: "ps_med_01",
-    domain: "Healthcare & BioTech",
-    title: "Wearable Continuous ECG Arrhythmia Warning System",
-    description: "Construct a wearable streaming filter that suppresses motion artifacts from photoplethysmography/ECG signals and raises immediate alerts upon detecting atrial fibrillation.",
-    difficulty: "Advanced",
-    source: "Default Seed",
-    tags: ["Signal Processing", "Cardiology", "Wearables"]
-  },
-  {
-    id: "ps_med_02",
-    domain: "Healthcare & BioTech",
-    title: "Medication Interaction Cross-Checker with Dynamic Genetic Profile Rules",
-    description: "Create a clinical decision support API that ingests prescription drug lists and pharmacogenomics markers to flag life-threatening drug-drug interactions and dosage adjustments.",
-    difficulty: "Intermediate",
-    source: "Default Seed",
-    tags: ["Clinical Informatics", "Pharmacology", "FHIR"]
-  },
 
   // --- Cloud & DevOps ---
   {
