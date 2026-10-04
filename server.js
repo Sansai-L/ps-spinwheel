@@ -212,10 +212,22 @@ app.delete('/api/domains/:name', adminAuthMiddleware, (req, res) => {
 // Problem Statement Wheel Spin Endpoint
 // Implements cycle tracking: no repeated problem statements until all problems in domain are exhausted
 app.post('/api/spin', (req, res) => {
-  const { domain, seenIds = [] } = req.body;
+  const { domain, seenIds = [], sessionToken } = req.body;
   
   if (!domain) {
     return res.status(400).json({ error: 'Please select a domain to spin' });
+  }
+
+  // Strict check: One spin only per team
+  if (sessionToken && db.teams) {
+    const team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
+    if (team && team.spins && team.spins.length >= 1) {
+      return res.status(403).json({
+        error: 'Each team is allowed to spin only once! You have already been assigned a problem statement.',
+        alreadySpun: true,
+        problem: team.spins[0]
+      });
+    }
   }
 
   const domainProblems = db.problems.filter(p => p.domain.toLowerCase() === domain.toLowerCase());
@@ -545,7 +557,15 @@ app.post('/api/team/register', (req, res) => {
     if (!existing.sessionTokens) existing.sessionTokens = [];
     existing.sessionTokens.push(sessionToken);
     saveDB(db);
-    return res.json({ success: true, sessionToken, team: { teamId: existing.teamId, teamName: existing.teamName, githubLink: existing.githubLink }, isReturning: true });
+    const hasSpun = Boolean(existing.spins && existing.spins.length > 0);
+    return res.json({
+      success: true,
+      sessionToken,
+      team: { teamId: existing.teamId, teamName: existing.teamName, githubLink: existing.githubLink },
+      isReturning: true,
+      hasSpun,
+      assignedProblem: hasSpun ? existing.spins[0] : null
+    });
   }
 
   const newTeam = {
@@ -559,10 +579,34 @@ app.post('/api/team/register', (req, res) => {
   };
   db.teams.unshift(newTeam);
   saveDB(db);
-  res.json({ success: true, sessionToken, team: { teamId: newTeam.teamId, teamName: newTeam.teamName, githubLink: newTeam.githubLink }, isReturning: false });
+  res.json({
+    success: true,
+    sessionToken,
+    team: { teamId: newTeam.teamId, teamName: newTeam.teamName, githubLink: newTeam.githubLink },
+    isReturning: false,
+    hasSpun: false,
+    assignedProblem: null
+  });
 });
 
-// Log a spin result for a team
+// Get current team session status
+app.get('/api/team/status', (req, res) => {
+  const { sessionToken } = req.query;
+  if (!sessionToken) return res.status(401).json({ error: 'Session token required' });
+  if (!db.teams) db.teams = [];
+
+  const team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
+  if (!team) return res.status(404).json({ error: 'Team session not found' });
+
+  const hasSpun = Boolean(team.spins && team.spins.length > 0);
+  res.json({
+    team: { teamId: team.teamId, teamName: team.teamName, githubLink: team.githubLink },
+    hasSpun,
+    assignedProblem: hasSpun ? team.spins[0] : null
+  });
+});
+
+// Log a spin result for a team (Strictly allows only ONE spin per team)
 app.post('/api/team/log-spin', (req, res) => {
   const { sessionToken, domain, problem } = req.body;
   if (!sessionToken) return res.status(401).json({ error: 'Session token required' });
@@ -571,18 +615,158 @@ app.post('/api/team/log-spin', (req, res) => {
   const team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
   if (!team) return res.status(404).json({ error: 'Team session not found or expired' });
 
-  team.spins.push({
-    domain,
+  // STRICT RULE: Only 1 spin per team!
+  if (team.spins && team.spins.length >= 1) {
+    return res.status(400).json({
+      error: 'Each team is allowed to spin only once! You already have an assigned problem statement.',
+      assignedProblem: team.spins[0],
+      alreadySpun: true
+    });
+  }
+
+  const assignedRecord = {
+    id: problem.id,
     problemId: problem.id,
+    domain,
+    title: problem.title,
     problemTitle: problem.title,
+    description: problem.description,
     problemDescription: problem.description,
-    problemDifficulty: problem.difficulty,
-    source: problem.source,
+    difficulty: problem.difficulty || 'Intermediate',
+    problemDifficulty: problem.difficulty || 'Intermediate',
+    source: problem.source || 'Default',
     tags: problem.tags || [],
     spunAt: new Date().toISOString()
-  });
+  };
+
+  team.spins = [assignedRecord]; // Exactly 1 problem statement stored
   saveDB(db);
-  res.json({ success: true, spinCount: team.spins.length });
+  res.json({ success: true, spinCount: 1, assignedProblem: assignedRecord });
+});
+
+// Visitor Endpoint: Download assigned problem statement as PDF
+app.get('/api/team/problem-pdf', (req, res) => {
+  try {
+    const { sessionToken, teamId } = req.query;
+    if (!db.teams) db.teams = [];
+
+    let team = null;
+    if (sessionToken) {
+      team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
+    }
+    if (!team && teamId) {
+      team = db.teams.find(t => t.teamId.toLowerCase() === teamId.trim().toLowerCase());
+    }
+
+    if (!team) {
+      return res.status(404).send('Team not found or session expired. Please re-register.');
+    }
+    if (!team.spins || team.spins.length === 0) {
+      return res.status(400).send('Your team has not spun for a problem statement yet.');
+    }
+
+    const spin = team.spins[0];
+    const PDFDocument = require('pdfkit');
+    const doc = new PDFDocument({ margin: 40, size: 'A4' });
+
+    const safeTeamId = team.teamId.replace(/[^a-zA-Z0-9_-]/g, '_');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename="Problem-Statement-${safeTeamId}.pdf"`);
+    doc.pipe(res);
+
+    const pageWidth = doc.page.width;
+    const contentWidth = pageWidth - 80;
+
+    // Header Background Banner
+    doc.rect(0, 0, pageWidth, 95).fill('#0a0d14');
+    
+    // Header title
+    doc.fill('#06b6d4').fontSize(22).font('Helvetica-Bold')
+       .text('🎯 SPINQUEST PS', 40, 20, { align: 'center', width: contentWidth });
+    doc.fill('#f1f5f9').fontSize(11).font('Helvetica')
+       .text('Official Problem Statement Allocation Sheet', 40, 48, { align: 'center', width: contentWidth });
+    doc.fill('#38bdf8').fontSize(9).font('Helvetica-Bold')
+       .text('VERIFIED HACKATHON ASSIGNMENT • 1 OF 1 ALLOCATION', 40, 68, { align: 'center', width: contentWidth });
+
+    doc.y = 112;
+
+    // ── Team Information Box ──
+    doc.roundedRect(40, doc.y, contentWidth, 75, 6).fill('#f8fafc').stroke('#cbd5e1');
+    const tBoxY = doc.y + 10;
+    doc.fill('#0f172a').fontSize(13).font('Helvetica-Bold').text(team.teamName, 55, tBoxY);
+    doc.fill('#0284c7').fontSize(10).font('Helvetica-Bold').text(`Team ID: ${team.teamId}`, 55, tBoxY + 18);
+    if (team.githubLink) {
+      doc.fill('#475569').fontSize(9).font('Helvetica').text(`GitHub: ${team.githubLink}`, 55, tBoxY + 34);
+    } else {
+      doc.fill('#94a3b8').fontSize(9).font('Helvetica').text('GitHub: Not provided at registration', 55, tBoxY + 34);
+    }
+    doc.fill('#64748b').fontSize(8.5).font('Helvetica').text(`Allocated on: ${new Date(spin.spunAt).toLocaleString()}`, 55, tBoxY + 49);
+
+    doc.y += 92;
+
+    // ── Domain & Difficulty Banner ──
+    doc.roundedRect(40, doc.y, contentWidth, 32, 4).fill('#1e293b');
+    const bY = doc.y + 8;
+    doc.fill('#38bdf8').fontSize(11).font('Helvetica-Bold').text(`Domain: ${spin.domain}`, 55, bY);
+    doc.fill('#f1f5f9').fontSize(10).font('Helvetica').text(`Difficulty: ${spin.problemDifficulty || 'Intermediate'}`, 360, bY, { align: 'right', width: contentWidth - 320 });
+
+    doc.y += 44;
+
+    // ── Problem Statement Box ──
+    const psBoxTop = doc.y;
+    doc.roundedRect(40, psBoxTop, contentWidth, 235, 6).fill('#ffffff').stroke('#94a3b8');
+    
+    doc.fill('#0f172a').fontSize(14).font('Helvetica-Bold')
+       .text(spin.problemTitle, 55, psBoxTop + 14, { width: contentWidth - 30 });
+    
+    doc.moveTo(55, doc.y + 8).lineTo(pageWidth - 55, doc.y + 8).strokeColor('#e2e8f0').stroke();
+    doc.y += 16;
+
+    doc.fill('#0369a1').fontSize(10).font('Helvetica-Bold').text('CHALLENGE BRIEF & REQUIREMENTS:', 55, doc.y);
+    doc.y += 8;
+
+    doc.fill('#334155').fontSize(9.5).font('Helvetica')
+       .text(spin.problemDescription, 55, doc.y, { width: contentWidth - 30, lineGap: 3.5 });
+
+    doc.y += 12;
+
+    if (spin.tags && spin.tags.length > 0) {
+      doc.fill('#64748b').fontSize(8.5).font('Helvetica-Oblique')
+         .text('Recommended Tech / Tags:  #' + spin.tags.join('   #'), 55, doc.y);
+      doc.y += 16;
+    }
+
+    doc.y = Math.max(doc.y, psBoxTop + 248);
+
+    // ── Guidelines & Submission Rules ──
+    doc.roundedRect(40, doc.y, contentWidth, 120, 6).fill('#f0fdf4').stroke('#86efac');
+    const gY = doc.y + 10;
+    doc.fill('#166534').fontSize(10.5).font('Helvetica-Bold').text('📋 Competition Guidelines & Submission Criteria', 55, gY);
+    
+    doc.fill('#15803d').fontSize(8.5).font('Helvetica');
+    const rules = [
+      '• Single Problem Allocation: Each team is granted strictly 1 spin and 1 problem statement.',
+      '• Version Control: Commit all project code, documentation, and architecture diagrams to your Git repository.',
+      '• Authenticity: Solution must be conceptualized and coded exclusively during this hackathon event.',
+      '• Evaluation Metrics: Innovation, problem coverage, engineering quality, usability, and presentation.'
+    ];
+    let rY = gY + 18;
+    rules.forEach(rule => {
+      doc.text(rule, 55, rY, { width: contentWidth - 30 });
+      rY += 15;
+    });
+
+    // ── Footer / Signature Line ──
+    doc.moveTo(40, doc.page.height - 48).lineTo(pageWidth - 40, doc.page.height - 48).strokeColor('#cbd5e1').stroke();
+    doc.fill('#94a3b8').fontSize(8).font('Helvetica')
+       .text(`Official Document • Team: ${team.teamName} (${team.teamId}) • Problem Statement ID: ${spin.problemId}`,
+             40, doc.page.height - 38, { align: 'center', width: contentWidth });
+
+    doc.end();
+  } catch (err) {
+    console.error('Visitor PDF generation error:', err);
+    if (!res.headersSent) res.status(500).send('Error generating PDF: ' + err.message);
+  }
 });
 
 // ─── ADMIN: TEAMS DASHBOARD ───────────────────────────────────────────────────
