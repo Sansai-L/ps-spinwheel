@@ -1375,3 +1375,208 @@ kbd {
     order: 1;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════ */
+/* TEAM ENTRY GATE & TEAM TRACKING STYLES                    */
+/* ═══════════════════════════════════════════════════════════ */
+
+.entry-gate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 50% 15%, rgba(6, 182, 212, 0.18) 0%, transparent 60%),
+    radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.14) 0%, transparent 50%),
+    radial-gradient(circle at 20% 85%, rgba(244, 63, 94, 0.1) 0%, transparent 50%);
+  backdrop-filter: blur(20px);
+}
+
+.entry-gate-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(6, 182, 212, 0.15);
+  padding: 40px 36px;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  animation: entryPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes entryPop {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.entry-gate-logo {
+  text-align: center;
+}
+
+.entry-logo-icon {
+  font-size: 42px;
+  display: inline-block;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 16px rgba(6, 182, 212, 0.5));
+}
+
+.entry-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.entry-subtitle {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.entry-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+  margin: 22px 0 20px;
+}
+
+.entry-form-heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.entry-form .form-group {
+  margin-bottom: 16px;
+}
+
+.label-icon {
+  margin-right: 4px;
+  font-size: 0.95rem;
+}
+
+.entry-submit-btn {
+  margin-top: 10px;
+}
+
+.entry-footer-note {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: 18px;
+  line-height: 1.4;
+}
+
+/* Team Nav Pill */
+.team-nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+}
+
+.team-nav-icon {
+  font-size: 0.95rem;
+}
+
+/* Team Info Panel in Sidebar */
+.team-info-panel {
+  margin-bottom: 20px;
+}
+
+.team-session-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.team-info-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.team-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.team-info-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.team-info-value {
+  color: var(--text-main);
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.team-info-link {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  font-size: 0.78rem;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team-info-link:hover {
+  text-decoration: underline;
+}
+
+.team-spin-counter {
+  color: var(--accent-cyan);
+  font-size: 1rem;
+}
+
+/* Subtle corner admin link */
+.admin-corner-link {
+  position: fixed;
+  bottom: 12px;
+  right: 14px;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  text-decoration: none;
+  background: rgba(18, 24, 38, 0.7);
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  z-index: 90;
+}
+
+.admin-corner-link:hover {
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  background: var(--bg-card);
+}
