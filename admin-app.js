@@ -78,8 +78,12 @@
     setupListeners();
     if (adminToken) {
       const valid = await verifyToken();
-      if (valid) { showDashboard(); loadTabData(activeTab); }
-      else { adminToken = null; localStorage.removeItem('spinquest_admin_token'); showLogin(); }
+      if (valid) {
+        showDashboard();
+        loadTabData(activeTab);
+      } else {
+        handleAuthFailure();
+      }
     } else {
       showLogin();
     }
@@ -87,9 +91,20 @@
 
   async function verifyToken() {
     try {
-      const res = await fetch('/api/verify', { headers: { 'Authorization': 'Bearer ' + adminToken } });
-      return res.ok;
-    } catch { return false; }
+      const res = await fetch('/api/admin/verify', { headers: { 'Authorization': 'Bearer ' + adminToken } });
+      if (!res.ok) return false;
+      const data = await res.json();
+      return Boolean(data.valid);
+    } catch {
+      return false;
+    }
+  }
+
+  function handleAuthFailure(msg = 'Session expired. Please log in as admin.') {
+    localStorage.removeItem('spinquest_admin_token');
+    adminToken = null;
+    showLogin();
+    showToast(msg, 'error');
   }
 
   // ─── AUTH ───────────────────────────────────────────────────────────────────
@@ -102,7 +117,7 @@
     const btn = loginForm.querySelector('button[type="submit"]');
     btn.textContent = 'Signing in…'; btn.disabled = true;
     try {
-      const res = await fetch('/api/login', {
+      const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: adminUsername.value, password: adminPassword.value })
@@ -148,42 +163,30 @@
 
   // ─── TEAMS ──────────────────────────────────────────────────────────────────
   async function loadTeams() {
-    teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="7">Loading…</td></tr>`;
+    teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="8">Loading teams...</td></tr>`;
     try {
       const res = await fetch('/api/admin/teams', { headers: { 'Authorization': 'Bearer ' + adminToken } });
-      if (!res.ok) throw new Error('Unauthorized');
+      if (res.status === 401 || res.status === 403) {
+        handleAuthFailure('Admin session expired. Please log in again.');
+        return;
+      }
+      if (!res.ok) throw new Error('Failed to load teams');
       const data = await res.json();
-      allTeams = data.teams;
+      allTeams = data.teams || [];
       renderTeamsStats(data);
       renderTeamsTable(allTeams);
-      const token = adminToken;
-      downloadPdfBtn.href = '#';
-      downloadPdfBtn.onclick = (e) => {
-        e.preventDefault();
-        const a = document.createElement('a');
-        a.href = '/api/admin/teams/pdf';
-        // attach token via header not possible for <a>, use window.open trick with fetch
-        fetch('/api/admin/teams/pdf', { headers: { 'Authorization': 'Bearer ' + token } })
-          .then(r => { if (!r.ok) throw new Error('PDF generation failed'); return r.blob(); })
-          .then(blob => {
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url; link.download = 'SpinQuest-Teams-Report.pdf';
-            link.click(); URL.revokeObjectURL(url);
-          })
-          .catch(err => showToast('PDF error: ' + err.message, 'error'));
-      };
+      setupPdfDownloadBtn();
     } catch (err) {
-      teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="7" style="color:#f43f5e;">Error: ${err.message}</td></tr>`;
+      teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="8" style="color:#f43f5e;">Error: ${err.message}</td></tr>`;
     }
   }
 
   function renderTeamsStats(data) {
-    const { teams, total, totalSpins } = data;
+    const { teams = [], total = 0, totalSpins = 0 } = data;
     statTotalTeams.textContent = total;
     statTotalSpins.textContent = totalSpins;
     statAvgSpins.textContent = total > 0 ? (totalSpins / total).toFixed(1) : '0';
-    const usedDomains = [...new Set(teams.flatMap(t => t.spins.map(s => s.domain)))].length;
+    const usedDomains = [...new Set(teams.flatMap(t => (t.spins || []).map(s => s.domain)))].length;
     statActiveDomains.textContent = usedDomains;
   }
 
@@ -194,60 +197,132 @@
       : teams;
 
     if (filtered.length === 0) {
-      teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="7">No teams registered yet.</td></tr>`;
+      teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="8">No teams registered yet.</td></tr>`;
       return;
     }
     teamsTableBody.innerHTML = '';
     filtered.forEach((team, idx) => {
       const tr = document.createElement('tr');
       const ghLink = team.githubLink
-        ? `<a href="${escHTML(team.githubLink)}" target="_blank" rel="noopener" style="color:var(--accent-cyan);font-size:0.78rem;">🔗 Repo</a>`
-        : '<span style="color:var(--text-muted);">—</span>';
-      tr.innerHTML = `
-        <td style="color:var(--text-muted);font-size:0.8rem;">${idx + 1}</td>
-        <td><code style="font-size:0.8rem;color:#34d399;">${escHTML(team.teamId)}</code></td>
-        <td style="font-weight:600;">${escHTML(team.teamName)}</td>
-        <td>${ghLink}</td>
-        <td style="font-size:0.78rem;color:var(--text-muted);">${new Date(team.registeredAt).toLocaleString()}</td>
-        <td><span style="font-weight:700;color:var(--accent-cyan);">${team.spinCount}</span></td>
-        <td><button class="expand-btn" data-tid="${escHTML(team.teamId)}">▼ View Spins</button></td>
-      `;
-      teamsTableBody.appendChild(tr);
+        ? `<a href="${escHTML(team.githubLink)}" target="_blank" rel="noopener" style="color:var(--accent-cyan);font-size:0.78rem;text-decoration:none;">🔗 GitHub Repo</a>`
+        : '<span style="color:var(--text-muted);font-size:0.75rem;">Not provided</span>';
 
-      // Spins detail row
-      if (team.spins.length > 0) {
-        const detailTr = document.createElement('tr');
-        detailTr.style.display = 'none';
-        detailTr.dataset.detailFor = team.teamId;
-        const spinsHtml = team.spins.map((s, si) => `
-          <div class="spin-entry">
-            <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">
-              <span style="color:var(--text-muted);font-size:0.75rem;">#${si + 1}</span>
-              <span class="spin-domain-badge">${escHTML(s.domain)}</span>
-              <strong style="font-size:0.82rem;">${escHTML(s.problemTitle)}</strong>
-              <span style="color:var(--text-muted);font-size:0.72rem;">[${s.problemDifficulty}]</span>
-            </div>
-            <div style="font-size:0.72rem;color:var(--text-muted);margin-top:3px;">
-              Drawn at: ${new Date(s.spunAt).toLocaleString()}
+      const spin = (team.spins && team.spins.length > 0) ? team.spins[0] : null;
+
+      let domainHtml = `<span style="color:#f59e0b;font-size:0.75rem;font-weight:600;">⏳ Not chosen yet</span>`;
+      let problemHtml = `<span style="color:var(--text-muted);font-style:italic;font-size:0.8rem;">Waiting for team to spin wheel</span>`;
+      let statusHtml = `<span style="color:#f59e0b;font-weight:700;font-size:0.78rem;">⏳ Pending</span>`;
+      let actionsHtml = `<span style="color:var(--text-muted);font-size:0.75rem;">—</span>`;
+
+      if (spin) {
+        domainHtml = `<span class="domain-tag" style="font-size:0.74rem;padding:3px 9px;white-space:nowrap;">${escHTML(spin.domain)}</span>`;
+        
+        const title = spin.title || spin.problemTitle || 'Assigned Problem';
+        const desc = spin.description || spin.problemDescription || '';
+        const diff = spin.difficulty || spin.problemDifficulty || 'Intermediate';
+        const pid = spin.problemId || spin.id || '';
+
+        problemHtml = `
+          <div style="max-width: 440px;">
+            <strong style="color:#ffffff; font-size:0.86rem; display:block; margin-bottom:4px; line-height:1.3;">
+              ${escHTML(title)}
+            </strong>
+            <p style="font-size:0.75rem; color:#94a3b8; line-height:1.4; margin:0 0 6px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+              ${escHTML(desc)}
+            </p>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <span class="difficulty-tag" style="font-size:0.68rem; padding:1px 7px;">
+                ${escHTML(diff)}
+              </span>
+              <span style="font-size:0.7rem; color:var(--text-muted);">
+                Ref: <code>${escHTML(pid)}</code>
+              </span>
             </div>
           </div>
-        `).join('');
-        detailTr.innerHTML = `<td colspan="7"><div class="spins-detail" style="display:block;">${spinsHtml}</div></td>`;
-        teamsTableBody.appendChild(detailTr);
+        `;
+
+        const timeStr = spin.spunAt ? new Date(spin.spunAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+        statusHtml = `
+          <span style="display:inline-flex; align-items:center; gap:4px; color:#34d399; font-weight:700; font-size:0.78rem;">
+            🟢 Allocated
+          </span>
+          <div style="font-size:0.7rem; color:var(--text-muted); margin-top:2px;">${timeStr}</div>
+        `;
+
+        actionsHtml = `
+          <button class="btn btn-accent btn-sm download-single-team-pdf" data-tid="${escHTML(team.teamId)}" style="padding:4px 10px; font-size:0.75rem;" title="Download PDF assignment for ${escHTML(team.teamName)}">
+            📄 PDF
+          </button>
+        `;
       }
+
+      tr.innerHTML = `
+        <td style="color:var(--text-muted);font-size:0.8rem;">${idx + 1}</td>
+        <td><code style="font-size:0.82rem;color:#34d399;font-weight:700;">${escHTML(team.teamId)}</code></td>
+        <td style="font-weight:600;font-size:0.88rem;color:#ffffff;">${escHTML(team.teamName)}</td>
+        <td>${ghLink}</td>
+        <td>${domainHtml}</td>
+        <td>${problemHtml}</td>
+        <td>${statusHtml}</td>
+        <td>${actionsHtml}</td>
+      `;
+      teamsTableBody.appendChild(tr);
     });
 
-    // Toggle expand
-    teamsTableBody.querySelectorAll('.expand-btn').forEach(btn => {
+    // Wire individual team PDF download buttons
+    teamsTableBody.querySelectorAll('.download-single-team-pdf').forEach(btn => {
       btn.addEventListener('click', () => {
         const tid = btn.dataset.tid;
-        const detailRow = teamsTableBody.querySelector(`[data-detail-for="${tid}"]`);
-        if (!detailRow) return;
-        const shown = detailRow.style.display !== 'none';
-        detailRow.style.display = shown ? 'none' : 'table-row';
-        btn.textContent = shown ? '▼ View Spins' : '▲ Hide Spins';
+        downloadIndividualTeamPdf(tid);
       });
     });
+  }
+
+  function downloadIndividualTeamPdf(teamId) {
+    showToast(`Downloading PDF for Team ${teamId}... 📄`, 'info');
+    fetch(`/api/team/problem-pdf?teamId=${encodeURIComponent(teamId)}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to generate PDF for this team');
+        return res.blob();
+      })
+      .then(blob => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Problem-Statement-${teamId}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showToast(`Team ${teamId} PDF downloaded! 📥`, 'success');
+      })
+      .catch(err => showToast(err.message, 'error'));
+  }
+
+  function setupPdfDownloadBtn() {
+    const token = adminToken;
+    downloadPdfBtn.href = '#';
+    downloadPdfBtn.onclick = (e) => {
+      e.preventDefault();
+      showToast('Generating overall Event Report PDF... 📄', 'info');
+      fetch('/api/admin/teams/pdf', { headers: { 'Authorization': 'Bearer ' + token } })
+        .then(r => {
+          if (!r.ok) throw new Error('PDF generation failed');
+          return r.blob();
+        })
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'SpinQuest-Teams-Report.pdf';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+          showToast('Event report PDF downloaded! 📥', 'success');
+        })
+        .catch(err => showToast('PDF error: ' + err.message, 'error'));
+    };
   }
 
   // ─── DOMAINS ────────────────────────────────────────────────────────────────
@@ -408,8 +483,9 @@
   async function loadDocuments() {
     try {
       const res = await fetch('/api/documents', { headers: { 'Authorization': 'Bearer ' + adminToken } });
+      if (res.status === 401 || res.status === 403) return handleAuthFailure('Session expired. Please log in.');
       const data = await res.json();
-      allDocuments = data.documents;
+      allDocuments = data.documents || [];
       renderDocumentsTable();
     } catch (err) {
       docsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="5" style="color:#f43f5e;">Error: ${err.message}</td></tr>`;
