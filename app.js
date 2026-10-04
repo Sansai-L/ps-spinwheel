@@ -377,9 +377,9 @@
     const seen = getSeenList(activeDomain).length;
     const remaining = Math.max(0, total - seen);
     const percent = total > 0 ? Math.min(100, Math.round((seen / total) * 100)) : 0;
-    cycleProgressBar.style.width = `${percent}%`;
-    cycleCountText.textContent = `${seen} / ${total} seen`;
-    cycleRemainingText.textContent = `${remaining} remaining in cycle`;
+    if (cycleProgressBar) cycleProgressBar.style.width = `${percent}%`;
+    if (cycleCountText) cycleCountText.textContent = `${seen} / ${total} seen`;
+    if (cycleRemainingText) cycleRemainingText.textContent = `${remaining} remaining in cycle`;
   }
 
   // ─── CANVAS WHEEL ───────────────────────────────────────────────────────────
@@ -637,27 +637,144 @@
   }
 
   // ─── VISITOR PDF DOWNLOAD ──────────────────────────────────────────────────
+  function printProblemCertificate(team, problem) {
+    try {
+      const printWin = window.open('', '_blank');
+      if (!printWin) {
+        showToast('Please allow popups to open and save your problem statement PDF.', 'info');
+        return;
+      }
+      const teamName = team?.teamName || 'Team';
+      const teamId = team?.teamId || 'N/A';
+      const githubLink = team?.githubLink || 'Not provided';
+      const title = problem?.title || problem?.problemTitle || 'Assigned Problem Statement';
+      const desc = problem?.description || problem?.problemDescription || '';
+      const domain = problem?.domain || activeDomain || 'Hackathon Track';
+      const diff = problem?.difficulty || problem?.problemDifficulty || 'Intermediate';
+      const tags = (problem?.tags && problem.tags.length) ? ('#' + problem.tags.join('   #')) : '';
+
+      const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Problem-Statement-${teamId}</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #0f172a; padding: 36px; max-width: 800px; margin: 0 auto; }
+    .header { background: #0a0d14; color: #fff; padding: 24px; border-radius: 8px; text-align: center; margin-bottom: 24px; }
+    .header h1 { font-size: 24px; color: #06b6d4; letter-spacing: 1px; }
+    .header p { font-size: 13px; color: #94a3b8; margin-top: 6px; }
+    .badge { display: inline-block; background: #1e293b; color: #38bdf8; padding: 4px 12px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-top: 8px; letter-spacing: 0.5px; }
+    .box { border: 1px solid #cbd5e1; border-radius: 8px; padding: 18px; margin-bottom: 20px; background: #f8fafc; }
+    .box-title { font-size: 11px; font-weight: bold; color: #0284c7; text-transform: uppercase; margin-bottom: 6px; }
+    .team-name { font-size: 17px; font-weight: 700; color: #0f172a; }
+    .team-meta { font-size: 13px; color: #475569; margin-top: 4px; }
+    .domain-bar { background: #1e293b; color: #fff; padding: 10px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; margin-bottom: 20px; }
+    .domain-title { color: #38bdf8; }
+    .problem-box { border: 2px solid #06b6d4; border-radius: 8px; padding: 22px; margin-bottom: 20px; background: #fff; }
+    .problem-heading { font-size: 11px; font-weight: bold; color: #0369a1; text-transform: uppercase; margin-bottom: 8px; }
+    .problem-title { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
+    .problem-desc { font-size: 13.5px; line-height: 1.6; color: #334155; margin-bottom: 12px; }
+    .tags { font-size: 12px; color: #64748b; font-style: italic; }
+    .rules { background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 16px; font-size: 12px; color: #166534; line-height: 1.6; }
+    .footer { text-align: center; margin-top: 28px; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 12px; }
+    @media print {
+      body { padding: 10px; }
+      @page { margin: 1cm; size: A4; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎯 SPINQUEST PS</h1>
+    <p>Official Problem Statement Allocation Sheet</p>
+    <div class="badge">VERIFIED HACKATHON ASSIGNMENT • 1 OF 1 ALLOCATION</div>
+  </div>
+
+  <div class="box">
+    <div class="box-title">Registered Team Details</div>
+    <div class="team-name">${teamName}</div>
+    <div class="team-meta"><strong>Team ID:</strong> ${teamId} &nbsp;|&nbsp; <strong>GitHub:</strong> ${githubLink}</div>
+  </div>
+
+  <div class="domain-bar">
+    <span class="domain-title">Domain: ${domain}</span>
+    <span>Difficulty: ${diff}</span>
+  </div>
+
+  <div class="problem-box">
+    <div class="problem-heading">CHALLENGE BRIEF &amp; REQUIREMENTS:</div>
+    <div class="problem-title">${title}</div>
+    <div class="problem-desc">${desc}</div>
+    ${tags ? `<div class="tags">Recommended Tech / Tags: ${tags}</div>` : ''}
+  </div>
+
+  <div class="rules">
+    <strong>📋 Competition Guidelines &amp; Submission Criteria:</strong><br>
+    • Single Problem Allocation: Each team is granted strictly 1 spin and 1 problem statement.<br>
+    • Version Control: Commit all project code, documentation, and architecture diagrams to your Git repository.<br>
+    • Authenticity: Solution must be conceptualized and coded exclusively during this hackathon event.
+  </div>
+
+  <div class="footer">
+    Official Document • Team: ${teamName} (${teamId}) • Generated for Hackathon Submission
+  </div>
+
+  <script>
+    window.onload = function() {
+      setTimeout(function() { window.print(); }, 200);
+    };
+  </script>
+</body>
+</html>`;
+      printWin.document.write(html);
+      printWin.document.close();
+      showToast('Print dialog opened. Select "Save as PDF" to save! 📄', 'success');
+    } catch (e) {
+      console.error('Error opening print certificate:', e);
+    }
+  }
+
   function downloadProblemPdf() {
-    if (!teamSession || !teamSession.sessionToken) {
+    if (!teamSession) {
       showToast('Session expired. Please register your team first.', 'error');
       return;
     }
-    if (!teamHasSpun && !assignedProblem) {
+    const currentProblem = assignedProblem || (teamSession && teamSession.assignedProblem);
+    if (!currentProblem) {
       showToast('Please spin the wheel first to receive a problem statement!', 'info');
       return;
     }
 
     showToast('Generating official Problem Statement PDF... 📄', 'info');
 
-    const downloadUrl = `/api/team/problem-pdf?sessionToken=${encodeURIComponent(teamSession.sessionToken)}`;
     const teamIdClean = (teamSession.team?.teamId || 'Team').replace(/[^a-zA-Z0-9_-]/g, '_');
+    const bodyData = {
+      sessionToken: teamSession.sessionToken,
+      teamId: teamSession.team?.teamId,
+      teamName: teamSession.team?.teamName,
+      githubLink: teamSession.team?.githubLink,
+      problem: currentProblem
+    };
 
-    fetch(downloadUrl)
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to generate PDF. Make sure you have completed your spin.');
+    fetch('/api/team/problem-pdf', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(bodyData)
+    })
+      .then(async res => {
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(errText || 'Server error while generating PDF');
+        }
         return res.blob();
       })
       .then(blob => {
+        if (blob.size < 100) {
+          throw new Error('Downloaded PDF content was empty');
+        }
         const blobUrl = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = blobUrl;
@@ -665,11 +782,12 @@
         document.body.appendChild(a);
         a.click();
         a.remove();
-        URL.revokeObjectURL(blobUrl);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
         showToast('PDF downloaded successfully! 📥 Good luck with your project!', 'success');
       })
       .catch(err => {
-        showToast(err.message, 'error');
+        console.warn('Direct PDF download hit an issue, launching print certificate fallback:', err.message);
+        printProblemCertificate(teamSession.team, currentProblem);
       });
   }
 
@@ -728,7 +846,7 @@
       }
     });
 
-    resetCycleBtn.addEventListener('click', () => resetCycle(activeDomain));
+    if (resetCycleBtn) resetCycleBtn.addEventListener('click', () => resetCycle(activeDomain));
 
     // PDF Download handlers
     modalDownloadPdfBtn.addEventListener('click', downloadProblemPdf);
