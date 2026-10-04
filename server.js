@@ -11,11 +11,18 @@ try {
   console.warn('pdf-parse module warning:', e.message);
 }
 
-const sampleProblems = require('./data/sampleProblems');
+const sampleProblemsPath = fs.existsSync(path.join(__dirname, 'data', 'sampleProblems.js'))
+  ? './data/sampleProblems'
+  : './sampleProblems';
+const sampleProblems = require(sampleProblemsPath);
 
 const app = express();
 const isVercel = process.env.VERCEL === '1' || Boolean(process.env.NOW_REGION);
-const DB_FILE = isVercel ? path.join('/tmp', 'database.json') : path.join(__dirname, 'data', 'database.json');
+const DB_FILE = isVercel
+  ? path.join('/tmp', 'database.json')
+  : (fs.existsSync(path.join(__dirname, 'data', 'database.json'))
+      ? path.join(__dirname, 'data', 'database.json')
+      : path.join(__dirname, 'database.json'));
 const UPLOADS_DIR = isVercel ? path.join('/tmp', 'uploads') : path.join(__dirname, 'uploads');
 
 try {
@@ -81,7 +88,10 @@ let db = loadDB();
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+const staticDir = fs.existsSync(path.join(__dirname, 'public', 'index.html'))
+  ? path.join(__dirname, 'public')
+  : __dirname;
+app.use(express.static(staticDir));
 
 // Admin Auth Token Store
 const ADMIN_CREDENTIALS = {
