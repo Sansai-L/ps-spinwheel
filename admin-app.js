@@ -915,6 +915,9 @@
       uploadResultBox.classList.remove('hidden');
       clearFileSelection();
       showToast('Upload successful! 🎉', 'success');
+      loadProblems();
+      loadDomains();
+      loadDocuments();
     } catch (err) { showToast('Upload error: ' + err.message, 'error'); }
     finally {
       adminUploadBtn.textContent = 'Extract & Add Problem Statements';
