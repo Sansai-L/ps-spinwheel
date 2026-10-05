@@ -290,7 +290,7 @@
     } catch (err) {
       showEntryError(err.message);
     } finally {
-      entrySubmitLabel.textContent = 'Enter Competition';
+      entrySubmitLabel.textContent = 'Verify & Enter';
       entrySubmitBtn.disabled = false;
     }
   }
