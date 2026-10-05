@@ -1109,6 +1109,62 @@ kbd {
   color: #e2e8f0;
 }
 
+/* STRUCTURED PROBLEM DETAILS (Title | Problem | Expected Solution) */
+.problem-structure-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.problem-detail-box {
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  transition: all var(--transition-fast);
+}
+
+.problem-detail-box.box-problem {
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(15, 23, 42, 0.7));
+  box-shadow: inset 0 0 20px rgba(56, 189, 248, 0.05);
+}
+
+.problem-detail-box.box-solution {
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.08), rgba(15, 23, 42, 0.7));
+  box-shadow: inset 0 0 20px rgba(52, 211, 153, 0.05);
+}
+
+.detail-box-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.box-problem .detail-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #38bdf8;
+  text-transform: uppercase;
+}
+
+.box-solution .detail-title {
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #34d399;
+  text-transform: uppercase;
+}
+
+.detail-box-content {
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: #e2e8f0;
+  white-space: pre-line;
+}
+
 .tags-container {
   display: flex;
   flex-wrap: wrap;
@@ -2145,6 +2201,62 @@ html, body {
   color: var(--text-muted);
   line-height: 1.5;
   margin-bottom: 18px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Assigned Problem Card Split View */
+.assigned-split-view {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.assigned-subcard {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.assigned-subcard.subcard-problem {
+  border-left: 3px solid #38bdf8;
+  border-top: 1px solid rgba(56, 189, 248, 0.2);
+  border-right: 1px solid rgba(56, 189, 248, 0.2);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.assigned-subcard.subcard-solution {
+  border-left: 3px solid #10b981;
+  border-top: 1px solid rgba(16, 185, 129, 0.2);
+  border-right: 1px solid rgba(16, 185, 129, 0.2);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.subcard-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.subcard-problem .subcard-label {
+  color: #38bdf8;
+}
+
+.subcard-solution .subcard-label {
+  color: #34d399;
+}
+
+.assigned-subcard .assigned-card-desc {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+  margin-bottom: 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
