@@ -1075,6 +1075,42 @@ app.post('/api/team/sync-spin', (req, res) => {
   res.status(404).json({ error: 'Team not found' });
 });
 
+// Helper: Extract structured problem details for PDF and UI consistency
+function extractProblemParts(item) {
+  if (!item) return { title: 'Assigned Problem Statement', problem: '', expectedSolution: '', tags: [] };
+  const title = item.problemTitle || item.title || 'Assigned Problem Statement';
+  let probText = item.problem || item.problemText || '';
+  let solText = item.expectedSolution || item.solution || '';
+
+  if (!probText || !solText) {
+    const rawDesc = item.problemDescription || item.description || '';
+    const probIdx = rawDesc.search(/(?:^|\n)\s*Problem\s*:\s*/i);
+    const solIdx = rawDesc.search(/(?:^|\n)\s*Expected\s+Solution\s*:\s*/i);
+
+    if (probIdx !== -1 && solIdx !== -1 && solIdx > probIdx) {
+      const afterProb = rawDesc.substring(probIdx).replace(/^(?:^|\n)\s*Problem\s*:\s*/i, '');
+      const nextSol = afterProb.search(/(?:^|\n)\s*Expected\s+Solution\s*:\s*/i);
+      if (nextSol !== -1) {
+        probText = afterProb.substring(0, nextSol).trim();
+        solText = afterProb.substring(nextSol).replace(/^(?:^|\n)\s*Expected\s+Solution\s*:\s*/i, '').trim();
+      }
+    } else if (solIdx !== -1) {
+      probText = rawDesc.substring(0, solIdx).trim();
+      solText = rawDesc.substring(solIdx).replace(/^(?:^|\n)\s*Expected\s+Solution\s*:\s*/i, '').trim();
+    } else {
+      probText = rawDesc.trim();
+      solText = 'Design and implement a complete, production-grade software solution addressing the core challenges, with clean architecture and deployment artifacts.';
+    }
+  }
+
+  return {
+    title,
+    problem: probText,
+    expectedSolution: solText,
+    tags: item.tags || []
+  };
+}
+
 // Visitor Endpoint: Download assigned problem statement as PDF (Supports GET and POST with payload fallback)
 app.all('/api/team/problem-pdf', (req, res) => {
   try {
@@ -1119,6 +1155,8 @@ app.all('/api/team/problem-pdf', (req, res) => {
         domain: problemPayload.domain || 'Hackathon Challenge',
         title: problemPayload.title || problemPayload.problemTitle || 'Assigned Problem Statement',
         problemTitle: problemPayload.title || problemPayload.problemTitle || 'Assigned Problem Statement',
+        problem: problemPayload.problem || '',
+        expectedSolution: problemPayload.expectedSolution || '',
         description: problemPayload.description || problemPayload.problemDescription || '',
         problemDescription: problemPayload.description || problemPayload.problemDescription || '',
         difficulty: problemPayload.difficulty || problemPayload.problemDifficulty || 'Intermediate',
@@ -1135,8 +1173,9 @@ app.all('/api/team/problem-pdf', (req, res) => {
     }
 
     const spin = team.spins[0];
+    const parts = extractProblemParts(spin);
     const PDFLib = PDFDocument || require('pdfkit');
-    const doc = new PDFLib({ margin: 40, size: 'A4' });
+    const doc = new PDFLib({ margin: 36, size: 'A4' });
 
     const safeTeamId = (team.teamId || 'TEAM').replace(/[^a-zA-Z0-9_-]/g, '_');
     res.setHeader('Content-Type', 'application/pdf');
@@ -1144,92 +1183,120 @@ app.all('/api/team/problem-pdf', (req, res) => {
     doc.pipe(res);
 
     const pageWidth = doc.page.width;
-    const contentWidth = pageWidth - 80;
+    const contentWidth = pageWidth - 72;
 
     // Header Background Banner
-    doc.rect(0, 0, pageWidth, 95).fill('#0a0d14');
-    
-    // Header title
-    doc.fill('#06b6d4').fontSize(22).font('Helvetica-Bold')
-       .text('🎯 SPINQUEST PS', 40, 20, { align: 'center', width: contentWidth });
-    doc.fill('#f1f5f9').fontSize(11).font('Helvetica')
-       .text('Official Problem Statement Allocation Sheet', 40, 48, { align: 'center', width: contentWidth });
-    doc.fill('#38bdf8').fontSize(9).font('Helvetica-Bold')
-       .text('VERIFIED HACKATHON ASSIGNMENT • 1 OF 1 ALLOCATION', 40, 68, { align: 'center', width: contentWidth });
+    doc.rect(0, 0, pageWidth, 85).fill('#0a0d14');
+    doc.fill('#06b6d4').fontSize(20).font('Helvetica-Bold')
+       .text('🎯 CODIENYCH 1.0', 36, 16, { align: 'center', width: contentWidth });
+    doc.fill('#f1f5f9').fontSize(10).font('Helvetica')
+       .text('Official Problem Statement Allocation Sheet', 36, 42, { align: 'center', width: contentWidth });
+    doc.fill('#38bdf8').fontSize(8.5).font('Helvetica-Bold')
+       .text('VERIFIED HACKATHON ALLOCATION • EXCLUSIVE 1-SPIN ASSIGNMENT', 36, 58, { align: 'center', width: contentWidth });
 
-    doc.y = 112;
+    doc.y = 98;
 
     // ── Team Information Box ──
-    doc.roundedRect(40, doc.y, contentWidth, 75, 6).fill('#f8fafc').stroke('#cbd5e1');
-    const tBoxY = doc.y + 10;
-    doc.fill('#0f172a').fontSize(13).font('Helvetica-Bold').text(team.teamName || 'Team', 55, tBoxY);
-    doc.fill('#0284c7').fontSize(10).font('Helvetica-Bold').text(`Team ID: ${team.teamId || 'N/A'}`, 55, tBoxY + 18);
+    doc.roundedRect(36, doc.y, contentWidth, 68, 6).fill('#f8fafc').stroke('#cbd5e1');
+    const tBoxY = doc.y + 8;
+    doc.fill('#0f172a').fontSize(12).font('Helvetica-Bold').text(team.teamName || 'Team', 50, tBoxY);
+    doc.fill('#0284c7').fontSize(9.5).font('Helvetica-Bold').text(`Team ID: ${team.teamId || 'N/A'}`, 50, tBoxY + 16);
     if (team.githubLink) {
-      doc.fill('#475569').fontSize(9).font('Helvetica').text(`GitHub: ${team.githubLink}`, 55, tBoxY + 34);
+      doc.fill('#475569').fontSize(8.5).font('Helvetica').text(`GitHub: ${team.githubLink}`, 50, tBoxY + 31);
     } else {
-      doc.fill('#94a3b8').fontSize(9).font('Helvetica').text('GitHub: Not provided at registration', 55, tBoxY + 34);
+      doc.fill('#94a3b8').fontSize(8.5).font('Helvetica').text('GitHub: Not provided at registration', 50, tBoxY + 31);
     }
-    doc.fill('#64748b').fontSize(8.5).font('Helvetica').text(`Allocated on: ${new Date(spin.spunAt || Date.now()).toLocaleString()}`, 55, tBoxY + 49);
+    doc.fill('#64748b').fontSize(8).font('Helvetica').text(`Allocated on: ${new Date(spin.spunAt || Date.now()).toLocaleString()}`, 50, tBoxY + 45);
 
-    doc.y += 92;
+    doc.y += 80;
 
     // ── Domain & Difficulty Banner ──
-    doc.roundedRect(40, doc.y, contentWidth, 32, 4).fill('#1e293b');
-    const bY = doc.y + 8;
-    doc.fill('#38bdf8').fontSize(11).font('Helvetica-Bold').text(`Domain: ${spin.domain}`, 55, bY);
-    doc.fill('#f1f5f9').fontSize(10).font('Helvetica').text(`Difficulty: ${spin.problemDifficulty || spin.difficulty || 'Intermediate'}`, 360, bY, { align: 'right', width: contentWidth - 320 });
+    doc.roundedRect(36, doc.y, contentWidth, 26, 4).fill('#1e293b');
+    const bY = doc.y + 6;
+    doc.fill('#38bdf8').fontSize(9.5).font('Helvetica-Bold').text(`Domain: ${spin.domain || 'General Track'}`, 50, bY);
+    doc.fill('#f1f5f9').fontSize(9).font('Helvetica').text(`Difficulty: ${spin.problemDifficulty || spin.difficulty || 'Intermediate'}`, 340, bY, { align: 'right', width: contentWidth - 300 });
 
-    doc.y += 44;
+    doc.y += 34;
 
-    // ── Problem Statement Box ──
-    const psBoxTop = doc.y;
-    doc.roundedRect(40, psBoxTop, contentWidth, 235, 6).fill('#ffffff').stroke('#94a3b8');
-    
-    doc.fill('#0f172a').fontSize(14).font('Helvetica-Bold')
-       .text(spin.problemTitle || spin.title, 55, psBoxTop + 14, { width: contentWidth - 30 });
-    
-    doc.moveTo(55, doc.y + 8).lineTo(pageWidth - 55, doc.y + 8).strokeColor('#e2e8f0').stroke();
-    doc.y += 16;
+    // ── Assigned Problem Title Card ──
+    doc.roundedRect(36, doc.y, contentWidth, 42, 6).fill('#f1f5f9').stroke('#94a3b8');
+    doc.fill('#0284c7').fontSize(8).font('Helvetica-Bold').text('ASSIGNED PROBLEM TITLE', 48, doc.y + 6);
+    doc.fill('#0f172a').fontSize(11.5).font('Helvetica-Bold').text(parts.title, 48, doc.y + 18, { width: contentWidth - 24, ellipsis: true });
 
-    doc.fill('#0369a1').fontSize(10).font('Helvetica-Bold').text('CHALLENGE BRIEF & REQUIREMENTS:', 55, doc.y);
-    doc.y += 8;
+    doc.y += 50;
 
-    doc.fill('#334155').fontSize(9.5).font('Helvetica')
-       .text(spin.problemDescription || spin.description, 55, doc.y, { width: contentWidth - 30, lineGap: 3.5 });
+    // ── 1. PROBLEM STATEMENT Box ──
+    const probFont = 'Helvetica';
+    const probFontSize = 9;
+    doc.font(probFont).fontSize(probFontSize);
+    const probTextHeight = doc.heightOfString(parts.problem, { width: contentWidth - 28, lineGap: 2.5 });
+    const probBoxHeight = Math.max(55, probTextHeight + 28);
 
-    doc.y += 12;
+    doc.roundedRect(36, doc.y, contentWidth, probBoxHeight, 6).fill('#f0f9ff').stroke('#38bdf8');
+    const pBoxY = doc.y;
+    doc.fill('#0369a1').fontSize(8.5).font('Helvetica-Bold').text('📌 1. PROBLEM STATEMENT', 48, pBoxY + 7);
+    doc.fill('#1e293b').fontSize(probFontSize).font(probFont).text(parts.problem, 48, pBoxY + 22, {
+      width: contentWidth - 24,
+      lineGap: 2.5
+    });
 
-    if (spin.tags && spin.tags.length > 0) {
-      doc.fill('#64748b').fontSize(8.5).font('Helvetica')
-         .text('Recommended Tech / Tags:  #' + spin.tags.join('   #'), 55, doc.y);
-      doc.y += 16;
+    doc.y = pBoxY + probBoxHeight + 10;
+
+    // ── 2. EXPECTED SOLUTION Box ──
+    const solFont = 'Helvetica';
+    const solFontSize = 9;
+    doc.font(solFont).fontSize(solFontSize);
+    const solTextHeight = doc.heightOfString(parts.expectedSolution, { width: contentWidth - 28, lineGap: 2.5 });
+    const solBoxHeight = Math.max(55, solTextHeight + 28);
+
+    if (doc.y + solBoxHeight > doc.page.height - 110) {
+      doc.addPage();
+      doc.y = 36;
     }
 
-    doc.y = Math.max(doc.y, psBoxTop + 248);
+    doc.roundedRect(36, doc.y, contentWidth, solBoxHeight, 6).fill('#ecfdf5').stroke('#10b981');
+    const sBoxY = doc.y;
+    doc.fill('#047857').fontSize(8.5).font('Helvetica-Bold').text('💡 2. EXPECTED SOLUTION & DELIVERABLES', 48, sBoxY + 7);
+    doc.fill('#064e3b').fontSize(solFontSize).font(solFont).text(parts.expectedSolution, 48, sBoxY + 22, {
+      width: contentWidth - 24,
+      lineGap: 2.5
+    });
+
+    doc.y = sBoxY + solBoxHeight + 10;
+
+    // ── Tags / Tech Stack ──
+    if (parts.tags && parts.tags.length > 0) {
+      doc.fill('#64748b').fontSize(8).font('Helvetica-Bold')
+         .text('Recommended Tech / Tags:  #' + parts.tags.join('   #'), 48, doc.y);
+      doc.y += 14;
+    }
 
     // ── Guidelines & Submission Rules ──
-    doc.roundedRect(40, doc.y, contentWidth, 120, 6).fill('#f0fdf4').stroke('#86efac');
-    const gY = doc.y + 10;
-    doc.fill('#166534').fontSize(10.5).font('Helvetica-Bold').text('📋 Competition Guidelines & Submission Criteria', 55, gY);
-    
-    doc.fill('#15803d').fontSize(8.5).font('Helvetica');
+    if (doc.y + 70 > doc.page.height - 40) {
+      doc.addPage();
+      doc.y = 36;
+    }
+    doc.roundedRect(36, doc.y, contentWidth, 75, 6).fill('#fffbeb').stroke('#f59e0b');
+    const gY = doc.y + 7;
+    doc.fill('#92400e').fontSize(8.5).font('Helvetica-Bold').text('📋 Competition Guidelines & Submission Criteria', 48, gY);
+    doc.fill('#78350f').fontSize(7.8).font('Helvetica');
     const rules = [
       '• Single Problem Allocation: Each team is granted strictly 1 spin and 1 problem statement.',
       '• Version Control: Commit all project code, documentation, and architecture diagrams to your Git repository.',
       '• Authenticity: Solution must be conceptualized and coded exclusively during this hackathon event.',
       '• Evaluation Metrics: Innovation, problem coverage, engineering quality, usability, and presentation.'
     ];
-    let rY = gY + 18;
+    let rY = gY + 14;
     rules.forEach(rule => {
-      doc.text(rule, 55, rY, { width: contentWidth - 30 });
-      rY += 15;
+      doc.text(rule, 48, rY, { width: contentWidth - 24 });
+      rY += 12;
     });
 
     // ── Footer / Signature Line ──
-    doc.moveTo(40, doc.page.height - 48).lineTo(pageWidth - 40, doc.page.height - 48).strokeColor('#cbd5e1').stroke();
-    doc.fill('#94a3b8').fontSize(8).font('Helvetica')
-       .text(`Official Document • Team: ${team.teamName} (${team.teamId}) • Problem Statement ID: ${spin.problemId}`,
-             40, doc.page.height - 38, { align: 'center', width: contentWidth });
+    doc.moveTo(36, doc.page.height - 30).lineTo(pageWidth - 36, doc.page.height - 30).strokeColor('#cbd5e1').stroke();
+    doc.fill('#94a3b8').fontSize(7.5).font('Helvetica')
+       .text(`Official Document • Team: ${team.teamName} (${team.teamId}) • Problem Statement Verification`,
+             36, doc.page.height - 22, { align: 'center', width: contentWidth });
 
     doc.end();
   } catch (err) {
@@ -1646,24 +1713,25 @@ function parseStatementsFromText(text, targetDomain, sourceName) {
     .trim();
 
   // Check if text matches the "Title -> Problem -> Expected Solution" PDF format
-  const hasProblemKeywords = /(?:^|\n)\s*Problem\s*(?:\n|:)/i.test(clean);
+  const hasProblemKeywords = /(?:^|\n)\s*(?:(?:#|\d+[\.:\-\)])\s*)?Problem\s*(?:\n|:)/i.test(clean);
   const hasExpectedSolutionKeywords = /(?:^|\n)\s*Expected\s+Solution\s*(?:\n|:)/i.test(clean);
 
   if (hasProblemKeywords && hasExpectedSolutionKeywords) {
     // ── SPECIFIC "Title | Problem | Expected Solution" PDF PARSER ──
-    const sections = clean.split(/(?=\n\s*Problem\s*(?:\n|:))/i);
+    const rawSections = clean.split(/(?=\n\s*(?:(?:#|\d+[\.:\-\)])\s*)?Problem\s*(?:\n|:))/i);
     let currentCategory = '';
 
-    for (let i = 0; i < sections.length; i++) {
-      const sec = sections[i];
-      const probMatch = sec.match(/^\s*Problem\s*(?:\n|:)/i);
+    for (let i = 0; i < rawSections.length; i++) {
+      const sec = rawSections[i];
+      const probMatch = sec.match(/^\s*(?:(?:#|\d+[\.:\-\)])\s*)?Problem\s*(?:\n|:)/i);
       if (!probMatch) continue; // Skip initial preamble/header
 
       let title = '';
+      let candidateTitleLines = [];
+
       if (i > 0) {
-        const prevSec = sections[i - 1];
+        const prevSec = rawSections[i - 1];
         const expIdx = prevSec.search(/Expected\s+Solution/i);
-        let candidateTitleLines = [];
 
         if (expIdx !== -1) {
           const afterExp = prevSec.substring(expIdx);
@@ -1672,7 +1740,7 @@ function parseStatementsFromText(text, targetDomain, sourceName) {
             const bottomLines = [];
             for (let b = expLines.length - 1; b >= 1; b--) {
               const line = expLines[b];
-              if (line.toLowerCase().startsWith('suggested tech:') || line.endsWith('.') || line.length > 110) {
+              if (line.toLowerCase().startsWith('suggested tech:') || line.endsWith('.') || line.length > 120) {
                 break;
               }
               bottomLines.unshift(line);
@@ -1705,31 +1773,37 @@ function parseStatementsFromText(text, targetDomain, sourceName) {
         }
       }
 
+      // Strip any leading numbers e.g. "12. "
+      title = title.replace(/^\d+[\.:\-\)]\s*/, '').trim();
+
       // Extract Problem text and Expected Solution text
-      const afterProbHeader = sec.replace(/^\s*Problem\s*(?:\n|:)\s*/i, '');
+      const afterProbHeader = sec.replace(/^\s*(?:(?:#|\d+[\.:\-\)])\s*)?Problem\s*(?:\n|:)\s*/i, '');
       const expSolMatch = afterProbHeader.search(/(?:^|\n)\s*Expected\s+Solution\s*(?:\n|:)\s*/i);
 
       let problemText = '';
-      let solutionText = '';
+      let solutionRaw = '';
 
       if (expSolMatch !== -1) {
         problemText = afterProbHeader.substring(0, expSolMatch).trim();
-        const afterSolHeader = afterProbHeader.substring(expSolMatch).replace(/^\s*Expected\s+Solution\s*(?:\n|:)\s*/i, '');
-        solutionText = afterSolHeader.trim();
+        solutionRaw = afterProbHeader.substring(expSolMatch).replace(/^\s*Expected\s+Solution\s*(?:\n|:)\s*/i, '').trim();
       } else {
         problemText = afterProbHeader.trim();
       }
 
-      // Clean trailing title/banner lines from solutionText
-      const solLines = solutionText.split('\n').map(l => l.trim()).filter(Boolean);
-      const cleanedSolLines = [];
-      for (const line of solLines) {
-        if (cleanedSolLines.some(l => l.toLowerCase().startsWith('suggested tech:')) && line.length < 80 && !line.endsWith('.')) {
-          break;
+      // Cut off trailing lines from solutionRaw that belong to the NEXT problem's title or category
+      let solutionLines = solutionRaw.split('\n').map(l => l.trim()).filter(Boolean);
+      if (i < rawSections.length - 1) {
+        let cutIndex = solutionLines.length;
+        for (let b = solutionLines.length - 1; b >= 1; b--) {
+          const line = solutionLines[b];
+          if (line.toLowerCase().startsWith('suggested tech:') || line.endsWith('.') || line.length > 120) {
+            break;
+          }
+          cutIndex = b;
         }
-        cleanedSolLines.push(line);
+        solutionLines = solutionLines.slice(0, cutIndex);
       }
-      const finalSolutionText = cleanedSolLines.join('\n');
+      const finalSolutionText = solutionLines.join('\n').trim();
 
       // Extract suggested tech tags
       const techMatch = finalSolutionText.match(/Suggested\s+tech\s*:\s*([^.\n]+)/i);
@@ -1758,6 +1832,8 @@ function parseStatementsFromText(text, targetDomain, sourceName) {
         id: 'ps_doc_' + Date.now() + '_' + problems.length + '_' + Math.random().toString(36).substring(2, 5),
         domain: targetDomain, // Fully assigned to the single target domain selected by user
         title: title || `Problem Statement #${problems.length + 1}`,
+        problem: problemText,
+        expectedSolution: finalSolutionText,
         description: fullDescription,
         difficulty: diff,
         source: sourceName,
@@ -1818,10 +1894,14 @@ function parseStatementsFromText(text, targetDomain, sourceName) {
       diff = 'Beginner';
     }
 
+    const defaultSol = 'Design and implement a complete, production-grade software solution addressing the core challenges, with clean architecture and deployment artifacts.';
+
     problems.push({
       id: 'ps_doc_' + Date.now() + '_' + i + '_' + Math.random().toString(36).substring(2, 5),
       domain: targetDomain,
       title: titleCandidate || `Problem Statement #${i + 1}`,
+      problem: descCandidate || titleCandidate,
+      expectedSolution: defaultSol,
       description: descCandidate || titleCandidate,
       difficulty: diff,
       source: sourceName,
