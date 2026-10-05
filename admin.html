@@ -591,8 +591,20 @@
       <div id="modalProblemSection" style="margin-bottom:18px;">
         <h4 style="font-size:0.85rem;text-transform:uppercase;color:#0284c7;letter-spacing:0.05em;margin-bottom:8px;">Allocated Problem Statement</h4>
         <div id="modalProblemBox" style="background:#0f172a;border:1px solid #1e293b;border-radius:var(--radius-md);padding:14px;">
-          <strong id="modalProblemTitle" style="color:#fff;font-size:0.95rem;display:block;margin-bottom:6px;">—</strong>
-          <p id="modalProblemDesc" style="color:#94a3b8;font-size:0.82rem;line-height:1.5;margin-bottom:8px;">—</p>
+          <div style="font-size:0.7rem;font-weight:700;color:#0284c7;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px;">Title</div>
+          <strong id="modalProblemTitle" style="color:#fff;font-size:0.95rem;display:block;margin-bottom:10px;">—</strong>
+          
+          <div style="background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.25);border-radius:6px;padding:10px 12px;margin-bottom:10px;">
+            <div style="font-size:0.7rem;font-weight:700;color:#38bdf8;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">📌 Problem Statement</div>
+            <p id="modalProblemText" style="color:#e2e8f0;font-size:0.84rem;line-height:1.55;margin:0;">—</p>
+          </div>
+
+          <div style="background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.25);border-radius:6px;padding:10px 12px;margin-bottom:10px;">
+            <div style="font-size:0.7rem;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">💡 Expected Solution &amp; Deliverables</div>
+            <p id="modalSolutionText" style="color:#e2e8f0;font-size:0.84rem;line-height:1.55;margin:0;">—</p>
+          </div>
+
+          <p id="modalProblemDesc" class="hidden" style="display:none;">—</p>
           <div style="display:flex;gap:8px;align-items:center;">
             <span id="modalProblemDiff" class="difficulty-tag" style="font-size:0.7rem;padding:2px 8px;">Intermediate</span>
             <span id="modalProblemDomain" class="domain-tag" style="font-size:0.7rem;padding:2px 8px;">Domain</span>
