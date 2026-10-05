@@ -1,5 +1,20 @@
 {
-  "problems": [],
+  "problems": [
+    {
+      "id": "ps_1791223584962_1t22",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Real-Time River Flood Warning System",
+      "description": "Problem:\nRiver gauge sensor latency prevents early evacuation.\n\nExpected Solution:\nBuild a streaming LSTM model predicting gauge surge 6 hours in advance.",
+      "difficulty": "Advanced",
+      "source": "Manual Entry",
+      "tags": [
+        "AI",
+        "Hydrology",
+        "LSTM"
+      ],
+      "createdAt": "2026-10-05T18:06:24.962Z"
+    }
+  ],
   "documents": [],
   "domains": [
     "Artificial Intelligence & ML",
@@ -2147,6 +2162,7 @@
     "adm.YWRtaW46MTc5MTE5Mzc1MjczNA.0547db42faf4a36711c0120c1a8123f27c37b90e2e401cb9622d80b34a002b68",
     "adm.YWRtaW46MTc5MTE5Mzc1Mjc0OQ.ad565ddf3e504ff3fda0a9a4dea6f531417d6027c1d02e7d6d160b0090daaab0",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NTg.970137b4028e3993363b17be46bc1591213b1a51e1963fa678503c5117c058b7",
-    "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NjU.3091a723a4961e52a5c560655b49d09df472447fb73dfe3f0f846d59c9bade37"
+    "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NjU.3091a723a4961e52a5c560655b49d09df472447fb73dfe3f0f846d59c9bade37",
+    "adm.YWRtaW46MTc5MTIyMzU4NDI5MA.d9f15611240baa095819f2079e0fdf44e5365414be3b00d7be09132a547fe1cd"
   ]
 }
