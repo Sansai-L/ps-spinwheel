@@ -30,21 +30,24 @@
 
       <div class="entry-divider"></div>
 
-      <h3 class="entry-form-heading">Register Your Team to Continue</h3>
+      <h3 class="entry-form-heading">Team Login — CODIENYCH 1.0</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin: -8px 0 16px;">
+        Enter your registered Reg ID and Team Name from the master sheet
+      </p>
 
       <form id="teamEntryForm" class="entry-form" autocomplete="off">
         <div class="form-group">
           <label class="form-label" for="entryTeamId">
-            <span class="label-icon">🏷️</span> Team ID
+            <span class="label-icon">🏷️</span> Reg ID / Team ID
           </label>
-          <input type="text" id="entryTeamId" class="form-input" placeholder="e.g. TEAM001" required maxlength="30">
+          <input type="text" id="entryTeamId" class="form-input" placeholder="e.g. CODIENYCH-2026-0001" required maxlength="35">
         </div>
 
         <div class="form-group">
           <label class="form-label" for="entryTeamName">
             <span class="label-icon">👥</span> Team Name
           </label>
-          <input type="text" id="entryTeamName" class="form-input" placeholder="e.g. Circuit Breakers" required maxlength="60">
+          <input type="text" id="entryTeamName" class="form-input" placeholder="e.g. Technical coders" required maxlength="60">
         </div>
 
         <div class="form-group">
@@ -58,11 +61,11 @@
 
         <button type="submit" id="entrySubmitBtn" class="btn btn-accent btn-full btn-lg entry-submit-btn">
           <span class="btn-icon">🚀</span>
-          <span id="entrySubmitLabel">Enter Competition</span>
+          <span id="entrySubmitLabel">Verify &amp; Enter</span>
         </button>
       </form>
 
-      <p class="entry-footer-note">Your team's spin history will be tracked and available to event organizers.</p>
+      <p class="entry-footer-note">Only registered teams from CODIENYCH 1.0 are authorized to access the roulette wheel.</p>
 
       <!-- Organizer / Admin Access on First Page -->
       <div class="entry-admin-access">
