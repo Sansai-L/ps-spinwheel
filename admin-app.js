@@ -59,6 +59,8 @@
   const modalProblemBox = document.getElementById('modalProblemBox');
   const modalProblemTitle = document.getElementById('modalProblemTitle');
   const modalProblemDesc = document.getElementById('modalProblemDesc');
+  const modalProblemText = document.getElementById('modalProblemText');
+  const modalSolutionText = document.getElementById('modalSolutionText');
   const modalProblemDiff = document.getElementById('modalProblemDiff');
   const modalProblemDomain = document.getElementById('modalProblemDomain');
   let selectedModalTeam = null;
@@ -399,6 +401,44 @@
     });
   }
 
+  // Helper: Extract structured problem details (Title | Problem | Expected Solution)
+  function extractProblemParts(problem) {
+    if (!problem) return { title: 'Assigned Problem Statement', problem: '', expectedSolution: '', tags: [] };
+    const title = problem.title || problem.problemTitle || 'Assigned Problem Statement';
+    let probText = problem.problem || problem.problemText || '';
+    let solText = problem.expectedSolution || problem.solution || '';
+
+    if (!probText || !solText) {
+      const rawDesc = problem.description || problem.problemDescription || '';
+      const probIdx = rawDesc.search(/(?:^|\n)\s*Problem\s*:\s*/i);
+      const solIdx = rawDesc.search(/(?:^|\n)\s*Expected\s+Solution\s*:\s*/i);
+
+      if (probIdx !== -1 && solIdx !== -1 && solIdx > probIdx) {
+        const afterProb = rawDesc.substring(probIdx).replace(/^(?:^|\n)\s*Problem\s*:\s*/i, '');
+        const nextSol = afterProb.search(/(?:^|\n)\s*Expected\s+Solution\s*:\s*/i);
+        if (nextSol !== -1) {
+          probText = afterProb.substring(0, nextSol).trim();
+          solText = afterProb.substring(nextSol).replace(/^(?:^|\n)\s*Expected\s+Solution\s*:\s*/i, '').trim();
+        }
+      } else if (solIdx !== -1) {
+        probText = rawDesc.substring(0, solIdx).trim();
+        solText = rawDesc.substring(solIdx).replace(/^(?:^|\n)\s*Expected\s+Solution\s*:\s*/i, '').trim();
+      } else {
+        probText = rawDesc.trim();
+        solText = 'Design and implement a complete, production-grade software solution addressing the core challenges, with clean architecture and deployment artifacts.';
+      }
+    }
+
+    return {
+      title,
+      problem: probText,
+      expectedSolution: solText,
+      domain: problem.domain || '',
+      difficulty: problem.difficulty || problem.problemDifficulty || 'Intermediate',
+      tags: problem.tags || []
+    };
+  }
+
   // ─── TEAM DETAILS MODAL ─────────────────────────────────────────────────────
   function openTeamDetailsModal(team) {
     selectedModalTeam = team;
@@ -425,9 +465,12 @@
 
     if (hasSpun) {
       const spin = team.spins[0];
-      modalProblemTitle.textContent = spin.title || spin.problemTitle || 'Assigned Problem';
-      modalProblemDesc.textContent = spin.description || spin.problemDescription || '';
-      modalProblemDiff.textContent = spin.difficulty || spin.problemDifficulty || 'Intermediate';
+      const parts = extractProblemParts(spin);
+      modalProblemTitle.textContent = parts.title;
+      if (modalProblemText) modalProblemText.textContent = parts.problem;
+      if (modalSolutionText) modalSolutionText.textContent = parts.expectedSolution;
+      if (modalProblemDesc) modalProblemDesc.textContent = parts.problem;
+      modalProblemDiff.textContent = parts.difficulty;
       modalProblemDomain.textContent = spin.domain || team.domain || 'Challenge';
       modalProblemSection.style.display = 'block';
       modalDownloadPdfBtn.style.display = 'inline-block';
