@@ -911,15 +911,6 @@
       toggleAdminPwd.textContent = isPass ? '🙈' : '👁️';
     });
 
-    const fillCredsBtn = document.getElementById('fillAdminCredsBtn');
-    if (fillCredsBtn) {
-      fillCredsBtn.addEventListener('click', () => {
-        if (adminUsername) adminUsername.value = 'admin';
-        if (adminPassword) adminPassword.value = 'admin123';
-        showToast('Credentials filled: admin / admin123', 'info');
-      });
-    }
-
     // Tabs
     tabBtns.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.atab)));
 
