@@ -106,21 +106,35 @@ function loadDB() {
     }
   }
 
-  if (!loaded || !loaded.problems || loaded.problems.length === 0) {
+  if (!loaded) {
     loaded = {
-      problems: [...sampleProblems],
-      documents: (loaded && loaded.documents) || [],
-      domains: (loaded && loaded.domains && loaded.domains.length > 0) ? loaded.domains : [
+      problems: [],
+      documents: [],
+      domains: [
         "Artificial Intelligence & ML",
         "Cybersecurity & Privacy",
         "Web & Mobile Development",
         "Internet of Things (IoT)",
         "Cloud & DevOps"
-      ]
+      ],
+      teams: [],
+      adminTokens: []
     };
     try {
       fs.writeFileSync(DB_FILE, JSON.stringify(loaded, null, 2));
     } catch (e) {}
+  } else {
+    if (!Array.isArray(loaded.problems)) loaded.problems = [];
+    if (!Array.isArray(loaded.documents)) loaded.documents = [];
+    if (!Array.isArray(loaded.domains) || loaded.domains.length === 0) {
+      loaded.domains = [
+        "Artificial Intelligence & ML",
+        "Cybersecurity & Privacy",
+        "Web & Mobile Development",
+        "Internet of Things (IoT)",
+        "Cloud & DevOps"
+      ];
+    }
   }
 
   // Ensure teams array always contains all authorized teams with complete metadata
@@ -501,6 +515,7 @@ app.post('/api/spin', (req, res) => {
   const domainProblems = db.problems.filter(p => matchesDomain(p, domain));
 
   if (domainProblems.length === 0) {
+    if (lockKey) spinningTeams.delete(lockKey);
     return res.status(404).json({
       error: `No problem statements currently available in domain: "${domain}". Admin can upload documents or add problems.`
     });
@@ -619,6 +634,23 @@ app.delete('/api/problems/:id', adminAuthMiddleware, (req, res) => {
 
   saveDB(db);
   res.json({ success: true, message: 'Problem statement deleted' });
+});
+
+// Clear All Problems (Admin Only)
+app.post('/api/admin/clear-all-problems', adminAuthMiddleware, (req, res) => {
+  db.problems = [];
+  db.documents = [];
+  saveDB(db);
+  scheduleGitHubSync();
+  res.json({ success: true, message: 'All problem statements and documents removed successfully', totalProblems: 0 });
+});
+
+app.delete('/api/problems', adminAuthMiddleware, (req, res) => {
+  db.problems = [];
+  db.documents = [];
+  saveDB(db);
+  scheduleGitHubSync();
+  res.json({ success: true, message: 'All problem statements and documents removed successfully', totalProblems: 0 });
 });
 
 // Document Upload & Intelligent Extraction Endpoint (Admin Only)
