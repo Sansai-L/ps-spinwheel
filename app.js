@@ -76,6 +76,8 @@
   const assignedCardDomain = document.getElementById('assignedCardDomain');
   const assignedCardTitle = document.getElementById('assignedCardTitle');
   const assignedCardDesc = document.getElementById('assignedCardDesc');
+  const assignedCardProblem = document.getElementById('assignedCardProblem');
+  const assignedCardSolution = document.getElementById('assignedCardSolution');
   const assignedCardDownloadPdfBtn = document.getElementById('assignedCardDownloadPdfBtn');
   const assignedCardViewBtn = document.getElementById('assignedCardViewBtn');
 
@@ -105,6 +107,8 @@
   const modalSourceTag = document.getElementById('modalSourceTag');
   const modalProblemTitle = document.getElementById('modalProblemTitle');
   const modalProblemDescription = document.getElementById('modalProblemDescription');
+  const modalProblemText = document.getElementById('modalProblemText');
+  const modalSolutionText = document.getElementById('modalSolutionText');
   const modalTagsContainer = document.getElementById('modalTagsContainer');
   const modalCycleStatusText = document.getElementById('modalCycleStatusText');
   const cycleCompletionAlert = document.getElementById('cycleCompletionAlert');
@@ -471,23 +475,64 @@
     ctx.restore();
   }
 
+  // ─── EXTRACT STRUCTURED PROBLEM DETAILS (Title | Problem | Expected Solution) ─
+  function extractProblemParts(problem) {
+    if (!problem) return { title: 'Assigned Problem Statement', problem: '', expectedSolution: '', tags: [] };
+    const title = problem.title || problem.problemTitle || 'Assigned Problem Statement';
+    let probText = problem.problem || problem.problemText || '';
+    let solText = problem.expectedSolution || problem.solution || '';
+
+    if (!probText || !solText) {
+      const rawDesc = problem.description || problem.problemDescription || '';
+      const probIdx = rawDesc.search(/(?:^|\n)\s*Problem\s*:\s*/i);
+      const solIdx = rawDesc.search(/(?:^|\n)\s*Expected\s+Solution\s*:\s*/i);
+
+      if (probIdx !== -1 && solIdx !== -1 && solIdx > probIdx) {
+        const afterProb = rawDesc.substring(probIdx).replace(/^(?:^|\n)\s*Problem\s*:\s*/i, '');
+        const nextSol = afterProb.search(/(?:^|\n)\s*Expected\s+Solution\s*:\s*/i);
+        if (nextSol !== -1) {
+          probText = afterProb.substring(0, nextSol).trim();
+          solText = afterProb.substring(nextSol).replace(/^(?:^|\n)\s*Expected\s+Solution\s*:\s*/i, '').trim();
+        }
+      } else if (solIdx !== -1) {
+        probText = rawDesc.substring(0, solIdx).trim();
+        solText = rawDesc.substring(solIdx).replace(/^(?:^|\n)\s*Expected\s+Solution\s*:\s*/i, '').trim();
+      } else {
+        probText = rawDesc.trim();
+        solText = 'Design and implement a complete, production-grade software solution addressing the core challenges, with clean architecture and deployment artifacts.';
+      }
+    }
+
+    return {
+      title,
+      problem: probText,
+      expectedSolution: solText,
+      domain: problem.domain || activeDomain || 'Hackathon Track',
+      difficulty: problem.difficulty || problem.problemDifficulty || 'Intermediate',
+      tags: problem.tags || []
+    };
+  }
+
   // ─── LOCK / UNLOCK 1-SPIN SYSTEM ──────────────────────────────────────────
   function lockWheelForAssignedProblem(problem) {
     teamHasSpun = true;
     assignedProblem = problem;
+    const parts = extractProblemParts(problem);
 
     // Center Stage Controls Lock
     spinMainBtn.disabled = true;
     spinMainBtn.classList.add('btn-locked');
     spinMainBtn.innerHTML = `<span>🔒 PROBLEM ASSIGNED (1/1 SPIN USED)</span>`;
     spinCenterBtn.classList.add('center-btn-locked');
-    spinStatusMessage.innerHTML = `🔒 Official Allocation: <strong>${escapeHTML(problem.title)}</strong>`;
+    spinStatusMessage.innerHTML = `🔒 Official Allocation: <strong>${escapeHTML(parts.title)}</strong>`;
     keyboardHint.textContent = '🔒 Spin completed. Each team receives strictly 1 problem statement.';
 
-    // Show Allocated Challenge Card
-    assignedCardDomain.textContent = problem.domain;
-    assignedCardTitle.textContent = problem.title;
-    assignedCardDesc.textContent = problem.description;
+    // Show Allocated Challenge Card with Title, Problem & Expected Solution
+    assignedCardDomain.textContent = parts.domain;
+    assignedCardTitle.textContent = parts.title;
+    if (assignedCardProblem) assignedCardProblem.textContent = parts.problem;
+    if (assignedCardSolution) assignedCardSolution.textContent = parts.expectedSolution;
+    if (assignedCardDesc) assignedCardDesc.textContent = parts.problem;
     assignedProblemCard.classList.remove('hidden');
 
     // Sidebar Team Info
@@ -677,15 +722,18 @@
         teamSession.assignedProblem = problem;
         localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
       }
-      assignedCardDomain.textContent = problem.domain;
-      assignedCardTitle.textContent = problem.title;
-      assignedCardDesc.textContent = problem.description;
+      const parts = extractProblemParts(problem);
+      assignedCardDomain.textContent = parts.domain;
+      assignedCardTitle.textContent = parts.title;
+      if (assignedCardProblem) assignedCardProblem.textContent = parts.problem;
+      if (assignedCardSolution) assignedCardSolution.textContent = parts.expectedSolution;
+      if (assignedCardDesc) assignedCardDesc.textContent = parts.problem;
       assignedProblemCard.classList.remove('hidden');
       teamSidebarPdfBox.classList.remove('hidden');
       renderAssignedProblemList(problem);
       spinMainBtn.disabled = false;
       spinCenterBtn.style.pointerEvents = 'auto';
-      spinStatusMessage.innerHTML = `✅ Test Allocation: <strong>${escapeHTML(problem.title)}</strong> (Admin can spin again)`;
+      spinStatusMessage.innerHTML = `✅ Test Allocation: <strong>${escapeHTML(parts.title)}</strong> (Admin can spin again)`;
     }
 
     openProblemModal(problem);
@@ -694,15 +742,19 @@
 
   // ─── PROBLEM MODAL ──────────────────────────────────────────────────────────
   function openProblemModal(problem) {
-    modalDomainTag.textContent = problem.domain;
-    modalDifficultyTag.textContent = problem.difficulty || 'Intermediate';
+    const parts = extractProblemParts(problem);
+    modalDomainTag.textContent = parts.domain;
+    modalDifficultyTag.textContent = parts.difficulty;
     modalSourceTag.textContent = `1/1 Spin Allocated`;
-    modalProblemTitle.textContent = problem.title;
-    modalProblemDescription.textContent = problem.description;
+    modalProblemTitle.textContent = parts.title;
+
+    if (modalProblemText) modalProblemText.textContent = parts.problem;
+    if (modalSolutionText) modalSolutionText.textContent = parts.expectedSolution;
+    if (modalProblemDescription) modalProblemDescription.textContent = `Problem:\n${parts.problem}\n\nExpected Solution:\n${parts.expectedSolution}`;
 
     modalTagsContainer.innerHTML = '';
-    if (problem.tags && problem.tags.length > 0) {
-      problem.tags.forEach(t => {
+    if (parts.tags && parts.tags.length > 0) {
+      parts.tags.forEach(t => {
         const span = document.createElement('span');
         span.className = 'tag-badge';
         span.textContent = '#' + t;
@@ -728,40 +780,57 @@
       const college = team?.college || '';
       const members = team?.members || '';
       const githubLink = team?.githubLink || 'Not provided';
-      const title = problem?.title || problem?.problemTitle || 'Assigned Problem Statement';
-      const desc = problem?.description || problem?.problemDescription || '';
-      const domain = problem?.domain || activeDomain || 'Hackathon Track';
-      const diff = problem?.difficulty || problem?.problemDifficulty || 'Intermediate';
-      const tags = (problem?.tags && problem.tags.length) ? ('#' + problem.tags.join('   #')) : '';
+
+      const parts = extractProblemParts(problem);
+      const title = parts.title;
+      const probText = parts.problem;
+      const solText = parts.expectedSolution;
+      const domain = parts.domain || activeDomain || 'Hackathon Track';
+      const diff = parts.difficulty || 'Intermediate';
+      const tags = (parts.tags && parts.tags.length) ? ('#' + parts.tags.join('   #')) : '';
 
       const html = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Problem-Statement-${teamId}</title>
+  <title>Problem-Statement-${escapeHTML(teamId)}</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #0f172a; padding: 36px; max-width: 800px; margin: 0 auto; }
-    .header { background: #0a0d14; color: #fff; padding: 24px; border-radius: 8px; text-align: center; margin-bottom: 24px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #0f172a; padding: 32px; max-width: 820px; margin: 0 auto; }
+    .header { background: #0a0d14; color: #fff; padding: 22px; border-radius: 8px; text-align: center; margin-bottom: 20px; }
     .header h1 { font-size: 24px; color: #06b6d4; letter-spacing: 1px; }
-    .header p { font-size: 13px; color: #94a3b8; margin-top: 6px; }
+    .header p { font-size: 13px; color: #94a3b8; margin-top: 5px; }
     .badge { display: inline-block; background: #1e293b; color: #38bdf8; padding: 4px 12px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-top: 8px; letter-spacing: 0.5px; }
-    .box { border: 1px solid #cbd5e1; border-radius: 8px; padding: 18px; margin-bottom: 20px; background: #f8fafc; }
+    
+    .box { border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; margin-bottom: 16px; background: #f8fafc; }
     .box-title { font-size: 11px; font-weight: bold; color: #0284c7; text-transform: uppercase; margin-bottom: 6px; }
-    .team-name { font-size: 17px; font-weight: 700; color: #0f172a; }
-    .team-meta { font-size: 13px; color: #475569; margin-top: 4px; line-height: 1.5; }
-    .domain-bar { background: #1e293b; color: #fff; padding: 10px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; margin-bottom: 20px; }
+    .team-name { font-size: 16px; font-weight: 700; color: #0f172a; }
+    .team-meta { font-size: 12.5px; color: #475569; margin-top: 4px; line-height: 1.5; }
+    
+    .domain-bar { background: #1e293b; color: #fff; padding: 10px 16px; border-radius: 6px; font-size: 12.5px; font-weight: 600; display: flex; justify-content: space-between; margin-bottom: 16px; }
     .domain-title { color: #38bdf8; }
-    .problem-box { border: 2px solid #06b6d4; border-radius: 8px; padding: 22px; margin-bottom: 20px; background: #fff; }
-    .problem-heading { font-size: 11px; font-weight: bold; color: #0369a1; text-transform: uppercase; margin-bottom: 8px; }
-    .problem-title { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 12px; }
-    .problem-desc { font-size: 13.5px; line-height: 1.6; color: #334155; margin-bottom: 12px; }
-    .tags { font-size: 12px; color: #64748b; font-style: italic; }
-    .rules { background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 16px; font-size: 12px; color: #166534; line-height: 1.6; }
-    .footer { text-align: center; margin-top: 28px; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 12px; }
+    
+    .title-card { background: #f1f5f9; border: 1px solid #94a3b8; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; }
+    .title-label { font-size: 10px; font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .title-text { font-size: 16px; font-weight: 700; color: #0f172a; line-height: 1.35; }
+    
+    .section-card { border-radius: 8px; padding: 16px 18px; margin-bottom: 16px; }
+    .card-problem { background: #f0f9ff; border: 1.5px solid #38bdf8; border-left: 5px solid #0284c7; }
+    .card-solution { background: #ecfdf5; border: 1.5px solid #10b981; border-left: 5px solid #059669; }
+    
+    .card-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .label-problem { color: #0369a1; }
+    .label-solution { color: #047857; }
+    
+    .card-content { font-size: 13px; line-height: 1.6; color: #1e293b; white-space: pre-line; }
+    
+    .tags { font-size: 12px; color: #475569; font-weight: 600; margin-bottom: 16px; padding: 8px 12px; background: #f8fafc; border-radius: 6px; }
+    .rules { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 14px; font-size: 11.5px; color: #92400e; line-height: 1.6; }
+    .footer { text-align: center; margin-top: 24px; font-size: 10.5px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 12px; }
     @media print {
-      body { padding: 10px; }
+      body { padding: 8px; }
       @page { margin: 1cm; size: A4; }
+      .section-card { page-break-inside: avoid; }
     }
   </style>
 </head>
@@ -774,35 +843,46 @@
 
   <div class="box">
     <div class="box-title">Registered Team Details (CODIENYCH 1.0)</div>
-    <div class="team-name">${teamName}</div>
+    <div class="team-name">${escapeHTML(teamName)}</div>
     <div class="team-meta">
-      <strong>Reg ID:</strong> ${teamId} &nbsp;|&nbsp; <strong>Leader:</strong> ${leader || 'Team Leader'} ${college ? `&nbsp;|&nbsp; <strong>College:</strong> ${college}` : ''}
-      ${members ? `<br><strong>Members:</strong> ${members}` : ''}
-      ${githubLink && githubLink !== 'Not provided' ? `<br><strong>GitHub:</strong> ${githubLink}` : ''}
+      <strong>Reg ID:</strong> ${escapeHTML(teamId)} &nbsp;|&nbsp; <strong>Leader:</strong> ${escapeHTML(leader || 'Team Leader')} ${college ? `&nbsp;|&nbsp; <strong>College:</strong> ${escapeHTML(college)}` : ''}
+      ${members ? `<br><strong>Members:</strong> ${escapeHTML(members)}` : ''}
+      ${githubLink && githubLink !== 'Not provided' ? `<br><strong>GitHub:</strong> ${escapeHTML(githubLink)}` : ''}
     </div>
   </div>
 
   <div class="domain-bar">
-    <span class="domain-title">Domain: ${domain}</span>
-    <span>Difficulty: ${diff}</span>
+    <span class="domain-title">Domain: ${escapeHTML(domain)}</span>
+    <span>Difficulty: ${escapeHTML(diff)}</span>
   </div>
 
-  <div class="problem-box">
-    <div class="problem-heading">CHALLENGE BRIEF &amp; REQUIREMENTS:</div>
-    <div class="problem-title">${title}</div>
-    <div class="problem-desc">${desc}</div>
-    ${tags ? `<div class="tags">Recommended Tech / Tags: ${tags}</div>` : ''}
+  <div class="title-card">
+    <div class="title-label">ASSIGNED PROBLEM TITLE:</div>
+    <div class="title-text">${escapeHTML(title)}</div>
   </div>
+
+  <div class="section-card card-problem">
+    <div class="card-label label-problem">📌 1. PROBLEM STATEMENT</div>
+    <div class="card-content">${escapeHTML(probText)}</div>
+  </div>
+
+  <div class="section-card card-solution">
+    <div class="card-label label-solution">💡 2. EXPECTED SOLUTION &amp; DELIVERABLES</div>
+    <div class="card-content">${escapeHTML(solText)}</div>
+  </div>
+
+  ${tags ? `<div class="tags">Recommended Tech / Tags: ${escapeHTML(tags)}</div>` : ''}
 
   <div class="rules">
     <strong>📋 Competition Guidelines &amp; Submission Criteria:</strong><br>
     • Single Problem Allocation: Each team is granted strictly 1 spin and 1 problem statement.<br>
     • Version Control: Commit all project code, documentation, and architecture diagrams to your Git repository.<br>
-    • Authenticity: Solution must be conceptualized and coded exclusively during this hackathon event.
+    • Authenticity: Solution must be conceptualized and coded exclusively during this hackathon event.<br>
+    • Evaluation Metrics: Innovation, problem coverage, engineering quality, usability, and presentation.
   </div>
 
   <div class="footer">
-    Official Document • Team: ${teamName} (${teamId}) • Generated for Hackathon Submission
+    Official Document • Team: ${escapeHTML(teamName)} (${escapeHTML(teamId)}) • Generated for Hackathon Submission
   </div>
 
   <script>
@@ -948,7 +1028,8 @@
     if (dismissProblemModalBtn) dismissProblemModalBtn.addEventListener('click', () => closeModal(problemModal));
 
     copyProblemBtn.addEventListener('click', () => {
-      const text = `[${modalDomainTag.textContent}] ${modalProblemTitle.textContent}\n\n${modalProblemDescription.textContent}`;
+      const parts = extractProblemParts(assignedProblem || (teamSession && teamSession.assignedProblem));
+      const text = `[${parts.domain}] ${parts.title}\n\nPROBLEM STATEMENT:\n${parts.problem}\n\nEXPECTED SOLUTION & DELIVERABLES:\n${parts.expectedSolution}`;
       navigator.clipboard.writeText(text)
         .then(() => showToast('Problem statement copied to clipboard! 📋', 'success'))
         .catch(() => showToast('Could not copy to clipboard', 'error'));
