@@ -560,6 +560,15 @@
       const spinResult = await response.json();
 
       if (!response.ok) {
+        // 429 = spin lock (concurrent request) — retry once after a short delay
+        if (response.status === 429) {
+          await new Promise(r => setTimeout(r, 1500));
+          isSpinning = false;
+          spinMainBtn.disabled = false;
+          spinCenterBtn.style.pointerEvents = 'auto';
+          triggerSpin();
+          return;
+        }
         if (spinResult.alreadySpun && spinResult.problem) {
           lockWheelForAssignedProblem(spinResult.problem);
           throw new Error(spinResult.error || 'Your team has already drawn a problem statement.');
