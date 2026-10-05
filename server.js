@@ -849,6 +849,9 @@ app.post('/api/team/register', (req, res) => {
         leader: existing.leader || matchedAuth.leader,
         college: existing.college || matchedAuth.college,
         members: existing.members || matchedAuth.members,
+        phone: existing.phone || matchedAuth.phone || '',
+        email: existing.email || matchedAuth.email || '',
+        utr: existing.utr || matchedAuth.utr || '',
         isAdmin: Boolean(matchedAuth.isAdmin)
       },
       isReturning: true,
@@ -890,6 +893,9 @@ app.post('/api/team/register', (req, res) => {
       leader: newTeam.leader,
       college: newTeam.college,
       members: newTeam.members,
+      phone: newTeam.phone || '',
+      email: newTeam.email || '',
+      utr: newTeam.utr || '',
       isAdmin: Boolean(newTeam.isAdmin)
     },
     isReturning: false,
@@ -908,16 +914,21 @@ app.get('/api/team/status', (req, res) => {
   if (!team) return res.status(404).json({ error: 'Team session not found' });
 
   const hasSpun = Boolean(team.spins && team.spins.length > 0);
+  const team_resp = {
+    teamId: team.teamId,
+    teamName: team.teamName,
+    githubLink: team.githubLink,
+    domain: team.domain,
+    leader: team.leader,
+    college: team.college,
+    members: team.members,
+    phone: team.phone || '',
+    email: team.email || '',
+    utr: team.utr || '',
+    isAdmin: Boolean(team.isAdmin)
+  };
   res.json({
-    team: {
-      teamId: team.teamId,
-      teamName: team.teamName,
-      githubLink: team.githubLink,
-      domain: team.domain,
-      leader: team.leader,
-      college: team.college,
-      isAdmin: Boolean(team.isAdmin)
-    },
+    team: team_resp,
     hasSpun,
     assignedProblem: hasSpun ? team.spins[0] : null
   });
