@@ -592,6 +592,8 @@
           URL.revokeObjectURL(url);
           showToast('Master event report PDF downloaded! 📥', 'success');
         })
+        .catch(err => showToast('PDF error: ' + err.message, 'error'));
+    };
   }
 
   // ─── DOMAINS ────────────────────────────────────────────────────────────────
