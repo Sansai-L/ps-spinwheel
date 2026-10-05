@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 const mammoth = require('mammoth');
+const zlib = require('zlib');
 let pdfParseModule = null;
 try {
   pdfParseModule = require('pdf-parse');
@@ -1455,43 +1456,156 @@ app.post('/api/reset-data', adminAuthMiddleware, (req, res) => {
   res.json({ success: true, message: 'Sample dataset successfully restored', totalProblems: db.problems.length });
 });
 
-// PDF Text Extraction Engine with multi-method fallbacks
-async function extractTextFromPDF(buffer) {
-  if (!pdfParseModule) {
-    throw new Error('PDF parsing library is not loaded on the server.');
-  }
-
-  let text = '';
-
-  // Method 1: Modern pdf-parse v2+ PDFParse class
-  try {
-    if (pdfParseModule.PDFParse) {
-      const parser = new pdfParseModule.PDFParse({ data: buffer });
-      const res = await parser.getText();
-      if (res && typeof res.text === 'string' && res.text.trim()) {
-        text = res.text;
+// Pure JS ASCII85 decoder (zero external dependencies)
+function ascii85Decode(s) {
+  let clean = s.replace(/\s+/g, '').replace(/^<~|~>$/g, '');
+  const out = [];
+  let tuple = 0, count = 0;
+  for (let i = 0; i < clean.length; i++) {
+    const c = clean.charCodeAt(i);
+    if (clean[i] === 'z' && count === 0) {
+      out.push(0, 0, 0, 0);
+      continue;
+    }
+    if (c >= 33 && c <= 117) {
+      tuple = tuple * 85 + (c - 33);
+      count++;
+      if (count === 5) {
+        out.push(
+          (tuple >>> 24) & 0xff,
+          (tuple >>> 16) & 0xff,
+          (tuple >>> 8) & 0xff,
+          tuple & 0xff
+        );
+        tuple = 0;
+        count = 0;
       }
     }
-  } catch (err1) {
-    console.warn('PDFParse class extraction attempt:', err1.message);
+  }
+  if (count > 1) {
+    for (let i = count; i < 5; i++) tuple = tuple * 85 + 84;
+    for (let i = 0; i < count - 1; i++) out.push((tuple >>> (24 - i * 8)) & 0xff);
+  }
+  return Buffer.from(out);
+}
+
+// Unescape PDF literal string
+function unescapePdfString(s) {
+  return s
+    .replace(/\\([()\\])/g, '$1')
+    .replace(/\\n/g, '\n')
+    .replace(/\\r/g, '\r')
+    .replace(/\\t/g, '\t')
+    .replace(/\\b/g, '\b')
+    .replace(/\\f/g, '\f')
+    .replace(/\\(\d{1,3})/g, (_, oct) => String.fromCharCode(parseInt(oct, 8)));
+}
+
+// Zero-dependency pure JavaScript PDF Text Extractor
+// Unpacks ReportLab, Adobe, PDFKit and standard PDF streams (FlateDecode + ASCII85)
+function extractPdfTextPure(buf) {
+  const str = buf.toString('latin1');
+  let fullText = '';
+
+  const objRegex = /(\d+)\s+0\s+obj\s*<<([\s\S]*?)>>\s*stream\r?\n([\s\S]*?)endstream/g;
+  let match;
+
+  while ((match = objRegex.exec(str)) !== null) {
+    const dict = match[2];
+    let rawData = match[3];
+    let bytes = Buffer.from(rawData, 'latin1');
+
+    if (dict.includes('ASCII85Decode') || rawData.includes('~>')) {
+      bytes = ascii85Decode(bytes.toString('latin1'));
+    }
+
+    if (dict.includes('FlateDecode')) {
+      try {
+        bytes = zlib.inflateSync(bytes);
+      } catch (e1) {
+        try {
+          bytes = zlib.inflateRawSync(bytes);
+        } catch (e2) {}
+      }
+    }
+
+    const decompressedStr = bytes.toString('latin1');
+    const btRegex = /BT([\s\S]*?)ET/g;
+    let btMatch;
+
+    while ((btMatch = btRegex.exec(decompressedStr)) !== null) {
+      const block = btMatch[1];
+      const tjRegex = /(?:\((?:\\.|[^\)\\])*\)\s*(?:Tj|'|")|\[(?:[^\]]*)\]\s*TJ)/g;
+      let tMatch;
+      let lineText = '';
+
+      while ((tMatch = tjRegex.exec(block)) !== null) {
+        const item = tMatch[0];
+        if (item.endsWith('TJ')) {
+          const sub = item.match(/\((?:\\.|[^\)\\])*\)/g);
+          if (sub) {
+            lineText += sub.map(s => unescapePdfString(s.slice(1, -1))).join('');
+          }
+        } else {
+          const paren = item.match(/\((?:\\.|[^\)\\])*\)/);
+          if (paren) {
+            lineText += unescapePdfString(paren[0].slice(1, -1));
+          }
+        }
+        lineText += ' ';
+      }
+
+      if (lineText.trim()) {
+        fullText += lineText.trim() + '\n';
+      }
+    }
   }
 
-  // Method 2: Legacy pdf-parse v1 function
-  if (!text.trim()) {
-    try {
-      if (typeof pdfParseModule === 'function') {
+  return fullText.trim();
+}
+
+// PDF Text Extraction Engine with multi-method fallbacks
+async function extractTextFromPDF(buffer) {
+  let text = '';
+
+  // Method 1: Pure JavaScript zero-dependency extractor (works 100% on serverless lambda without native bindings)
+  try {
+    text = extractPdfTextPure(buffer);
+  } catch (pureErr) {
+    console.warn('Pure JS PDF extraction attempt failed:', pureErr.message);
+  }
+
+  // Method 2: Modern pdf-parse v2+ PDFParse class (if available)
+  if (!text || text.length < 20) {
+    if (pdfParseModule && pdfParseModule.PDFParse) {
+      try {
+        const parser = new pdfParseModule.PDFParse({ data: buffer });
+        const res = await parser.getText();
+        if (res && typeof res.text === 'string' && res.text.trim()) {
+          text = res.text;
+        }
+      } catch (err1) {
+        console.warn('PDFParse class extraction attempt:', err1.message);
+      }
+    }
+  }
+
+  // Method 3: Legacy pdf-parse v1 function (if available)
+  if (!text || text.length < 20) {
+    if (pdfParseModule && typeof pdfParseModule === 'function') {
+      try {
         const res = await pdfParseModule(buffer);
         if (res && typeof res.text === 'string' && res.text.trim()) {
           text = res.text;
         }
+      } catch (err2) {
+        console.warn('Legacy pdfParse function extraction attempt:', err2.message);
       }
-    } catch (err2) {
-      console.warn('Legacy pdfParse function extraction attempt:', err2.message);
     }
   }
 
-  // Method 3: Regex stream extraction fallback for uncompressed/direct text streams
-  if (!text.trim()) {
+  // Method 4: Regex stream extraction fallback for uncompressed/direct text streams
+  if (!text || text.length < 20) {
     try {
       const raw = buffer.toString('latin1');
       const matches = raw.match(/\((?:\\.|[^\)\\])*\)\s*(?:Tj|'|TJ)/g);
@@ -1510,7 +1624,7 @@ async function extractTextFromPDF(buffer) {
 
   const clean = text
     .replace(/--\s*\d+\s+of\s+\d+\s*--/gi, '')
-    .replace(/\f/g, '\n\n')
+    .replace(/\f/g, '\n')
     .replace(/\r\n/g, '\n')
     .trim();
 
