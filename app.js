@@ -167,9 +167,22 @@
     entryGate.classList.add('hidden');
     mainApp.classList.remove('hidden');
     renderTeamInfo(team);
+    if (team && team.domain) {
+      activeDomain = team.domain;
+    }
     fetchDomains();
 
-    if (teamHasSpun && assignedProblem) {
+    if (team && team.isAdmin) {
+      unlockWheel();
+      if (assignedProblem) {
+        assignedCardDomain.textContent = assignedProblem.domain;
+        assignedCardTitle.textContent = assignedProblem.title;
+        assignedCardDesc.textContent = assignedProblem.description;
+        assignedProblemCard.classList.remove('hidden');
+        teamSidebarPdfBox.classList.remove('hidden');
+        renderAssignedProblemList(assignedProblem);
+      }
+    } else if (teamHasSpun && assignedProblem) {
       lockWheelForAssignedProblem(assignedProblem);
     } else {
       unlockWheel();
@@ -188,7 +201,15 @@
       teamGithubRow.style.display = 'none';
     }
 
-    if (teamHasSpun) {
+    if (team && team.isAdmin) {
+      teamSpinStatusBadge.textContent = 'Admin Mode (Unlimited Spins)';
+      teamSpinStatusBadge.style.color = '#a855f7';
+      if (assignedProblem) {
+        teamSidebarPdfBox.classList.remove('hidden');
+      } else {
+        teamSidebarPdfBox.classList.add('hidden');
+      }
+    } else if (teamHasSpun) {
       teamSpinStatusBadge.textContent = '1 / 1 (Used)';
       teamSpinStatusBadge.style.color = '#38bdf8';
       teamSidebarPdfBox.classList.remove('hidden');
@@ -236,13 +257,19 @@
       localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
 
       if (data.isReturning) {
-        if (teamHasSpun) {
+        if (data.team && data.team.isAdmin) {
+          showToast(`Welcome back, Admin! ⚡ Main page test access granted.`, 'info');
+        } else if (teamHasSpun) {
           showToast(`Welcome back, ${data.team.teamName}! Your assigned problem statement is ready. 📄`, 'info');
         } else {
           showToast(`Welcome back, ${data.team.teamName}! You have 1 spin available. ⚡`, 'info');
         }
       } else {
-        showToast(`Welcome, ${data.team.teamName}! 🚀 You have 1 spin to draw your challenge.`, 'success');
+        if (data.team && data.team.isAdmin) {
+          showToast(`Welcome Admin! ⚡ Main page test access granted.`, 'success');
+        } else {
+          showToast(`Welcome, ${data.team.teamName}! 🚀 You have 1 spin to draw your challenge.`, 'success');
+        }
       }
 
       showMainApp(data.team);
@@ -491,7 +518,8 @@
   // ─── SPIN LOGIC ─────────────────────────────────────────────────────────────
   async function triggerSpin() {
     if (isSpinning) return;
-    if (teamHasSpun) {
+    const isAdmin = Boolean(teamSession?.team?.isAdmin);
+    if (teamHasSpun && !isAdmin) {
       showToast('Your team has already completed its 1 allowed spin! 🔒', 'info');
       if (assignedProblem) openProblemModal(assignedProblem);
       return;
@@ -600,16 +628,36 @@
       }
     }
 
-    // Lock permanently to 1 spin
-    teamHasSpun = true;
+    // Lock permanently to 1 spin (regular teams only; admin can test multiple spins)
+    const isAdmin = Boolean(teamSession?.team?.isAdmin);
     assignedProblem = problem;
-    if (teamSession) {
-      teamSession.hasSpun = true;
-      teamSession.assignedProblem = problem;
-      localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
+
+    if (!isAdmin) {
+      teamHasSpun = true;
+      if (teamSession) {
+        teamSession.hasSpun = true;
+        teamSession.assignedProblem = problem;
+        localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
+      }
+      lockWheelForAssignedProblem(problem);
+    } else {
+      teamHasSpun = false;
+      if (teamSession) {
+        teamSession.hasSpun = false;
+        teamSession.assignedProblem = problem;
+        localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
+      }
+      assignedCardDomain.textContent = problem.domain;
+      assignedCardTitle.textContent = problem.title;
+      assignedCardDesc.textContent = problem.description;
+      assignedProblemCard.classList.remove('hidden');
+      teamSidebarPdfBox.classList.remove('hidden');
+      renderAssignedProblemList(problem);
+      spinMainBtn.disabled = false;
+      spinCenterBtn.style.pointerEvents = 'auto';
+      spinStatusMessage.innerHTML = `✅ Test Allocation: <strong>${escapeHTML(problem.title)}</strong> (Admin can spin again)`;
     }
 
-    lockWheelForAssignedProblem(problem);
     openProblemModal(problem);
     showToast('Challenge officially allocated! You can now download your PDF. 📄', 'success');
   }
@@ -646,6 +694,9 @@
       }
       const teamName = team?.teamName || 'Team';
       const teamId = team?.teamId || 'N/A';
+      const leader = team?.leader || '';
+      const college = team?.college || '';
+      const members = team?.members || '';
       const githubLink = team?.githubLink || 'Not provided';
       const title = problem?.title || problem?.problemTitle || 'Assigned Problem Statement';
       const desc = problem?.description || problem?.problemDescription || '';
@@ -668,7 +719,7 @@
     .box { border: 1px solid #cbd5e1; border-radius: 8px; padding: 18px; margin-bottom: 20px; background: #f8fafc; }
     .box-title { font-size: 11px; font-weight: bold; color: #0284c7; text-transform: uppercase; margin-bottom: 6px; }
     .team-name { font-size: 17px; font-weight: 700; color: #0f172a; }
-    .team-meta { font-size: 13px; color: #475569; margin-top: 4px; }
+    .team-meta { font-size: 13px; color: #475569; margin-top: 4px; line-height: 1.5; }
     .domain-bar { background: #1e293b; color: #fff; padding: 10px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; margin-bottom: 20px; }
     .domain-title { color: #38bdf8; }
     .problem-box { border: 2px solid #06b6d4; border-radius: 8px; padding: 22px; margin-bottom: 20px; background: #fff; }
@@ -686,15 +737,19 @@
 </head>
 <body>
   <div class="header">
-    <h1>🎯 SPINQUEST PS</h1>
-    <p>Official Problem Statement Allocation Sheet</p>
-    <div class="badge">VERIFIED HACKATHON ASSIGNMENT • 1 OF 1 ALLOCATION</div>
+    <h1>CODIENYCH 1.0</h1>
+    <p>Official Problem Statement Allocation Certificate</p>
+    <div class="badge">VERIFIED HACKATHON ALLOCATION • 1 OF 1 PROBLEM ASSIGNMENT</div>
   </div>
 
   <div class="box">
-    <div class="box-title">Registered Team Details</div>
+    <div class="box-title">Registered Team Details (CODIENYCH 1.0)</div>
     <div class="team-name">${teamName}</div>
-    <div class="team-meta"><strong>Team ID:</strong> ${teamId} &nbsp;|&nbsp; <strong>GitHub:</strong> ${githubLink}</div>
+    <div class="team-meta">
+      <strong>Reg ID:</strong> ${teamId} &nbsp;|&nbsp; <strong>Leader:</strong> ${leader || 'Team Leader'} ${college ? `&nbsp;|&nbsp; <strong>College:</strong> ${college}` : ''}
+      ${members ? `<br><strong>Members:</strong> ${members}` : ''}
+      ${githubLink && githubLink !== 'Not provided' ? `<br><strong>GitHub:</strong> ${githubLink}` : ''}
+    </div>
   </div>
 
   <div class="domain-bar">
