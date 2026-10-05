@@ -181,7 +181,18 @@
             <span class="assigned-domain-tag" id="assignedCardDomain">Artificial Intelligence &amp; ML</span>
           </div>
           <h3 class="assigned-card-title" id="assignedCardTitle">Problem Statement Title</h3>
-          <p class="assigned-card-desc" id="assignedCardDesc">Challenge description...</p>
+
+          <div class="assigned-split-view">
+            <div class="assigned-subcard subcard-problem">
+              <span class="subcard-label">📌 Problem Statement:</span>
+              <p class="assigned-card-desc" id="assignedCardProblem"></p>
+            </div>
+            <div class="assigned-subcard subcard-solution">
+              <span class="subcard-label">💡 Expected Solution:</span>
+              <p class="assigned-card-desc" id="assignedCardSolution"></p>
+            </div>
+          </div>
+          <p class="assigned-card-desc hidden" id="assignedCardDesc"></p>
           <div class="assigned-card-actions">
             <button id="assignedCardDownloadPdfBtn" class="btn btn-accent btn-md">
               📄 Download Problem Statement (PDF)
@@ -272,10 +283,25 @@
 
       <h2 class="problem-title" id="modalProblemTitle">Problem Statement Title</h2>
 
-      <div class="problem-body">
-        <label class="section-label">Challenge Brief:</label>
-        <p class="problem-description" id="modalProblemDescription"></p>
+      <!-- Structured Problem & Solution Presentation (Title | Problem | Expected Solution) -->
+      <div class="problem-structure-wrap">
+        <div class="problem-detail-box box-problem">
+          <div class="detail-box-header">
+            <span class="detail-icon">📌</span>
+            <span class="detail-title">PROBLEM STATEMENT</span>
+          </div>
+          <div class="detail-box-content" id="modalProblemText"></div>
+        </div>
+
+        <div class="problem-detail-box box-solution">
+          <div class="detail-box-header">
+            <span class="detail-icon">💡</span>
+            <span class="detail-title">EXPECTED SOLUTION &amp; DELIVERABLES</span>
+          </div>
+          <div class="detail-box-content" id="modalSolutionText"></div>
+        </div>
       </div>
+      <p class="problem-description hidden" id="modalProblemDescription"></p>
 
       <div class="tags-container" id="modalTagsContainer"></div>
 
@@ -341,6 +367,6 @@
   <!-- Subtle Admin Access Link -->
   <a href="/admin" class="admin-corner-link" title="Admin Dashboard">⚙️ Admin</a>
 
-  <script src="app.js?v=20261005_6"></script>
+  <script src="app.js?v=20261005_8"></script>
 </body>
 </html>
