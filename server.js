@@ -121,11 +121,95 @@ function loadDB() {
     } catch (e) {}
   }
 
-  // Ensure teams array always exists
+  // Ensure teams array always contains all authorized teams with complete metadata
   if (!loaded.teams) loaded.teams = [];
   if (!loaded.adminTokens) loaded.adminTokens = [];
 
+  if (authorizedTeams && authorizedTeams.length > 0) {
+    for (const at of authorizedTeams) {
+      const existing = loaded.teams.find(t => 
+        (t.teamId && t.teamId.toLowerCase() === at.regId.toLowerCase()) ||
+        (t.regId && t.regId.toLowerCase() === at.regId.toLowerCase())
+      );
+      if (!existing) {
+        loaded.teams.push({
+          id: at.id,
+          teamId: at.regId,
+          regId: at.regId,
+          teamName: at.teamName,
+          originalTrack: at.originalTrack,
+          domain: at.domain,
+          size: at.size,
+          leader: at.leader,
+          email: at.email,
+          phone: at.phone,
+          college: at.college,
+          members: at.members,
+          utr: at.utr,
+          isAdmin: Boolean(at.isAdmin),
+          githubLink: '',
+          hasEntered: false,
+          registeredAt: null,
+          sessionTokens: [],
+          spins: []
+        });
+      } else {
+        // Backfill any missing fields from authorizedTeams master sheet
+        if (!existing.regId) existing.regId = at.regId;
+        if (!existing.leader) existing.leader = at.leader;
+        if (!existing.phone) existing.phone = at.phone;
+        if (!existing.email) existing.email = at.email;
+        if (!existing.college) existing.college = at.college;
+        if (!existing.members) existing.members = at.members;
+        if (!existing.domain) existing.domain = at.domain;
+        if (!existing.originalTrack) existing.originalTrack = at.originalTrack;
+        if (!existing.utr) existing.utr = at.utr;
+        if (at.isAdmin) existing.isAdmin = true;
+      }
+    }
+  }
+
   return loaded;
+}
+
+let syncTimer = null;
+function scheduleGitHubSync() {
+  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+  const GITHUB_REPO = process.env.GITHUB_REPO || 'Sansai-L/ps-spinwheel';
+  if (!GITHUB_TOKEN) return;
+
+  if (syncTimer) clearTimeout(syncTimer);
+  syncTimer = setTimeout(async () => {
+    try {
+      const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/database.json?ref=main`, {
+        headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}`, 'User-Agent': 'Antigravity-Server' }
+      });
+      let sha;
+      if (getRes.ok) {
+        const fileInfo = await getRes.json();
+        sha = fileInfo.sha;
+      }
+      const content = Buffer.from(JSON.stringify(db, null, 2)).toString('base64');
+      const body = {
+        message: 'Auto-sync database: team allocations & activity',
+        content,
+        branch: 'main'
+      };
+      if (sha) body.sha = sha;
+
+      await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/database.json`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${GITHUB_TOKEN}`,
+          'User-Agent': 'Antigravity-Server',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+    } catch (err) {
+      // Non-fatal background sync
+    }
+  }, 1500);
 }
 
 function saveDB(data) {
@@ -324,10 +408,10 @@ app.post('/api/spin', (req, res) => {
     return res.status(400).json({ error: 'Please select a domain to spin' });
   }
 
-  // Strict check: One spin only per team
+  // Strict check: One spin only per team (Admin bypass allows test spins)
   if (sessionToken && db.teams) {
     const team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
-    if (team && team.spins && team.spins.length >= 1) {
+    if (team && !team.isAdmin && team.spins && team.spins.length >= 1) {
       return res.status(403).json({
         error: 'Each team is allowed to spin only once! You have already been assigned a problem statement.',
         alreadySpun: true,
@@ -799,11 +883,20 @@ app.get('/api/team/status', (req, res) => {
 
 // Log a spin result for a team (Strictly allows only ONE spin per team, Admin can test spin)
 app.post('/api/team/log-spin', (req, res) => {
-  const { sessionToken, domain, problem } = req.body;
-  if (!sessionToken) return res.status(401).json({ error: 'Session token required' });
+  const { sessionToken, teamId, domain, problem } = req.body;
+  if (!sessionToken && !teamId) return res.status(401).json({ error: 'Session token or Team ID required' });
+  if (!problem) return res.status(400).json({ error: 'Problem statement data required' });
   if (!db.teams) db.teams = [];
 
-  const team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
+  let team = null;
+  if (sessionToken) {
+    team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
+  }
+  if (!team && teamId) {
+    const rawId = teamId.trim().toLowerCase();
+    team = db.teams.find(t => (t.teamId && t.teamId.toLowerCase() === rawId) || (t.regId && t.regId.toLowerCase() === rawId));
+  }
+
   if (!team) return res.status(404).json({ error: 'Team session not found or expired' });
 
   // STRICT RULE: Only 1 spin per team! (Admin bypass allows test spins)
@@ -816,23 +909,58 @@ app.post('/api/team/log-spin', (req, res) => {
   }
 
   const assignedRecord = {
-    id: problem.id,
-    problemId: problem.id,
-    domain,
-    title: problem.title,
-    problemTitle: problem.title,
-    description: problem.description,
-    problemDescription: problem.description,
-    difficulty: problem.difficulty || 'Intermediate',
-    problemDifficulty: problem.difficulty || 'Intermediate',
+    id: problem.id || problem.problemId,
+    problemId: problem.id || problem.problemId,
+    domain: domain || team.domain,
+    title: problem.title || problem.problemTitle,
+    problemTitle: problem.title || problem.problemTitle,
+    description: problem.description || problem.problemDescription,
+    problemDescription: problem.description || problem.problemDescription,
+    difficulty: problem.difficulty || problem.problemDifficulty || 'Intermediate',
+    problemDifficulty: problem.difficulty || problem.problemDifficulty || 'Intermediate',
     source: problem.source || 'Default',
     tags: problem.tags || [],
     spunAt: new Date().toISOString()
   };
 
   team.spins = [assignedRecord]; // Exactly 1 problem statement stored
+  team.hasEntered = true;
   saveDB(db);
+  scheduleGitHubSync();
   res.json({ success: true, spinCount: 1, assignedProblem: assignedRecord });
+});
+
+// Sync client-side spin allocation with server database
+app.post('/api/team/sync-spin', (req, res) => {
+  const { teamId, domain, problem, githubLink } = req.body;
+  if (!teamId || !problem) return res.status(400).json({ error: 'Team ID and problem required' });
+  if (!db.teams) db.teams = [];
+
+  const rawId = teamId.trim().toLowerCase();
+  const team = db.teams.find(t => (t.teamId && t.teamId.toLowerCase() === rawId) || (t.regId && t.regId.toLowerCase() === rawId));
+  if (team) {
+    team.hasEntered = true;
+    if (githubLink) team.githubLink = githubLink;
+    if (!team.spins || team.spins.length === 0) {
+      team.spins = [{
+        id: problem.id || problem.problemId,
+        problemId: problem.id || problem.problemId,
+        domain: domain || problem.domain || team.domain,
+        title: problem.title || problem.problemTitle,
+        problemTitle: problem.title || problem.problemTitle,
+        description: problem.description || problem.problemDescription,
+        problemDescription: problem.description || problem.problemDescription,
+        difficulty: problem.difficulty || problem.problemDifficulty || 'Intermediate',
+        problemDifficulty: problem.difficulty || problem.problemDifficulty || 'Intermediate',
+        tags: problem.tags || [],
+        spunAt: problem.spunAt || new Date().toISOString()
+      }];
+      saveDB(db);
+      scheduleGitHubSync();
+    }
+    return res.json({ success: true, synced: true, teamId: team.teamId });
+  }
+  res.status(404).json({ error: 'Team not found' });
 });
 
 // Visitor Endpoint: Download assigned problem statement as PDF (Supports GET and POST with payload fallback)
@@ -1000,101 +1128,183 @@ app.all('/api/team/problem-pdf', (req, res) => {
 
 // ─── ADMIN: TEAMS DASHBOARD ───────────────────────────────────────────────────
 
-// Get all teams with activity data
+// Get all teams with activity data & complete master sheet metadata
 app.get('/api/admin/teams', adminAuthMiddleware, (req, res) => {
   const teams = (db.teams || []).map(t => ({
     id: t.id,
     teamId: t.teamId,
+    regId: t.regId || t.teamId,
     teamName: t.teamName,
-    githubLink: t.githubLink,
+    originalTrack: t.originalTrack || '',
+    domain: t.domain || '',
+    leader: t.leader || '',
+    phone: t.phone || '',
+    email: t.email || '',
+    college: t.college || '',
+    members: t.members || '',
+    size: t.size || 4,
+    utr: t.utr || '',
+    githubLink: t.githubLink || '',
+    hasEntered: Boolean(t.hasEntered || (t.sessionTokens && t.sessionTokens.length) || (t.spins && t.spins.length)),
     registeredAt: t.registeredAt,
+    isAdmin: Boolean(t.isAdmin),
     spinCount: (t.spins || []).length,
     spins: t.spins || []
   }));
-  res.json({ teams, total: teams.length, totalSpins: teams.reduce((a, t) => a + t.spinCount, 0) });
+
+  const allocatedCount = teams.filter(t => t.spinCount > 0).length;
+  const pendingCount = teams.length - allocatedCount;
+
+  res.json({
+    teams,
+    total: teams.length,
+    allocatedCount,
+    pendingCount,
+    totalSpins: allocatedCount
+  });
 });
 
-// Generate & download PDF report of all team activity
+// Admin: Reset Spin for a Team
+app.post('/api/admin/teams/reset-spin', adminAuthMiddleware, (req, res) => {
+  const { teamId } = req.body;
+  if (!teamId) return res.status(400).json({ error: 'Team ID required' });
+  const rawId = teamId.trim().toLowerCase();
+  const team = (db.teams || []).find(t => (t.teamId && t.teamId.toLowerCase() === rawId) || (t.regId && t.regId.toLowerCase() === rawId));
+  if (!team) return res.status(404).json({ error: 'Team not found' });
+
+  team.spins = [];
+  saveDB(db);
+  scheduleGitHubSync();
+  res.json({ success: true, message: `Spin reset for team "${team.teamName}". They can spin again.` });
+});
+
+// Admin: Manually Assign Problem to a Team
+app.post('/api/admin/teams/assign-problem', adminAuthMiddleware, (req, res) => {
+  const { teamId, problemId } = req.body;
+  if (!teamId || !problemId) return res.status(400).json({ error: 'Team ID and Problem ID required' });
+  const rawId = teamId.trim().toLowerCase();
+  const team = (db.teams || []).find(t => (t.teamId && t.teamId.toLowerCase() === rawId) || (t.regId && t.regId.toLowerCase() === rawId));
+  if (!team) return res.status(404).json({ error: 'Team not found' });
+  const problem = (db.problems || []).find(p => p.id === problemId);
+  if (!problem) return res.status(404).json({ error: 'Problem statement not found' });
+
+  team.spins = [{
+    id: problem.id,
+    problemId: problem.id,
+    domain: problem.domain,
+    title: problem.title,
+    problemTitle: problem.title,
+    description: problem.description,
+    problemDescription: problem.description,
+    difficulty: problem.difficulty || 'Intermediate',
+    problemDifficulty: problem.difficulty || 'Intermediate',
+    source: problem.source || 'Admin Assigned',
+    tags: problem.tags || [],
+    spunAt: new Date().toISOString()
+  }];
+  team.hasEntered = true;
+  saveDB(db);
+  scheduleGitHubSync();
+  res.json({ success: true, message: `Problem "${problem.title}" assigned to team "${team.teamName}".` });
+});
+
+// Admin: Restore Database Backup
+app.post('/api/admin/backup/restore', adminAuthMiddleware, (req, res) => {
+  const { backupData } = req.body;
+  if (!backupData || !backupData.teams) {
+    return res.status(400).json({ error: 'Invalid backup format' });
+  }
+  if (Array.isArray(backupData.teams)) db.teams = backupData.teams;
+  if (Array.isArray(backupData.problems) && backupData.problems.length > 0) db.problems = backupData.problems;
+  if (Array.isArray(backupData.domains) && backupData.domains.length > 0) db.domains = backupData.domains;
+  saveDB(db);
+  scheduleGitHubSync();
+  res.json({ success: true, message: `Database successfully restored! Loaded ${db.teams.length} teams.` });
+});
+
+// Generate & download Master PDF report of all team activity
 app.get('/api/admin/teams/pdf', adminAuthMiddleware, (req, res) => {
   try {
-    const PDFDocument = require('pdfkit');
-    const doc = new PDFDocument({ margin: 50, size: 'A4', bufferPages: true });
+    const PDFLib = PDFDocument || require('pdfkit');
+    const doc = new PDFLib({ margin: 40, size: 'A4', bufferPages: true });
 
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename="SpinQuest-Teams-Report.pdf"');
+    res.setHeader('Content-Disposition', 'attachment; filename="CODIENYCH-1.0-Teams-Report.pdf"');
     doc.pipe(res);
 
     const teams = db.teams || [];
-    const totalSpins = teams.reduce((a, t) => a + (t.spins || []).length, 0);
+    const totalSpins = teams.filter(t => t.spins && t.spins.length > 0).length;
     const now = new Date().toLocaleString();
 
     // Header Banner
     doc.rect(0, 0, doc.page.width, 90).fill('#0a0d14');
-    doc.fill('#06b6d4').fontSize(22).font('Helvetica-Bold').text('🎯 SpinQuest PS', 50, 22, { align: 'center', width: doc.page.width - 100 });
-    doc.fill('#94a3b8').fontSize(11).font('Helvetica').text('Team Activity Report', 50, 50, { align: 'center', width: doc.page.width - 100 });
-    doc.fill('#475569').fontSize(9).text('Generated: ' + now, 50, 68, { align: 'center', width: doc.page.width - 100 });
+    doc.fill('#06b6d4').fontSize(22).font('Helvetica-Bold').text('CODIENYCH 1.0', 40, 20, { align: 'center', width: doc.page.width - 80 });
+    doc.fill('#f1f5f9').fontSize(11).font('Helvetica').text('Master Team Registration & Problem Statement Allocation Report', 40, 48, { align: 'center', width: doc.page.width - 80 });
+    doc.fill('#94a3b8').fontSize(9).text('Generated: ' + now, 40, 68, { align: 'center', width: doc.page.width - 80 });
 
-    doc.y = 108; doc.fill('#1e293b');
+    doc.y = 104; doc.fill('#1e293b');
 
     // Summary Box
-    doc.roundedRect(50, doc.y, doc.page.width - 100, 58, 6).fill('#f0f9ff').stroke('#bae6fd');
+    doc.roundedRect(40, doc.y, doc.page.width - 80, 54, 6).fill('#f0f9ff').stroke('#bae6fd');
     const sumY = doc.y + 10;
-    doc.fill('#0c4a6e').fontSize(12).font('Helvetica-Bold').text('Summary', 70, sumY);
-    doc.fill('#1e40af').fontSize(10).font('Helvetica')
-       .text(`Total Teams Registered: ${teams.length}`, 70, sumY + 18)
-       .text(`Total Problem Draws: ${totalSpins}`, 70, sumY + 32);
-    doc.fill('#1e40af').fontSize(10)
-       .text(`Domains Active: ${[...new Set(teams.flatMap(t => (t.spins||[]).map(s => s.domain)))].length}`, 310, sumY + 18)
-       .text(`Avg Spins/Team: ${teams.length ? (totalSpins / teams.length).toFixed(1) : '0'}`, 310, sumY + 32);
-    doc.y += 70; doc.fill('#000000');
+    doc.fill('#0c4a6e').fontSize(11).font('Helvetica-Bold').text('Summary Statistics', 55, sumY);
+    doc.fill('#1e40af').fontSize(9.5).font('Helvetica')
+       .text(`Total Registered Teams: ${teams.length}`, 55, sumY + 16)
+       .text(`Allocated Problem Statements: ${totalSpins}`, 55, sumY + 30);
+    doc.fill('#1e40af').fontSize(9.5)
+       .text(`Pending Teams: ${teams.length - totalSpins}`, 320, sumY + 16)
+       .text(`Allocated Percentage: ${teams.length ? ((totalSpins / teams.length) * 100).toFixed(0) : 0}%`, 320, sumY + 30);
+    doc.y += 66; doc.fill('#000000');
 
     if (teams.length === 0) {
-      doc.fontSize(12).font('Helvetica').fill('#64748b').text('No teams have registered yet.', { align: 'center' });
+      doc.fontSize(12).font('Helvetica').fill('#64748b').text('No teams found in database.', { align: 'center' });
     } else {
       teams.forEach((team, idx) => {
-        if (doc.y > doc.page.height - 180) doc.addPage();
+        if (doc.y > doc.page.height - 140) doc.addPage();
         const hY = doc.y;
-        doc.rect(50, hY, doc.page.width - 100, 28).fill('#1e3a5f');
-        doc.fill('#ffffff').fontSize(11).font('Helvetica-Bold')
-           .text(`${idx + 1}.  ${team.teamName}  (Team ID: ${team.teamId})`, 62, hY + 8);
-        doc.y = hY + 36;
+        const hasSpun = team.spins && team.spins.length > 0;
+        doc.rect(40, hY, doc.page.width - 80, 24).fill(hasSpun ? '#1e3a5f' : '#334155');
+        doc.fill('#ffffff').fontSize(10).font('Helvetica-Bold')
+           .text(`${idx + 1}.  ${team.teamName}  (Reg ID: ${team.teamId || team.regId})`, 50, hY + 6);
+        
+        const statusLabel = hasSpun ? 'ALLOCATED' : 'PENDING';
+        doc.fill(hasSpun ? '#38bdf8' : '#fbbf24').fontSize(8.5).font('Helvetica-Bold')
+           .text(statusLabel, doc.page.width - 130, hY + 6, { align: 'right', width: 80 });
 
-        doc.fill('#334155').fontSize(9.5).font('Helvetica');
-        doc.text(`Registered: ${new Date(team.registeredAt).toLocaleString()}`, 62, doc.y);
-        if (team.githubLink) { doc.y += 13; doc.text(`GitHub: ${team.githubLink}`, 62, doc.y); }
-        doc.y += 13;
-        doc.fill('#0369a1').fontSize(9.5).font('Helvetica-Bold')
-           .text(`Total Problem Draws: ${(team.spins||[]).length}`, 62, doc.y);
-        doc.y += 16;
+        doc.y = hY + 28;
+        doc.fill('#334155').fontSize(9).font('Helvetica');
 
-        if (team.spins && team.spins.length > 0) {
-          doc.fill('#1e40af').fontSize(10).font('Helvetica-Bold').text('Drawn Problem Statements:', 62, doc.y);
-          doc.y += 14;
+        const leaderInfo = team.leader ? `Leader: ${team.leader}${team.phone ? ` (${team.phone})` : ''}` : '';
+        const collegeInfo = team.college ? `College: ${team.college}` : '';
+        const trackInfo = (team.domain || team.originalTrack) ? `Track: ${team.domain || team.originalTrack}` : '';
+        
+        const line1 = [leaderInfo, collegeInfo].filter(Boolean).join('  |  ');
+        if (line1) {
+          doc.text(line1, 50, doc.y, { width: doc.page.width - 100 });
+          doc.y += doc.currentLineHeight() + 3;
+        }
 
-          team.spins.forEach((spin, sIdx) => {
-            if (doc.y > doc.page.height - 100) doc.addPage();
-            doc.rect(62, doc.y, doc.page.width - 124, 13).fill(sIdx % 2 === 0 ? '#f8fafc' : '#f1f5f9');
-            doc.fill('#0f172a').fontSize(9.5).font('Helvetica-Bold')
-               .text(`  ${sIdx + 1}. [${spin.domain}]  ${spin.problemTitle}`, 68, doc.y + 2);
-            doc.y += 15;
-            doc.fill('#334155').fontSize(8.5).font('Helvetica')
-               .text(`     Difficulty: ${spin.problemDifficulty}  •  Drawn: ${new Date(spin.spunAt).toLocaleString()}`, 68, doc.y);
-            doc.y += 12;
-            const desc = (spin.problemDescription || '').substring(0, 220);
-            doc.fill('#475569').fontSize(8)
-               .text(`     ${desc}${spin.problemDescription.length > 220 ? '…' : ''}`, 68, doc.y, { width: doc.page.width - 140 });
-            doc.y += doc.currentLineHeight() + 6;
-          });
+        const line2 = [trackInfo, team.githubLink ? `GitHub: ${team.githubLink}` : ''].filter(Boolean).join('  |  ');
+        if (line2) {
+          doc.text(line2, 50, doc.y, { width: doc.page.width - 100 });
+          doc.y += doc.currentLineHeight() + 3;
+        }
+
+        if (hasSpun) {
+          const spin = team.spins[0];
+          doc.fill('#0369a1').fontSize(9).font('Helvetica-Bold')
+             .text(`Assigned Challenge: [${spin.domain}] ${spin.title || spin.problemTitle}`, 50, doc.y);
+          doc.y += doc.currentLineHeight() + 2;
+          doc.fill('#64748b').fontSize(8).font('Helvetica')
+             .text(`Difficulty: ${spin.difficulty || 'Intermediate'}  •  Allocated: ${new Date(spin.spunAt).toLocaleString()}`, 50, doc.y);
+          doc.y += doc.currentLineHeight() + 6;
         } else {
-          doc.fill('#94a3b8').fontSize(9.5).font('Helvetica').text('  No spins recorded for this team.', 62, doc.y);
-          doc.y += 14;
+          doc.fill('#94a3b8').fontSize(8.5).font('Helvetica-Oblique').text('Status: Awaiting participant spin draw.', 50, doc.y);
+          doc.y += doc.currentLineHeight() + 6;
         }
 
-        doc.y += 4;
-        if (idx < teams.length - 1) {
-          doc.moveTo(50, doc.y).lineTo(doc.page.width - 50, doc.y).strokeColor('#cbd5e1').stroke();
-          doc.y += 12;
-        }
+        doc.moveTo(40, doc.y).lineTo(doc.page.width - 40, doc.y).strokeColor('#e2e8f0').stroke();
+        doc.y += 8;
       });
     }
 
@@ -1103,8 +1313,8 @@ app.get('/api/admin/teams/pdf', adminAuthMiddleware, (req, res) => {
     for (let i = 0; i < range.count; i++) {
       doc.switchToPage(range.start + i);
       doc.fill('#94a3b8').fontSize(8).font('Helvetica')
-         .text(`SpinQuest PS – Confidential Team Report  •  Page ${i + 1} of ${range.count}`,
-               50, doc.page.height - 28, { align: 'center', width: doc.page.width - 100 });
+         .text(`CODIENYCH 1.0 – Official Event Master Sheet  •  Page ${i + 1} of ${range.count}`,
+               40, doc.page.height - 24, { align: 'center', width: doc.page.width - 80 });
     }
     doc.end();
   } catch (err) {
@@ -1113,8 +1323,9 @@ app.get('/api/admin/teams/pdf', adminAuthMiddleware, (req, res) => {
   }
 });
 
-// Restore Sample Data Endpoint (Admin Only)
+// Restore Sample Data Endpoint (Admin Only) — Preserves Registered Teams!
 app.post('/api/reset-data', adminAuthMiddleware, (req, res) => {
+  const preservedTeams = db.teams || [];
   db = {
     problems: [...sampleProblems],
     documents: [],
@@ -1124,9 +1335,12 @@ app.post('/api/reset-data', adminAuthMiddleware, (req, res) => {
       "Web & Mobile Development",
       "Internet of Things (IoT)",
       "Cloud & DevOps"
-    ]
+    ],
+    teams: preservedTeams,
+    adminTokens: db.adminTokens || []
   };
   saveDB(db);
+  scheduleGitHubSync();
   res.json({ success: true, message: 'Sample dataset successfully restored', totalProblems: db.problems.length });
 });
 
