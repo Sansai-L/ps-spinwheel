@@ -1,6 +1,408 @@
 {
   "problems": [
     {
+      "id": "ps_doc_1791223703135_0_i9y",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Smart Community Health Monitoring and Early Warning System for Water-Borne Diseases",
+      "problem": "Water-borne disease outbreaks in communities often go undetected until they've already spread, due to a lack of systematic health monitoring and early alerts.",
+      "expectedSolution": "A predictive-analytics platform that monitors community health data and flags early warning signs of water-borne disease outbreaks so authorities can respond before they spread. Suggested tech: Python, predictive analytics/ML models, cloud database, React/Flutter dashboard.",
+      "description": "Problem:\nWater-borne disease outbreaks in communities often go undetected until they've already spread, due to a lack of systematic health monitoring and early alerts.\n\nExpected Solution:\nA predictive-analytics platform that monitors community health data and flags early warning signs of water-borne disease outbreaks so authorities can respond before they spread. Suggested tech: Python, predictive analytics/ML models, cloud database, React/Flutter dashboard.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "MedTech",
+        "Python",
+        "predictive analytics",
+        "ML models",
+        "cloud database",
+        "React",
+        "Flutter dashboard"
+      ],
+      "createdAt": "2026-10-05T18:08:23.135Z"
+    },
+    {
+      "id": "ps_doc_1791223703135_1_i6t",
+      "domain": "Artificial Intelligence & ML",
+      "title": "AI-based medical diagnosis assistant",
+      "problem": "Patients, especially in under-served areas, often lack quick access to a first assessment of their symptoms to know when and where to seek care.",
+      "expectedSolution": "An AI-based assistant that uses NLP and classification models to analyze patient-reported symptoms and provide a preliminary diagnosis suggestion along with guidance on next steps. Suggested tech: Python, NLP/classification models, web/mobile app, cloud database.",
+      "description": "Problem:\nPatients, especially in under-served areas, often lack quick access to a first assessment of their symptoms to know when and where to seek care.\n\nExpected Solution:\nAn AI-based assistant that uses NLP and classification models to analyze patient-reported symptoms and provide a preliminary diagnosis suggestion along with guidance on next steps. Suggested tech: Python, NLP/classification models, web/mobile app, cloud database.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "MedTech",
+        "Python",
+        "NLP",
+        "classification models",
+        "web",
+        "mobile app",
+        "cloud database"
+      ],
+      "createdAt": "2026-10-05T18:08:23.135Z"
+    },
+    {
+      "id": "ps_doc_1791223703135_2_1au",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Telemedicine chatbot for rural clinics",
+      "problem": "Rural clinics often face a shortage of doctors and language barriers, making it hard for patients to get timely medical guidance.",
+      "expectedSolution": "A conversational AI chatbot for rural clinics that uses NLP to triage patient queries, answer common health questions, and connect patients with clinic staff or telemedicine services when needed. Suggested tech: Python, NLP/conversational AI (LLM APIs), web/mobile chat interface, multilingual support.",
+      "description": "Problem:\nRural clinics often face a shortage of doctors and language barriers, making it hard for patients to get timely medical guidance.\n\nExpected Solution:\nA conversational AI chatbot for rural clinics that uses NLP to triage patient queries, answer common health questions, and connect patients with clinic staff or telemedicine services when needed. Suggested tech: Python, NLP/conversational AI (LLM APIs), web/mobile chat interface, multilingual support.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "MedTech",
+        "Python",
+        "NLP",
+        "conversational AI (LLM APIs",
+        "web",
+        "mobile chat interface",
+        "multilingual support"
+      ],
+      "createdAt": "2026-10-05T18:08:23.135Z"
+    },
+    {
+      "id": "ps_doc_1791223703135_3_5me",
+      "domain": "Artificial Intelligence & ML",
+      "title": "AI chatbot for mental health support and emotion recognition",
+      "problem": "Many people hesitate to seek mental health support due to stigma, cost, or limited access to counselors, especially when they need immediate emotional support.",
+      "expectedSolution": "An AI chatbot that uses sentiment analysis to understand a user's emotional state through conversation, offer supportive responses, and flag cases that need escalation to a human counselor. Suggested tech: Python, NLP/sentiment analysis models, web/mobile app.",
+      "description": "Problem:\nMany people hesitate to seek mental health support due to stigma, cost, or limited access to counselors, especially when they need immediate emotional support.\n\nExpected Solution:\nAn AI chatbot that uses sentiment analysis to understand a user's emotional state through conversation, offer supportive responses, and flag cases that need escalation to a human counselor. Suggested tech: Python, NLP/sentiment analysis models, web/mobile app.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "MedTech",
+        "Python",
+        "NLP",
+        "sentiment analysis models",
+        "web",
+        "mobile app"
+      ],
+      "createdAt": "2026-10-05T18:08:23.135Z"
+    },
+    {
+      "id": "ps_doc_1791223703135_4_561",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Early symptom prediction system for chronic diseases",
+      "problem": "Chronic diseases such as diabetes and heart disease are often diagnosed late because early, subtle symptoms go unnoticed or unreported.",
+      "expectedSolution": "A system that applies classification algorithms to patient-reported symptoms and health data to predict the likelihood of a chronic disease and recommend early medical consultation. Suggested tech: Python, Scikit-learn/TensorFlow classification models, web/mobile input interface, cloud database.",
+      "description": "Problem:\nChronic diseases such as diabetes and heart disease are often diagnosed late because early, subtle symptoms go unnoticed or unreported.\n\nExpected Solution:\nA system that applies classification algorithms to patient-reported symptoms and health data to predict the likelihood of a chronic disease and recommend early medical consultation. Suggested tech: Python, Scikit-learn/TensorFlow classification models, web/mobile input interface, cloud database.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "MedTech",
+        "Python",
+        "Scikit-learn",
+        "web",
+        "mobile input interface",
+        "cloud database"
+      ],
+      "createdAt": "2026-10-05T18:08:23.135Z"
+    },
+    {
+      "id": "ps_doc_1791223703135_5_q06",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Smart Tourist Safety Monitoring & Incident Response System using AI and Geo-Fencing",
+      "problem": "Tourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to detect unusual situations and respond quickly.",
+      "expectedSolution": "An AI system that applies anomaly detection to tourist location and activity data within geo-fenced zones, alerting authorities to potential incidents for rapid response. Suggested tech: Python, anomaly detection models, geofencing APIs, mobile app, cloud backend.",
+      "description": "Problem:\nTourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to detect unusual situations and respond quickly.\n\nExpected Solution:\nAn AI system that applies anomaly detection to tourist location and activity data within geo-fenced zones, alerting authorities to potential incidents for rapid response. Suggested tech: Python, anomaly detection models, geofencing APIs, mobile app, cloud backend.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Travel & Tourism",
+        "Python",
+        "anomaly detection models",
+        "geofencing APIs",
+        "mobile app",
+        "cloud backend"
+      ],
+      "createdAt": "2026-10-05T18:08:23.135Z"
+    },
+    {
+      "id": "ps_doc_1791223703135_6_p3g",
+      "domain": "Artificial Intelligence & ML",
+      "title": "AI/ML based system for deriving value added parameters using satellite",
+      "problem": "Raw satellite imagery is difficult for non-experts to interpret directly, limiting its usefulness for agriculture, urban planning, and environmental monitoring.",
+      "expectedSolution": "A computer-vision-based system that processes raw satellite imagery to automatically derive value-added parameters (e.g. vegetation index, land-use classification) and presents them through a usable interface. Suggested tech: Python, OpenCV/deep-learning models, cloud processing pipeline, web dashboard.",
+      "description": "Problem:\nRaw satellite imagery is difficult for non-experts to interpret directly, limiting its usefulness for agriculture, urban planning, and environmental monitoring.\n\nExpected Solution:\nA computer-vision-based system that processes raw satellite imagery to automatically derive value-added parameters (e.g. vegetation index, land-use classification) and presents them through a usable interface. Suggested tech: Python, OpenCV/deep-learning models, cloud processing pipeline, web dashboard.",
+      "difficulty": "Advanced",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "SpaceTech",
+        "Python",
+        "OpenCV",
+        "deep-learning models",
+        "cloud processing pipeline",
+        "web dashboard"
+      ],
+      "createdAt": "2026-10-05T18:08:23.135Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_7_5qv",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Deep Learning web application to automate tree enumeration in forest areas",
+      "problem": "Manually counting and enumerating trees across large forest areas is slow, labor-intensive, and hard to scale.",
+      "expectedSolution": "A deep-learning web application that uses image segmentation on aerial or satellite imagery to automatically detect and count trees across forest areas. Suggested tech: Python, deep-learning segmentation models (U-Net/Mask R-CNN), React web app, cloud image processing.",
+      "description": "Problem:\nManually counting and enumerating trees across large forest areas is slow, labor-intensive, and hard to scale.\n\nExpected Solution:\nA deep-learning web application that uses image segmentation on aerial or satellite imagery to automatically detect and count trees across forest areas. Suggested tech: Python, deep-learning segmentation models (U-Net/Mask R-CNN), React web app, cloud image processing.",
+      "difficulty": "Advanced",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Environment & Forestry",
+        "Python",
+        "Mask R-CNN",
+        "React web app",
+        "cloud image processing"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_8_pwu",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Real-time traffic congestion predictor",
+      "problem": "Drivers and commuters often lack advance warning of traffic congestion, leading to wasted time and inefficient route choices.",
+      "expectedSolution": "A system that uses time-series forecasting on historical and live traffic data to predict congestion levels on key routes and display them through a web/mobile interface. Suggested tech: Python, time-series ML (LSTM/Prophet), React/Flutter interface, cloud data pipeline.",
+      "description": "Problem:\nDrivers and commuters often lack advance warning of traffic congestion, leading to wasted time and inefficient route choices.\n\nExpected Solution:\nA system that uses time-series forecasting on historical and live traffic data to predict congestion levels on key routes and display them through a web/mobile interface. Suggested tech: Python, time-series ML (LSTM/Prophet), React/Flutter interface, cloud data pipeline.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Smart Automation",
+        "Python",
+        "time-series ML (LSTM",
+        "Prophet",
+        "React",
+        "Flutter interface",
+        "cloud data pipeline"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_9_xua",
+      "domain": "Artificial Intelligence & ML",
+      "title": "AI-powered building maintenance system",
+      "problem": "Building maintenance issues are often identified reactively, after equipment fails, leading to higher repair costs and downtime.",
+      "expectedSolution": "An AI-powered system that applies predictive analytics to building sensor/maintenance-log data to forecast equipment issues before they occur and schedule preventive maintenance. Suggested tech: Python, predictive analytics/ML models, web dashboard, cloud database.",
+      "description": "Problem:\nBuilding maintenance issues are often identified reactively, after equipment fails, leading to higher repair costs and downtime.\n\nExpected Solution:\nAn AI-powered system that applies predictive analytics to building sensor/maintenance-log data to forecast equipment issues before they occur and schedule preventive maintenance. Suggested tech: Python, predictive analytics/ML models, web dashboard, cloud database.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Smart Automation",
+        "Python",
+        "predictive analytics",
+        "ML models",
+        "web dashboard",
+        "cloud database"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_10_wha",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Dynamic route rationalization model for public transit",
+      "problem": "Public transit routes are often static and don't adapt to changing demand patterns, leading to inefficiency  overcrowding on some routes and underuse on others.",
+      "expectedSolution": "A software model that applies optimization algorithms to ridership and traffic data to dynamically rationalize and suggest transit routes for better efficiency and coverage. Suggested tech: Python, optimization libraries (OR-Tools), React dashboard, cloud database.",
+      "description": "Problem:\nPublic transit routes are often static and don't adapt to changing demand patterns, leading to inefficiency  overcrowding on some routes and underuse on others.\n\nExpected Solution:\nA software model that applies optimization algorithms to ridership and traffic data to dynamically rationalize and suggest transit routes for better efficiency and coverage. Suggested tech: Python, optimization libraries (OR-Tools), React dashboard, cloud database.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Smart Automation",
+        "Python",
+        "React dashboard",
+        "cloud database"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_11_1xv",
+      "domain": "Artificial Intelligence & ML",
+      "title": "AI-based traffic management and adaptive signal control",
+      "problem": "Fixed-timing traffic signals can't adapt to real-time traffic conditions, which leads to congestion and inefficient flow.",
+      "expectedSolution": "A reinforcement-learning-based system that analyzes real-time traffic data feeds and adaptively controls signal timing to optimize flow, with a monitoring dashboard for traffic authorities. Suggested tech: Python, reinforcement learning frameworks, FastAPI backend, React dashboard.",
+      "description": "Problem:\nFixed-timing traffic signals can't adapt to real-time traffic conditions, which leads to congestion and inefficient flow.\n\nExpected Solution:\nA reinforcement-learning-based system that analyzes real-time traffic data feeds and adaptively controls signal timing to optimize flow, with a monitoring dashboard for traffic authorities. Suggested tech: Python, reinforcement learning frameworks, FastAPI backend, React dashboard.",
+      "difficulty": "Advanced",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Smart Automation",
+        "Python",
+        "FastAPI backend",
+        "React dashboard"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_12_8b6",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Automated defective exhibit identification system",
+      "problem": "Manually inspecting exhibits or products for defects is time-consuming and prone to human error, especially at scale.",
+      "expectedSolution": "An image-classification system that automatically analyzes uploaded images to detect and flag defective exhibits or items, with a dashboard for human review. Suggested tech: Python, CNN/image classification models, web dashboard, cloud storage.",
+      "description": "Problem:\nManually inspecting exhibits or products for defects is time-consuming and prone to human error, especially at scale.\n\nExpected Solution:\nAn image-classification system that automatically analyzes uploaded images to detect and flag defective exhibits or items, with a dashboard for human review. Suggested tech: Python, CNN/image classification models, web dashboard, cloud storage.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Smart Automation",
+        "Python",
+        "CNN",
+        "image classification models",
+        "web dashboard",
+        "cloud storage"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_13_sw4",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Last mile delivery route optimizer",
+      "problem": "Last-mile delivery is often the least efficient part of the logistics chain, with drivers taking suboptimal routes that increase cost and delivery time.",
+      "expectedSolution": "A route-optimization tool that applies optimization algorithms to delivery addresses, traffic, and time-window constraints to generate the most efficient last-mile delivery routes. Suggested tech: Python, optimization libraries (OR-Tools), Google Maps API, web/mobile app for drivers.",
+      "description": "Problem:\nLast-mile delivery is often the least efficient part of the logistics chain, with drivers taking suboptimal routes that increase cost and delivery time.\n\nExpected Solution:\nA route-optimization tool that applies optimization algorithms to delivery addresses, traffic, and time-window constraints to generate the most efficient last-mile delivery routes. Suggested tech: Python, optimization libraries (OR-Tools), Google Maps API, web/mobile app for drivers.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Logistics",
+        "Python",
+        "Google Maps API",
+        "web",
+        "mobile app for drivers"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_14_qk1",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Explainable AI (XAI) model for predicting high-impact rain",
+      "problem": "Existing rainfall-prediction models often act as \"black boxes,\" making it hard for authorities to trust or act confidently on forecasts of high-impact rain events.",
+      "expectedSolution": "A time-series forecasting model for high-impact rain events that incorporates explainable AI (XAI) techniques, so forecasters can see and trust the reasoning behind each prediction. Suggested tech: Python, time-series ML (LSTM/Prophet), XAI libraries (SHAP/LIME), web dashboard.",
+      "description": "Problem:\nExisting rainfall-prediction models often act as \"black boxes,\" making it hard for authorities to trust or act confidently on forecasts of high-impact rain events.\n\nExpected Solution:\nA time-series forecasting model for high-impact rain events that incorporates explainable AI (XAI) techniques, so forecasters can see and trust the reasoning behind each prediction. Suggested tech: Python, time-series ML (LSTM/Prophet), XAI libraries (SHAP/LIME), web dashboard.",
+      "difficulty": "Advanced",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Disaster Management",
+        "Python",
+        "time-series ML (LSTM",
+        "Prophet",
+        "XAI libraries (SHAP",
+        "LIME",
+        "web dashboard"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_15_98f",
+      "domain": "Artificial Intelligence & ML",
+      "title": "ML model to predict and mitigate natural disaster risks",
+      "problem": "Disaster-prone regions often lack timely, data-driven risk assessments to guide preparedness and mitigation planning.",
+      "expectedSolution": "A machine learning model that performs spatial data analysis on historical disaster and geographic data to predict risk zones and suggest mitigation measures, presented through an interactive map-based dashboard. Suggested tech: Python, spatial ML/GIS libraries, PostGIS, React/Mapbox dashboard.",
+      "description": "Problem:\nDisaster-prone regions often lack timely, data-driven risk assessments to guide preparedness and mitigation planning.\n\nExpected Solution:\nA machine learning model that performs spatial data analysis on historical disaster and geographic data to predict risk zones and suggest mitigation measures, presented through an interactive map-based dashboard. Suggested tech: Python, spatial ML/GIS libraries, PostGIS, React/Mapbox dashboard.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Disaster Management",
+        "Python",
+        "spatial ML",
+        "GIS libraries",
+        "PostGIS",
+        "React",
+        "Mapbox dashboard"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_16_ird",
+      "domain": "Artificial Intelligence & ML",
+      "title": "AI-powered crop recommendation system",
+      "problem": "Farmers often lack data-driven guidance on which crops best suit their soil, climate, and market conditions, which can lead to suboptimal yields.",
+      "expectedSolution": "A recommendation system that analyzes soil, weather, and market data to suggest optimal crops for a farmer's specific conditions, delivered through a mobile/web app. Suggested tech: Python, recommendation algorithms, cloud database, Flutter/React app.",
+      "description": "Problem:\nFarmers often lack data-driven guidance on which crops best suit their soil, climate, and market conditions, which can lead to suboptimal yields.\n\nExpected Solution:\nA recommendation system that analyzes soil, weather, and market data to suggest optimal crops for a farmer's specific conditions, delivered through a mobile/web app. Suggested tech: Python, recommendation algorithms, cloud database, Flutter/React app.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Agriculture",
+        "Python",
+        "recommendation algorithms",
+        "cloud database",
+        "Flutter",
+        "React app"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_17_g1r",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Smart transportation route optimization for agri-produce",
+      "problem": "Agricultural produce often spoils or loses value in transit due to inefficient routing from farms to markets.",
+      "expectedSolution": "A routing system that applies graph algorithms to optimize the transportation of produce from farms to markets, minimizing time and spoilage. Suggested tech: Python, graph/routing algorithms (Dijkstra/OR-Tools), Google Maps API, web dashboard.",
+      "description": "Problem:\nAgricultural produce often spoils or loses value in transit due to inefficient routing from farms to markets.\n\nExpected Solution:\nA routing system that applies graph algorithms to optimize the transportation of produce from farms to markets, minimizing time and spoilage. Suggested tech: Python, graph/routing algorithms (Dijkstra/OR-Tools), Google Maps API, web dashboard.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Agriculture",
+        "Python",
+        "graph",
+        "routing algorithms (Dijkstra",
+        "OR-Tools",
+        "Google Maps API",
+        "web dashboard"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_18_mty",
+      "domain": "Artificial Intelligence & ML",
+      "title": "AI-powered personalized student study plan generator",
+      "problem": "Students learn at different paces and have different strengths, but most study plans are generic and don't adapt to individual needs.",
+      "expectedSolution": "An app that uses clustering and generative AI to analyze a student's performance and learning style, then generates a personalized study plan. Suggested tech: Python, generative AI/LLM APIs, clustering algorithms, web/mobile app.",
+      "description": "Problem:\nStudents learn at different paces and have different strengths, but most study plans are generic and don't adapt to individual needs.\n\nExpected Solution:\nAn app that uses clustering and generative AI to analyze a student's performance and learning style, then generates a personalized study plan. Suggested tech: Python, generative AI/LLM APIs, clustering algorithms, web/mobile app.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "EdTech",
+        "Python",
+        "generative AI",
+        "LLM APIs",
+        "clustering algorithms",
+        "web",
+        "mobile app"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
+      "id": "ps_doc_1791223703136_19_vsk",
+      "domain": "Artificial Intelligence & ML",
+      "title": "Automated canonical place name extraction from text",
+      "problem": "Text documents such as news reports and records often reference place names inconsistently (abbreviations, variants, misspellings), which makes it hard to standardize location data.",
+      "expectedSolution": "An NLP-based tool that uses Named Entity Recognition (NER) to extract place names from text and map them to their canonical, standardized form. Suggested tech: Python, NER models (spaCy/Transformers), cloud database, API for standardized lookups.",
+      "description": "Problem:\nText documents such as news reports and records often reference place names inconsistently (abbreviations, variants, misspellings), which makes it hard to standardize location data.\n\nExpected Solution:\nAn NLP-based tool that uses Named Entity Recognition (NER) to extract place names from text and map them to their canonical, standardized form. Suggested tech: Python, NER models (spaCy/Transformers), cloud database, API for standardized lookups.",
+      "difficulty": "Intermediate",
+      "source": "20_Software_(AIML)_Problem statement.pdf",
+      "tags": [
+        "Artificial Intelligence & ML",
+        "Miscellaneous",
+        "Python",
+        "NER models (spaCy",
+        "Transformers",
+        "cloud database",
+        "API for standardized lookups"
+      ],
+      "createdAt": "2026-10-05T18:08:23.136Z"
+    },
+    {
       "id": "ps_doc_1791223685599_0_0if",
       "domain": "Web & Mobile Development",
       "title": "Conversational Image Recognition Chatbot",
@@ -369,6 +771,14 @@
     }
   ],
   "documents": [
+    {
+      "id": "doc_1791223703136",
+      "filename": "20_Software_(AIML)_Problem statement.pdf",
+      "domain": "Artificial Intelligence & ML",
+      "extractedCount": 20,
+      "uploadedAt": "2026-10-05T18:08:23.136Z",
+      "size": 12294
+    },
     {
       "id": "doc_1791223685599",
       "filename": "20_(WebApp)_Problem statement.pdf",
