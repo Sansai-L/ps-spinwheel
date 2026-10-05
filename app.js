@@ -913,6 +913,7 @@
 
     spinCenterBtn.addEventListener('click', triggerSpin);
     spinMainBtn.addEventListener('click', triggerSpin);
+    if (wheelCanvas) wheelCanvas.addEventListener('click', triggerSpin);
 
     window.addEventListener('keydown', e => {
       if (e.code === 'Space' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
