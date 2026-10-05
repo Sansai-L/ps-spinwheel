@@ -35,9 +35,17 @@
 
   // ─── DOMAIN THEMES ──────────────────────────────────────────────────────────
   const DOMAIN_THEMES = [
-    { name: 'Artificial Intelligence & ML', icon: '🤖', color: '#06b6d4', dark: '#083344' },
+    { name: 'Smart Automation', icon: '⚡', color: '#06b6d4', dark: '#083344' },
+    { name: 'Healthcare & MedTech', icon: '🩺', color: '#ec4899', dark: '#500724' },
+    { name: 'Agriculture & Rural Development', icon: '🌾', color: '#84cc16', dark: '#1a2e05' },
+    { name: 'Disaster Management', icon: '🚨', color: '#ef4444', dark: '#450a0a' },
+    { name: 'Smart Education & EdTech', icon: '🎓', color: '#f59e0b', dark: '#451a03' },
     { name: 'Cybersecurity & Privacy', icon: '🛡️', color: '#f43f5e', dark: '#4c0519' },
+    { name: 'Travel & Tourism', icon: '✈️', color: '#14b8a6', dark: '#042f2e' },
+    { name: 'Transportation & Logistics', icon: '🚚', color: '#eab308', dark: '#422006' },
+    { name: 'SpaceTech & Environment', icon: '🛰️', color: '#6366f1', dark: '#1e1b4b' },
     { name: 'Web & Mobile Development', icon: '🌐', color: '#8b5cf6', dark: '#2e1065' },
+    { name: 'Artificial Intelligence & ML', icon: '🤖', color: '#06b6d4', dark: '#083344' },
     { name: 'Internet of Things (IoT)', icon: '📡', color: '#10b981', dark: '#022c22' },
     { name: 'Cloud & DevOps', icon: '☁️', color: '#3b82f6', dark: '#172554' }
   ];
