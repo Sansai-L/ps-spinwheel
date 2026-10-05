@@ -22,15 +22,46 @@
   const adminWelcomeText = document.getElementById('adminWelcomeText');
   const adminLogoutBtn = document.getElementById('adminLogoutBtn');
 
-  // Teams
+  // Teams & Master Sheet Controls
   const statTotalTeams = document.getElementById('statTotalTeams');
-  const statTotalSpins = document.getElementById('statTotalSpins');
-  const statAvgSpins = document.getElementById('statAvgSpins');
+  const statTotalAllocated = document.getElementById('statTotalAllocated');
+  const statTotalPending = document.getElementById('statTotalPending');
   const statActiveDomains = document.getElementById('statActiveDomains');
   const teamsTableBody = document.getElementById('teamsTableBody');
   const teamSearchInput = document.getElementById('teamSearchInput');
+  const teamStatusFilter = document.getElementById('teamStatusFilter');
+  const teamDomainFilter = document.getElementById('teamDomainFilter');
+  const exportCsvBtn = document.getElementById('exportCsvBtn');
+  const backupJsonBtn = document.getElementById('backupJsonBtn');
+  const triggerRestoreBtn = document.getElementById('triggerRestoreBtn');
+  const restoreJsonInput = document.getElementById('restoreJsonInput');
   const refreshTeamsBtn = document.getElementById('refreshTeamsBtn');
   const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+
+  // Team Details Modal
+  const teamDetailsModal = document.getElementById('teamDetailsModal');
+  const closeTeamModalBtn = document.getElementById('closeTeamModalBtn');
+  const modalDismissBtn = document.getElementById('modalDismissBtn');
+  const modalResetSpinBtn = document.getElementById('modalResetSpinBtn');
+  const modalDownloadPdfBtn = document.getElementById('modalDownloadPdfBtn');
+  const modalTeamId = document.getElementById('modalTeamId');
+  const modalTeamName = document.getElementById('modalTeamName');
+  const modalTeamStatusBadge = document.getElementById('modalTeamStatusBadge');
+  const modalLeader = document.getElementById('modalLeader');
+  const modalPhone = document.getElementById('modalPhone');
+  const modalEmail = document.getElementById('modalEmail');
+  const modalTrack = document.getElementById('modalTrack');
+  const modalCollege = document.getElementById('modalCollege');
+  const modalMembers = document.getElementById('modalMembers');
+  const modalUtr = document.getElementById('modalUtr');
+  const modalGithub = document.getElementById('modalGithub');
+  const modalProblemSection = document.getElementById('modalProblemSection');
+  const modalProblemBox = document.getElementById('modalProblemBox');
+  const modalProblemTitle = document.getElementById('modalProblemTitle');
+  const modalProblemDesc = document.getElementById('modalProblemDesc');
+  const modalProblemDiff = document.getElementById('modalProblemDiff');
+  const modalProblemDomain = document.getElementById('modalProblemDomain');
+  let selectedModalTeam = null;
 
   // Domains
   const newDomainName = document.getElementById('newDomainName');
@@ -161,9 +192,9 @@
     else if (tabId === 'tabUpload') await populateUploadDomainSelect();
   }
 
-  // ─── TEAMS ──────────────────────────────────────────────────────────────────
+  // ─── TEAMS & MASTER SHEET ───────────────────────────────────────────────────
   async function loadTeams() {
-    teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="8">Loading teams...</td></tr>`;
+    teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="9">Loading teams...</td></tr>`;
     try {
       const res = await fetch('/api/admin/teams', { headers: { 'Authorization': 'Bearer ' + adminToken } });
       if (res.status === 401 || res.status === 403) {
@@ -174,70 +205,118 @@
       const data = await res.json();
       allTeams = data.teams || [];
       renderTeamsStats(data);
+      populateTeamDomainFilter();
       renderTeamsTable(allTeams);
       setupPdfDownloadBtn();
     } catch (err) {
-      teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="8" style="color:#f43f5e;">Error: ${err.message}</td></tr>`;
+      teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="9" style="color:#f43f5e;">Error: ${err.message}</td></tr>`;
     }
   }
 
   function renderTeamsStats(data) {
-    const { teams = [], total = 0, totalSpins = 0 } = data;
-    statTotalTeams.textContent = total;
-    statTotalSpins.textContent = totalSpins;
-    statAvgSpins.textContent = total > 0 ? (totalSpins / total).toFixed(1) : '0';
-    const usedDomains = [...new Set(teams.flatMap(t => (t.spins || []).map(s => s.domain)))].length;
-    statActiveDomains.textContent = usedDomains;
+    const { teams = [], total = 0, allocatedCount = 0, pendingCount = 0 } = data;
+    if (statTotalTeams) statTotalTeams.textContent = total || teams.length;
+    if (statTotalAllocated) statTotalAllocated.textContent = allocatedCount;
+    if (statTotalPending) statTotalPending.textContent = pendingCount;
+    const tracks = [...new Set(teams.map(t => t.domain || t.originalTrack).filter(Boolean))];
+    if (statActiveDomains) statActiveDomains.textContent = tracks.length || 5;
+  }
+
+  function populateTeamDomainFilter() {
+    if (!teamDomainFilter) return;
+    const currentVal = teamDomainFilter.value;
+    const tracks = [...new Set(allTeams.map(t => t.domain || t.originalTrack).filter(Boolean))].sort();
+    teamDomainFilter.innerHTML = '<option value="All">All Tracks</option>';
+    tracks.forEach(tr => {
+      const opt = document.createElement('option');
+      opt.value = tr;
+      opt.textContent = tr;
+      if (tr === currentVal) opt.selected = true;
+      teamDomainFilter.appendChild(opt);
+    });
   }
 
   function renderTeamsTable(teams) {
-    const search = (teamSearchInput.value || '').toLowerCase();
-    const filtered = search
-      ? teams.filter(t => t.teamId.toLowerCase().includes(search) || t.teamName.toLowerCase().includes(search))
-      : teams;
+    const search = (teamSearchInput?.value || '').trim().toLowerCase();
+    const statusVal = teamStatusFilter ? teamStatusFilter.value : 'All';
+    const domainVal = teamDomainFilter ? teamDomainFilter.value : 'All';
+
+    const filtered = teams.filter(team => {
+      // 1. Status filter
+      const hasSpun = Boolean(team.spins && team.spins.length > 0);
+      if (statusVal === 'Allocated' && !hasSpun) return false;
+      if (statusVal === 'Pending' && hasSpun) return false;
+
+      // 2. Domain / Track filter
+      const track = team.domain || team.originalTrack || '';
+      if (domainVal !== 'All' && track.toLowerCase() !== domainVal.toLowerCase()) return false;
+
+      // 3. Search filter across all details
+      if (search) {
+        const textToSearch = [
+          team.teamId,
+          team.regId,
+          team.teamName,
+          team.leader,
+          team.college,
+          team.members,
+          team.phone,
+          team.email,
+          track,
+          hasSpun ? (team.spins[0].title || team.spins[0].problemTitle) : ''
+        ].filter(Boolean).join(' ').toLowerCase();
+
+        if (!textToSearch.includes(search)) return false;
+      }
+
+      return true;
+    });
 
     if (filtered.length === 0) {
-      teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="8">No teams registered yet.</td></tr>`;
+      teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="9">No matching teams found.</td></tr>`;
       return;
     }
+
     teamsTableBody.innerHTML = '';
     filtered.forEach((team, idx) => {
       const tr = document.createElement('tr');
-      const ghLink = team.githubLink
-        ? `<a href="${escHTML(team.githubLink)}" target="_blank" rel="noopener" style="color:var(--accent-cyan);font-size:0.78rem;text-decoration:none;">🔗 GitHub Repo</a>`
-        : '<span style="color:var(--text-muted);font-size:0.75rem;">Not provided</span>';
+      const hasSpun = team.spins && team.spins.length > 0;
+      const spin = hasSpun ? team.spins[0] : null;
 
-      const spin = (team.spins && team.spins.length > 0) ? team.spins[0] : null;
+      // Leader & Contact
+      const leaderHtml = `
+        <div style="font-weight:600;color:#ffffff;font-size:0.83rem;">${escHTML(team.leader || '—')}</div>
+        ${team.phone ? `<div style="font-size:0.75rem;color:#38bdf8;margin-top:2px;">📞 ${escHTML(team.phone)}</div>` : ''}
+        ${team.email ? `<div style="font-size:0.7rem;color:var(--text-muted);">${escHTML(team.email)}</div>` : ''}
+      `;
 
-      let domainHtml = `<span style="color:#f59e0b;font-size:0.75rem;font-weight:600;">⏳ Not chosen yet</span>`;
-      let problemHtml = `<span style="color:var(--text-muted);font-style:italic;font-size:0.8rem;">Waiting for team to spin wheel</span>`;
+      // College
+      const collegeHtml = `<div style="font-size:0.78rem;color:#cbd5e1;line-height:1.35;max-width:210px;">${escHTML(team.college || '—')}</div>`;
+
+      // Track / Domain
+      const trackName = team.domain || team.originalTrack || 'General';
+      const domainHtml = `<span class="domain-tag" style="font-size:0.72rem;padding:3px 8px;white-space:nowrap;">${escHTML(trackName)}</span>`;
+
+      // Allocated Problem Statement
+      let problemHtml = `<span style="color:#f59e0b;font-size:0.78rem;font-style:italic;">⏳ Waiting for spin draw</span>`;
       let statusHtml = `<span style="color:#f59e0b;font-weight:700;font-size:0.78rem;">⏳ Pending</span>`;
-      let actionsHtml = `<span style="color:var(--text-muted);font-size:0.75rem;">—</span>`;
 
       if (spin) {
-        domainHtml = `<span class="domain-tag" style="font-size:0.74rem;padding:3px 9px;white-space:nowrap;">${escHTML(spin.domain)}</span>`;
-        
         const title = spin.title || spin.problemTitle || 'Assigned Problem';
         const desc = spin.description || spin.problemDescription || '';
         const diff = spin.difficulty || spin.problemDifficulty || 'Intermediate';
-        const pid = spin.problemId || spin.id || '';
 
         problemHtml = `
-          <div style="max-width: 440px;">
-            <strong style="color:#ffffff; font-size:0.86rem; display:block; margin-bottom:4px; line-height:1.3;">
+          <div style="max-width: 320px;">
+            <strong style="color:#ffffff; font-size:0.84rem; display:block; margin-bottom:3px; line-height:1.3;">
               ${escHTML(title)}
             </strong>
-            <p style="font-size:0.75rem; color:#94a3b8; line-height:1.4; margin:0 0 6px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+            <p style="font-size:0.74rem; color:#94a3b8; line-height:1.35; margin:0 0 4px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
               ${escHTML(desc)}
             </p>
-            <div style="display:flex; gap:6px; align-items:center;">
-              <span class="difficulty-tag" style="font-size:0.68rem; padding:1px 7px;">
-                ${escHTML(diff)}
-              </span>
-              <span style="font-size:0.7rem; color:var(--text-muted);">
-                Ref: <code>${escHTML(pid)}</code>
-              </span>
-            </div>
+            <span class="difficulty-tag" style="font-size:0.65rem; padding:1px 6px;">
+              ${escHTML(diff)}
+            </span>
           </div>
         `;
 
@@ -248,25 +327,46 @@
           </span>
           <div style="font-size:0.7rem; color:var(--text-muted); margin-top:2px;">${timeStr}</div>
         `;
-
-        actionsHtml = `
-          <button class="btn btn-accent btn-sm download-single-team-pdf" data-tid="${escHTML(team.teamId)}" style="padding:4px 10px; font-size:0.75rem;" title="Download PDF assignment for ${escHTML(team.teamName)}">
-            📄 PDF
-          </button>
-        `;
       }
 
+      // Actions
+      const actionsHtml = `
+        <div style="display:flex;gap:6px;align-items:center;">
+          <button class="btn btn-secondary btn-sm view-team-details" data-tid="${escHTML(team.teamId)}" style="padding:4px 9px;font-size:0.74rem;" title="View all team details">
+            👁️ Details
+          </button>
+          ${hasSpun 
+            ? `<button class="btn btn-accent btn-sm download-single-team-pdf" data-tid="${escHTML(team.teamId)}" style="padding:4px 9px;font-size:0.74rem;" title="Download PDF assignment">
+                📄 PDF
+               </button>`
+            : `<button class="btn btn-outline btn-sm" disabled style="padding:4px 9px;font-size:0.74rem;opacity:0.35;" title="Team has not spun yet">
+                📄 PDF
+               </button>`
+          }
+        </div>
+      `;
+
       tr.innerHTML = `
-        <td style="color:var(--text-muted);font-size:0.8rem;">${idx + 1}</td>
-        <td><code style="font-size:0.82rem;color:#34d399;font-weight:700;">${escHTML(team.teamId)}</code></td>
-        <td style="font-weight:600;font-size:0.88rem;color:#ffffff;">${escHTML(team.teamName)}</td>
-        <td>${ghLink}</td>
+        <td style="color:var(--text-muted);font-size:0.78rem;">${idx + 1}</td>
+        <td><code style="font-size:0.8rem;color:#38bdf8;font-weight:700;">${escHTML(team.teamId)}</code></td>
+        <td style="font-weight:700;font-size:0.85rem;color:#ffffff;">${escHTML(team.teamName)}</td>
+        <td>${leaderHtml}</td>
+        <td>${collegeHtml}</td>
         <td>${domainHtml}</td>
         <td>${problemHtml}</td>
         <td>${statusHtml}</td>
         <td>${actionsHtml}</td>
       `;
       teamsTableBody.appendChild(tr);
+    });
+
+    // Wire Details buttons
+    teamsTableBody.querySelectorAll('.view-team-details').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tid = btn.dataset.tid;
+        const team = allTeams.find(t => t.teamId.toLowerCase() === tid.toLowerCase());
+        if (team) openTeamDetailsModal(team);
+      });
     });
 
     // Wire individual team PDF download buttons
@@ -276,6 +376,177 @@
         downloadIndividualTeamPdf(tid);
       });
     });
+  }
+
+  // ─── TEAM DETAILS MODAL ─────────────────────────────────────────────────────
+  function openTeamDetailsModal(team) {
+    selectedModalTeam = team;
+    modalTeamId.textContent = team.teamId || team.regId;
+    modalTeamName.textContent = team.teamName;
+
+    const hasSpun = team.spins && team.spins.length > 0;
+    modalTeamStatusBadge.textContent = hasSpun ? '🟢 Allocated' : '⏳ Pending Draw';
+    modalTeamStatusBadge.style.color = hasSpun ? '#34d399' : '#f59e0b';
+
+    modalLeader.textContent = team.leader || 'Not specified';
+    modalPhone.textContent = team.phone || 'Not specified';
+    modalEmail.textContent = team.email || 'Not specified';
+    modalTrack.textContent = team.domain || team.originalTrack || 'General';
+    modalCollege.textContent = team.college || 'Not specified';
+    modalMembers.textContent = team.members || 'Not specified';
+    modalUtr.textContent = team.utr || 'Not recorded';
+
+    if (team.githubLink) {
+      modalGithub.innerHTML = `<a href="${escHTML(team.githubLink)}" target="_blank" rel="noopener" style="color:#38bdf8;">${escHTML(team.githubLink)}</a>`;
+    } else {
+      modalGithub.textContent = 'Not provided';
+    }
+
+    if (hasSpun) {
+      const spin = team.spins[0];
+      modalProblemTitle.textContent = spin.title || spin.problemTitle || 'Assigned Problem';
+      modalProblemDesc.textContent = spin.description || spin.problemDescription || '';
+      modalProblemDiff.textContent = spin.difficulty || spin.problemDifficulty || 'Intermediate';
+      modalProblemDomain.textContent = spin.domain || team.domain || 'Challenge';
+      modalProblemSection.style.display = 'block';
+      modalDownloadPdfBtn.style.display = 'inline-block';
+      modalResetSpinBtn.style.display = 'inline-block';
+    } else {
+      modalProblemSection.style.display = 'none';
+      modalDownloadPdfBtn.style.display = 'none';
+      modalResetSpinBtn.style.display = 'none';
+    }
+
+    teamDetailsModal.classList.remove('hidden');
+  }
+
+  function closeTeamDetailsModal() {
+    teamDetailsModal.classList.add('hidden');
+    selectedModalTeam = null;
+  }
+
+  async function handleResetSpin() {
+    if (!selectedModalTeam) return;
+    if (!confirm(`Are you sure you want to reset the spin for "${selectedModalTeam.teamName}"? They will be allowed to spin the wheel again.`)) return;
+
+    try {
+      const res = await fetch('/api/admin/teams/reset-spin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
+        body: JSON.stringify({ teamId: selectedModalTeam.teamId })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to reset spin');
+      showToast(data.message || 'Spin reset successfully!', 'success');
+      closeTeamDetailsModal();
+      loadTeams();
+    } catch (err) {
+      showToast(err.message, 'error');
+    }
+  }
+
+  // ─── EXPORT CSV & BACKUP/RESTORE ────────────────────────────────────────────
+  function exportTeamsCsv() {
+    if (allTeams.length === 0) {
+      showToast('No teams to export', 'error');
+      return;
+    }
+    const headers = [
+      '#', 'Reg ID', 'Team Name', 'Leader', 'Phone', 'Email',
+      'College', 'Members', 'Original Track', 'Assigned Domain',
+      'Status', 'Problem Title', 'Problem Description', 'Difficulty',
+      'Allocated At', 'GitHub Link', 'UTR Ref'
+    ];
+
+    const escapeCsv = (str) => {
+      if (str === null || str === undefined) return '""';
+      const s = String(str).replace(/"/g, '""');
+      return `"${s}"`;
+    };
+
+    const rows = allTeams.map((team, idx) => {
+      const hasSpun = team.spins && team.spins.length > 0;
+      const spin = hasSpun ? team.spins[0] : null;
+      return [
+        idx + 1,
+        team.teamId || team.regId,
+        team.teamName,
+        team.leader || '',
+        team.phone || '',
+        team.email || '',
+        team.college || '',
+        team.members || '',
+        team.originalTrack || '',
+        team.domain || '',
+        hasSpun ? 'Allocated' : 'Pending',
+        spin ? (spin.title || spin.problemTitle || '') : '',
+        spin ? (spin.description || spin.problemDescription || '') : '',
+        spin ? (spin.difficulty || spin.problemDifficulty || '') : '',
+        spin && spin.spunAt ? new Date(spin.spunAt).toLocaleString() : '',
+        team.githubLink || '',
+        team.utr || ''
+      ].map(escapeCsv).join(',');
+    });
+
+    const csvContent = '\uFEFF' + [headers.map(escapeCsv).join(','), ...rows].join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'CODIENYCH-1.0-Master-Allocation-Sheet.csv';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    showToast('Exported CSV spreadsheet! 📥', 'success');
+  }
+
+  function backupJsonData() {
+    const backupObj = {
+      exportedAt: new Date().toISOString(),
+      teams: allTeams,
+      problems: allProblems,
+      domains: allDomains
+    };
+    const blob = new Blob([JSON.stringify(backupObj, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `codienych-database-backup-${Date.now()}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    showToast('Database JSON backup downloaded! 💾', 'success');
+  }
+
+  async function handleRestoreJsonFile(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const parsed = JSON.parse(text);
+      if (!parsed.teams || !Array.isArray(parsed.teams)) {
+        throw new Error('Invalid backup file. Missing teams array.');
+      }
+      if (!confirm(`Restore ${parsed.teams.length} teams from backup "${file.name}"?`)) {
+        restoreJsonInput.value = '';
+        return;
+      }
+      const res = await fetch('/api/admin/backup/restore', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
+        body: JSON.stringify({ backupData: parsed })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Restore failed');
+      showToast(data.message || 'Database restored successfully!', 'success');
+      loadTeams();
+    } catch (err) {
+      showToast('Restore error: ' + err.message, 'error');
+    } finally {
+      restoreJsonInput.value = '';
+    }
   }
 
   function downloadIndividualTeamPdf(teamId) {
@@ -304,7 +575,7 @@
     downloadPdfBtn.href = '#';
     downloadPdfBtn.onclick = (e) => {
       e.preventDefault();
-      showToast('Generating overall Event Report PDF... 📄', 'info');
+      showToast('Generating Master Event Report PDF... 📄', 'info');
       fetch('/api/admin/teams/pdf', { headers: { 'Authorization': 'Bearer ' + token } })
         .then(r => {
           if (!r.ok) throw new Error('PDF generation failed');
@@ -314,15 +585,13 @@
           const url = URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
-          link.download = 'SpinQuest-Teams-Report.pdf';
+          link.download = 'CODIENYCH-1.0-Teams-Report.pdf';
           document.body.appendChild(link);
           link.click();
           link.remove();
           URL.revokeObjectURL(url);
-          showToast('Event report PDF downloaded! 📥', 'success');
+          showToast('Master event report PDF downloaded! 📥', 'success');
         })
-        .catch(err => showToast('PDF error: ' + err.message, 'error'));
-    };
   }
 
   // ─── DOMAINS ────────────────────────────────────────────────────────────────
@@ -622,9 +891,25 @@
     // Tabs
     tabBtns.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.atab)));
 
-    // Teams
+    // Teams & Master Sheet
     refreshTeamsBtn.addEventListener('click', loadTeams);
     teamSearchInput.addEventListener('input', debounce(() => renderTeamsTable(allTeams), 300));
+    if (teamStatusFilter) teamStatusFilter.addEventListener('change', () => renderTeamsTable(allTeams));
+    if (teamDomainFilter) teamDomainFilter.addEventListener('change', () => renderTeamsTable(allTeams));
+    if (exportCsvBtn) exportCsvBtn.addEventListener('click', exportTeamsCsv);
+    if (backupJsonBtn) backupJsonBtn.addEventListener('click', backupJsonData);
+    if (triggerRestoreBtn && restoreJsonInput) {
+      triggerRestoreBtn.addEventListener('click', () => restoreJsonInput.click());
+      restoreJsonInput.addEventListener('change', handleRestoreJsonFile);
+    }
+
+    // Modal controls
+    if (closeTeamModalBtn) closeTeamModalBtn.addEventListener('click', closeTeamDetailsModal);
+    if (modalDismissBtn) modalDismissBtn.addEventListener('click', closeTeamDetailsModal);
+    if (modalResetSpinBtn) modalResetSpinBtn.addEventListener('click', handleResetSpin);
+    if (modalDownloadPdfBtn) modalDownloadPdfBtn.addEventListener('click', () => {
+      if (selectedModalTeam) downloadIndividualTeamPdf(selectedModalTeam.teamId);
+    });
 
     // Domains
     addDomainBtn.addEventListener('click', addDomain);
