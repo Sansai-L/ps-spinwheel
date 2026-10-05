@@ -33,6 +33,17 @@ try {
   }
 }
 
+let authorizedTeams = [];
+try {
+  authorizedTeams = require('./authorizedTeams');
+} catch (e) {
+  try {
+    authorizedTeams = require('./data/authorizedTeams');
+  } catch (err) {
+    authorizedTeams = [];
+  }
+}
+
 const app = express();
 const isVercel = process.env.VERCEL === '1' || Boolean(process.env.NOW_REGION);
 const DB_FILE = isVercel
@@ -638,25 +649,82 @@ app.delete('/api/documents/:id', adminAuthMiddleware, (req, res) => {
 
 // ─── TEAM REGISTRATION & TRACKING ────────────────────────────────────────────
 
-// Register a new team (or re-session an existing one)
+// ─── TEAM REGISTRATION & TRACKING ────────────────────────────────────────────
+
+// Register a new team (or re-session an existing one) — Restrict strictly to authorizedTeams & Admin
 app.post('/api/team/register', (req, res) => {
   const { teamId, teamName, githubLink } = req.body;
-  if (!teamId || !teamId.trim()) return res.status(400).json({ error: 'Team ID is required' });
+  if (!teamId || !teamId.trim()) return res.status(400).json({ error: 'Reg ID / Team ID is required' });
   if (!teamName || !teamName.trim()) return res.status(400).json({ error: 'Team Name is required' });
+
+  const rawId = teamId.trim();
+  const rawName = teamName.trim();
+
+  // String normalizer for flexible case/punctuation-insensitive matching
+  const norm = str => (str || '').toLowerCase().replace(/[^a-z0-9]/g, '').trim();
+
+  // 1. Verify Reg ID against authorized master list (100 teams from PDF + Admin bypass)
+  const matchedAuth = authorizedTeams.find(t => {
+    // Exact Reg ID match (e.g. CODIENYCH-2026-0001)
+    if (t.regId.toLowerCase() === rawId.toLowerCase()) return true;
+    // Numeric index match (e.g. "1" or "0001" -> CODIENYCH-2026-0001)
+    if (/^\d+$/.test(rawId) && (t.id === parseInt(rawId, 10) || t.regId.endsWith('-' + rawId.padStart(4, '0')))) return true;
+    // Admin bypass matches (CODIENYCH-ADMIN, ADMIN-TEAM, ADMIN)
+    if (t.isAdmin && (rawId.toUpperCase() === 'CODIENYCH-ADMIN' || rawId.toUpperCase() === 'ADMIN-TEAM' || rawId.toUpperCase() === 'ADMIN')) return true;
+    return false;
+  });
+
+  if (!matchedAuth) {
+    return res.status(403).json({
+      error: `Access Denied: "${rawId}" is not a recognized Reg ID. Only authorized teams from CODIENYCH 1.0 (e.g. CODIENYCH-2026-0001 to CODIENYCH-2026-0100) are permitted to enter.`
+    });
+  }
+
+  // 2. Validate Team Name matches the Reg ID
+  const inputNormName = norm(rawName);
+  const authNormName = norm(matchedAuth.teamName);
+  const isAdminNameMatch = matchedAuth.isAdmin && (inputNormName.includes('admin') || inputNormName === 'adminteam');
+  const isNameMatch = inputNormName === authNormName || isAdminNameMatch;
+
+  if (!isNameMatch) {
+    return res.status(400).json({
+      error: `Team Name does not match Reg ID "${matchedAuth.regId}". Please enter your registered team name ("${matchedAuth.teamName}").`
+    });
+  }
+
+  const canonicalTeamId = matchedAuth.regId;
+  const canonicalTeamName = matchedAuth.teamName;
+  const teamDomain = matchedAuth.domain;
 
   if (!db.teams) db.teams = [];
   const sessionToken = 'sess_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
 
-  const existing = db.teams.find(t => t.teamId.toLowerCase() === teamId.trim().toLowerCase());
+  let existing = db.teams.find(t => t.teamId.toLowerCase() === canonicalTeamId.toLowerCase());
   if (existing) {
     if (!existing.sessionTokens) existing.sessionTokens = [];
     existing.sessionTokens.push(sessionToken);
+    if (githubLink) existing.githubLink = githubLink.trim();
+    if (!existing.college && matchedAuth.college) existing.college = matchedAuth.college;
+    if (!existing.leader && matchedAuth.leader) existing.leader = matchedAuth.leader;
+    if (!existing.members && matchedAuth.members) existing.members = matchedAuth.members;
+    if (!existing.domain && matchedAuth.domain) existing.domain = matchedAuth.domain;
+    if (matchedAuth.isAdmin) existing.isAdmin = true;
+
     saveDB(db);
     const hasSpun = Boolean(existing.spins && existing.spins.length > 0);
     return res.json({
       success: true,
       sessionToken,
-      team: { teamId: existing.teamId, teamName: existing.teamName, githubLink: existing.githubLink },
+      team: {
+        teamId: existing.teamId,
+        teamName: existing.teamName,
+        githubLink: existing.githubLink || '',
+        domain: existing.domain || teamDomain,
+        leader: existing.leader || matchedAuth.leader,
+        college: existing.college || matchedAuth.college,
+        members: existing.members || matchedAuth.members,
+        isAdmin: Boolean(matchedAuth.isAdmin)
+      },
       isReturning: true,
       hasSpun,
       assignedProblem: hasSpun ? existing.spins[0] : null
@@ -665,19 +733,39 @@ app.post('/api/team/register', (req, res) => {
 
   const newTeam = {
     id: 'team_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
-    teamId: teamId.trim(),
-    teamName: teamName.trim(),
+    teamId: canonicalTeamId,
+    teamName: canonicalTeamName,
+    domain: teamDomain,
+    originalTrack: matchedAuth.originalTrack,
+    leader: matchedAuth.leader,
+    college: matchedAuth.college,
+    members: matchedAuth.members,
+    size: matchedAuth.size,
+    email: matchedAuth.email,
+    phone: matchedAuth.phone,
     githubLink: githubLink ? githubLink.trim() : '',
     registeredAt: new Date().toISOString(),
     sessionTokens: [sessionToken],
+    isAdmin: Boolean(matchedAuth.isAdmin),
     spins: []
   };
+
   db.teams.unshift(newTeam);
   saveDB(db);
+
   res.json({
     success: true,
     sessionToken,
-    team: { teamId: newTeam.teamId, teamName: newTeam.teamName, githubLink: newTeam.githubLink },
+    team: {
+      teamId: newTeam.teamId,
+      teamName: newTeam.teamName,
+      githubLink: newTeam.githubLink,
+      domain: newTeam.domain,
+      leader: newTeam.leader,
+      college: newTeam.college,
+      members: newTeam.members,
+      isAdmin: Boolean(newTeam.isAdmin)
+    },
     isReturning: false,
     hasSpun: false,
     assignedProblem: null
@@ -695,13 +783,21 @@ app.get('/api/team/status', (req, res) => {
 
   const hasSpun = Boolean(team.spins && team.spins.length > 0);
   res.json({
-    team: { teamId: team.teamId, teamName: team.teamName, githubLink: team.githubLink },
+    team: {
+      teamId: team.teamId,
+      teamName: team.teamName,
+      githubLink: team.githubLink,
+      domain: team.domain,
+      leader: team.leader,
+      college: team.college,
+      isAdmin: Boolean(team.isAdmin)
+    },
     hasSpun,
     assignedProblem: hasSpun ? team.spins[0] : null
   });
 });
 
-// Log a spin result for a team (Strictly allows only ONE spin per team)
+// Log a spin result for a team (Strictly allows only ONE spin per team, Admin can test spin)
 app.post('/api/team/log-spin', (req, res) => {
   const { sessionToken, domain, problem } = req.body;
   if (!sessionToken) return res.status(401).json({ error: 'Session token required' });
@@ -710,8 +806,8 @@ app.post('/api/team/log-spin', (req, res) => {
   const team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
   if (!team) return res.status(404).json({ error: 'Team session not found or expired' });
 
-  // STRICT RULE: Only 1 spin per team!
-  if (team.spins && team.spins.length >= 1) {
+  // STRICT RULE: Only 1 spin per team! (Admin bypass allows test spins)
+  if (!team.isAdmin && team.spins && team.spins.length >= 1) {
     return res.status(400).json({
       error: 'Each team is allowed to spin only once! You already have an assigned problem statement.',
       assignedProblem: team.spins[0],
