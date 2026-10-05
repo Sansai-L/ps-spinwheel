@@ -661,7 +661,7 @@
       const res = await fetch('/api/domains', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
-        body: JSON.stringify({ domain: name })
+        body: JSON.stringify({ name })
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to add domain');
@@ -795,7 +795,7 @@
       tr.innerHTML = `
         <td style="font-size:0.85rem;">📄 ${escHTML(doc.filename)}</td>
         <td><span class="domain-tag" style="font-size:0.7rem;">${escHTML(doc.domain)}</span></td>
-        <td style="font-size:0.85rem;">${doc.problemCount || '?'}</td>
+        <td style="font-size:0.85rem;">${doc.extractedCount || doc.problemCount || '—'}</td>
         <td style="font-size:0.78rem;color:var(--text-muted);">${new Date(doc.uploadedAt).toLocaleString()}</td>
         <td><button class="expand-btn delete-doc-btn" data-did="${escHTML(doc.id)}">🗑️ Delete</button></td>
       `;
@@ -867,7 +867,7 @@
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Upload failed');
-      uploadResultMsg.textContent = `Extracted ${data.problemsAdded || '?'} problem statements from "${selectedAdminFile.name}" for domain "${domain}".`;
+      uploadResultMsg.textContent = `Extracted ${data.extractedCount || '?'} problem statements from "${selectedAdminFile.name}" for domain "${domain}".`;
       uploadResultBox.classList.remove('hidden');
       clearFileSelection();
       showToast('Upload successful! 🎉', 'success');
@@ -933,6 +933,12 @@
     if (modalDownloadPdfBtn) modalDownloadPdfBtn.addEventListener('click', () => {
       if (selectedModalTeam) downloadIndividualTeamPdf(selectedModalTeam.teamId);
     });
+    // Close modal when clicking the backdrop outside the modal card
+    if (teamDetailsModal) {
+      teamDetailsModal.addEventListener('click', (e) => {
+        if (e.target === teamDetailsModal) closeTeamDetailsModal();
+      });
+    }
 
     // Domains
     addDomainBtn.addEventListener('click', addDomain);
