@@ -442,24 +442,39 @@ app.delete('/api/domains/:name', adminAuthMiddleware, (req, res) => {
 });
 
 // Problem Statement Wheel Spin Endpoint
-// Implements cycle tracking: no repeated problem statements until all problems in domain are exhausted
+// ATOMIC: Checks 1-spin limit AND saves spin in a single request to prevent race
+// conditions across multiple serverless Vercel lambda instances.
 app.post('/api/spin', (req, res) => {
-  const { domain, seenIds = [], sessionToken } = req.body;
-  
+  const { domain, seenIds = [], sessionToken, teamId: reqTeamId } = req.body;
+
   if (!domain) {
     return res.status(400).json({ error: 'Please select a domain to spin' });
   }
 
-  // Strict check: One spin only per team (Admin bypass allows test spins)
-  if (sessionToken && db.teams) {
-    const team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
-    if (team && !team.isAdmin && team.spins && team.spins.length >= 1) {
-      return res.status(403).json({
-        error: 'Each team is allowed to spin only once! You have already been assigned a problem statement.',
-        alreadySpun: true,
-        problem: team.spins[0]
-      });
+  // ── Find team: by session token first, then by Reg ID ─────────────────────
+  // Two-step lookup ensures the 1-spin check works even when different lambda
+  // instances handled /register and /spin for the same team.
+  let team = null;
+  if (db.teams) {
+    if (sessionToken) {
+      team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
     }
+    if (!team && reqTeamId) {
+      const rawId = reqTeamId.trim().toLowerCase();
+      team = db.teams.find(t =>
+        (t.teamId && t.teamId.toLowerCase() === rawId) ||
+        (t.regId && t.regId.toLowerCase() === rawId)
+      );
+    }
+  }
+
+  // ── Strict 1-spin limit check ──────────────────────────────────────────────
+  if (team && !team.isAdmin && team.spins && team.spins.length >= 1) {
+    return res.status(403).json({
+      error: 'Each team is allowed to spin only once! You have already been assigned a problem statement.',
+      alreadySpun: true,
+      problem: team.spins[0]
+    });
   }
 
   const domainProblems = db.problems.filter(p => p.domain.toLowerCase() === domain.toLowerCase());
@@ -470,33 +485,53 @@ app.post('/api/spin', (req, res) => {
     });
   }
 
-  // Find problems in this domain that have not been seen in the current cycle
+  // Find unseen problems in current cycle
   const seenSet = new Set(seenIds);
   let availableProblems = domainProblems.filter(p => !seenSet.has(p.id));
-
   let cycleCompleted = false;
 
-  // If all problems in this domain have been seen, complete the cycle and reset!
   if (availableProblems.length === 0) {
     cycleCompleted = true;
     availableProblems = [...domainProblems];
   }
 
-  // Pick a random problem statement from the available pool
   const randomIndex = Math.floor(Math.random() * availableProblems.length);
   const selectedProblem = availableProblems[randomIndex];
 
-  const totalInDomain = domainProblems.length;
-  // Calculate remaining after this draw:
-  // If cycle completed, remaining is total - 1. Otherwise available.length - 1.
-  const remainingInCycle = availableProblems.length - 1;
+  // ── ATOMIC SPIN SAVE ────────────────────────────────────────────────────────
+  // Save the spin assignment immediately in this same request (not waiting for
+  // the client to call /api/team/log-spin) so a teamId lookup on the NEXT
+  // request will correctly return alreadySpun=true across all lambda instances.
+  if (team && !team.isAdmin) {
+    const spinRecord = {
+      id: selectedProblem.id,
+      problemId: selectedProblem.id,
+      domain: selectedProblem.domain,
+      title: selectedProblem.title,
+      problemTitle: selectedProblem.title,
+      description: selectedProblem.description,
+      problemDescription: selectedProblem.description,
+      difficulty: selectedProblem.difficulty || 'Intermediate',
+      problemDifficulty: selectedProblem.difficulty || 'Intermediate',
+      source: selectedProblem.source || 'Default',
+      tags: selectedProblem.tags || [],
+      spunAt: new Date().toISOString()
+    };
+    team.spins = [spinRecord];
+    team.hasEntered = true;
+    if (sessionToken && team.sessionTokens && !team.sessionTokens.includes(sessionToken)) {
+      team.sessionTokens.push(sessionToken);
+    }
+    saveDB(db);
+    scheduleGitHubSync();
+  }
 
   res.json({
     problem: selectedProblem,
     cycleCompleted,
-    totalInDomain,
-    remainingInCycle,
-    cycleSize: totalInDomain
+    totalInDomain: domainProblems.length,
+    remainingInCycle: availableProblems.length - 1,
+    cycleSize: domainProblems.length
   });
 });
 
