@@ -150,6 +150,20 @@
         assignedProblem = teamSession.assignedProblem || null;
         showMainApp(teamSession.team);
       }
+
+      // Auto-sync problem allocation with server database
+      if (teamHasSpun && assignedProblem && teamSession?.team?.teamId) {
+        fetch('/api/team/sync-spin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            teamId: teamSession.team.teamId,
+            domain: assignedProblem.domain || activeDomain,
+            problem: assignedProblem,
+            githubLink: teamSession.team.githubLink || ''
+          })
+        }).catch(() => {});
+      }
     } catch (e) {
       teamHasSpun = Boolean(teamSession.hasSpun);
       assignedProblem = teamSession.assignedProblem || null;
@@ -616,15 +630,21 @@
     updateCycleDisplay();
 
     // Log spin permanently to team record
-    if (teamSession && teamSession.sessionToken) {
+    if (teamSession && (teamSession.sessionToken || teamSession.team?.teamId)) {
       try {
         await fetch('/api/team/log-spin', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sessionToken: teamSession.sessionToken, domain: activeDomain, problem })
+          body: JSON.stringify({
+            sessionToken: teamSession.sessionToken,
+            teamId: teamSession.team?.teamId,
+            teamName: teamSession.team?.teamName,
+            domain: activeDomain,
+            problem
+          })
         });
       } catch (e) {
-        // Non-fatal
+        // Non-fatal fallback
       }
     }
 
