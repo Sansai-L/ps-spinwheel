@@ -188,44 +188,143 @@ function loadDB() {
   return loaded;
 }
 
-let syncTimer = null;
-function scheduleGitHubSync() {
-  const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  const GITHUB_REPO = process.env.GITHUB_REPO || 'Sansai-L/ps-spinwheel';
-  if (!GITHUB_TOKEN) return;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_REPO = process.env.GITHUB_REPO || 'Sansai-L/ps-spinwheel';
 
-  if (syncTimer) clearTimeout(syncTimer);
-  syncTimer = setTimeout(async () => {
-    try {
-      const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/database.json?ref=main`, {
-        headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}`, 'User-Agent': 'Antigravity-Server' }
-      });
-      let sha;
-      if (getRes.ok) {
-        const fileInfo = await getRes.json();
-        sha = fileInfo.sha;
+let lastGitHubFetchTime = 0;
+let isPullingFromGitHub = false;
+let gitHubSyncLock = false;
+
+// Pull latest database.json from GitHub repo to survive Vercel lambda recycling
+async function pullLatestFromGitHub() {
+  if (!GITHUB_TOKEN || isPullingFromGitHub) return;
+  isPullingFromGitHub = true;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/database.json?ref=main`, {
+      headers: {
+        'Authorization': `Bearer ${GITHUB_TOKEN}`,
+        'User-Agent': 'ps-spinwheel-server',
+        'Accept': 'application/vnd.github.v3+json'
       }
-      const content = Buffer.from(JSON.stringify(db, null, 2)).toString('base64');
-      const body = {
-        message: 'Auto-sync database: team allocations & activity',
-        content,
-        branch: 'main'
-      };
-      if (sha) body.sha = sha;
-
-      await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/database.json`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${GITHUB_TOKEN}`,
-          'User-Agent': 'Antigravity-Server',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      });
-    } catch (err) {
-      // Non-fatal background sync
+    });
+    if (!res.ok) {
+      isPullingFromGitHub = false;
+      return;
     }
-  }, 1500);
+    const data = await res.json();
+    if (!data.content) {
+      isPullingFromGitHub = false;
+      return;
+    }
+    const rawStr = Buffer.from(data.content, 'base64').toString('utf8');
+    const parsed = JSON.parse(rawStr);
+    
+    if (parsed && typeof parsed === 'object') {
+      if (Array.isArray(parsed.problems)) {
+        db.problems = parsed.problems;
+      }
+      if (Array.isArray(parsed.documents)) {
+        db.documents = parsed.documents;
+      }
+      if (Array.isArray(parsed.domains) && parsed.domains.length > 0) {
+        db.domains = parsed.domains;
+      }
+      if (Array.isArray(parsed.teams) && parsed.teams.length > 0) {
+        const localSpunMap = new Map();
+        (db.teams || []).forEach(t => {
+          if (t.spins && t.spins.length > 0) {
+            localSpunMap.set((t.teamId || t.regId || '').toLowerCase(), t.spins);
+          }
+        });
+        db.teams = parsed.teams.map(t => {
+          const key = (t.teamId || t.regId || '').toLowerCase();
+          if ((!t.spins || t.spins.length === 0) && localSpunMap.has(key)) {
+            return { ...t, spins: localSpunMap.get(key) };
+          }
+          return t;
+        });
+      }
+      saveDB(db);
+      lastGitHubFetchTime = Date.now();
+    }
+  } catch (err) {
+    console.warn('pullLatestFromGitHub non-fatal error:', err.message);
+  } finally {
+    isPullingFromGitHub = false;
+  }
+}
+
+// Persist database.json directly to GitHub repository so data is NEVER lost
+async function syncToGitHub(retryCount = 2) {
+  if (!GITHUB_TOKEN) return false;
+  
+  for (let i = 0; i < 5 && gitHubSyncLock; i++) {
+    await new Promise(r => setTimeout(r, 400));
+  }
+  gitHubSyncLock = true;
+
+  try {
+    for (let attempt = 0; attempt <= retryCount; attempt++) {
+      try {
+        const getRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/database.json?ref=main`, {
+          headers: {
+            'Authorization': `Bearer ${GITHUB_TOKEN}`,
+            'User-Agent': 'ps-spinwheel-server',
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+        let sha = null;
+        if (getRes.ok) {
+          const fileInfo = await getRes.json();
+          sha = fileInfo.sha;
+        }
+
+        const content = Buffer.from(JSON.stringify(db, null, 2)).toString('base64');
+        const body = {
+          message: 'chore: auto-sync database state (problems, teams, domains)',
+          content,
+          branch: 'main'
+        };
+        if (sha) body.sha = sha;
+
+        const putRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/database.json`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${GITHUB_TOKEN}`,
+            'User-Agent': 'ps-spinwheel-server',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+
+        if (putRes.ok) {
+          lastGitHubFetchTime = Date.now();
+          return true;
+        }
+
+        if (putRes.status === 409 && attempt < retryCount) {
+          await new Promise(r => setTimeout(r, 600));
+          continue;
+        }
+
+        const errData = await putRes.json().catch(() => ({}));
+        console.warn(`GitHub PUT failed (${putRes.status}):`, errData.message);
+        return false;
+      } catch (err) {
+        if (attempt >= retryCount) throw err;
+        await new Promise(r => setTimeout(r, 600));
+      }
+    }
+  } catch (err) {
+    console.error('syncToGitHub error:', err.message);
+    return false;
+  } finally {
+    gitHubSyncLock = false;
+  }
+}
+
+function scheduleGitHubSync() {
+  syncToGitHub().catch(() => {});
 }
 
 function saveDB(data) {
@@ -237,10 +336,28 @@ function saveDB(data) {
 }
 
 let db = loadDB();
+// Asynchronously pull latest on startup
+pullLatestFromGitHub().catch(() => {});
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Keep database fresh from GitHub across serverless microVM restarts
+app.use(async (req, res, next) => {
+  const now = Date.now();
+  if (now - lastGitHubFetchTime > 15000) {
+    lastGitHubFetchTime = now;
+    if (req.method === 'GET' && (req.path === '/api/problems' || req.path === '/api/domains' || req.path.startsWith('/api/admin/'))) {
+      try {
+        await pullLatestFromGitHub();
+      } catch (e) {}
+    } else {
+      pullLatestFromGitHub().catch(() => {});
+    }
+  }
+  next();
+});
 const staticDir = fs.existsSync(path.join(__dirname, 'public', 'index.html'))
   ? path.join(__dirname, 'public')
   : __dirname;
@@ -422,7 +539,7 @@ app.get('/api/domains', (req, res) => {
   res.json({ domains: domainsList, totalProblems: db.problems.length });
 });
 
-app.post('/api/domains', adminAuthMiddleware, (req, res) => {
+app.post('/api/domains', adminAuthMiddleware, async (req, res) => {
   const { name } = req.body;
   if (!name || typeof name !== 'string' || !name.trim()) {
     return res.status(400).json({ error: 'Domain name is required' });
@@ -433,10 +550,11 @@ app.post('/api/domains', adminAuthMiddleware, (req, res) => {
   }
   db.domains.push(cleanName);
   saveDB(db);
+  await syncToGitHub();
   res.json({ success: true, domain: cleanName });
 });
 
-app.delete('/api/domains/:name', adminAuthMiddleware, (req, res) => {
+app.delete('/api/domains/:name', adminAuthMiddleware, async (req, res) => {
   const domainParam = decodeURIComponent(req.params.name).trim();
   const index = db.domains.findIndex(d => d.toLowerCase() === domainParam.toLowerCase());
   if (index === -1) {
@@ -453,6 +571,7 @@ app.delete('/api/domains/:name', adminAuthMiddleware, (req, res) => {
   const removedCount = prevCount - db.problems.length;
 
   saveDB(db);
+  await syncToGitHub();
   res.json({
     success: true,
     message: `Domain "${actualDomainName}" and ${removedCount} associated problem statement(s) deleted.`,
@@ -596,7 +715,7 @@ app.get('/api/problems', (req, res) => {
 });
 
 // Add Single Problem Manually (Admin Only)
-app.post('/api/problems', adminAuthMiddleware, (req, res) => {
+app.post('/api/problems', adminAuthMiddleware, async (req, res) => {
   const { domain, title, description, difficulty = 'Intermediate', tags = [] } = req.body;
   if (!domain || !title || !description) {
     return res.status(400).json({ error: 'Domain, title, and description are required' });
@@ -619,11 +738,12 @@ app.post('/api/problems', adminAuthMiddleware, (req, res) => {
 
   db.problems.unshift(newProblem);
   saveDB(db);
+  await syncToGitHub();
   res.json({ success: true, problem: newProblem });
 });
 
 // Delete Problem (Admin Only)
-app.delete('/api/problems/:id', adminAuthMiddleware, (req, res) => {
+app.delete('/api/problems/:id', adminAuthMiddleware, async (req, res) => {
   const { id } = req.params;
   const initialLen = db.problems.length;
   db.problems = db.problems.filter(p => p.id !== id);
@@ -633,23 +753,24 @@ app.delete('/api/problems/:id', adminAuthMiddleware, (req, res) => {
   }
 
   saveDB(db);
+  await syncToGitHub();
   res.json({ success: true, message: 'Problem statement deleted' });
 });
 
 // Clear All Problems (Admin Only)
-app.post('/api/admin/clear-all-problems', adminAuthMiddleware, (req, res) => {
+app.post('/api/admin/clear-all-problems', adminAuthMiddleware, async (req, res) => {
   db.problems = [];
   db.documents = [];
   saveDB(db);
-  scheduleGitHubSync();
+  await syncToGitHub();
   res.json({ success: true, message: 'All problem statements and documents removed successfully', totalProblems: 0 });
 });
 
-app.delete('/api/problems', adminAuthMiddleware, (req, res) => {
+app.delete('/api/problems', adminAuthMiddleware, async (req, res) => {
   db.problems = [];
   db.documents = [];
   saveDB(db);
-  scheduleGitHubSync();
+  await syncToGitHub();
   res.json({ success: true, message: 'All problem statements and documents removed successfully', totalProblems: 0 });
 });
 
@@ -829,6 +950,7 @@ app.post('/api/upload', adminAuthMiddleware, upload.single('file'), async (req, 
     };
     db.documents.unshift(docRecord);
     saveDB(db);
+    await syncToGitHub();
 
     res.json({
       success: true,
@@ -848,7 +970,7 @@ app.get('/api/documents', adminAuthMiddleware, (req, res) => {
   res.json({ documents: db.documents || [] });
 });
 
-app.delete('/api/documents/:id', adminAuthMiddleware, (req, res) => {
+app.delete('/api/documents/:id', adminAuthMiddleware, async (req, res) => {
   const { id } = req.params;
   const doc = (db.documents || []).find(d => d.id === id);
   if (!doc) {
@@ -861,6 +983,7 @@ app.delete('/api/documents/:id', adminAuthMiddleware, (req, res) => {
   db.problems = db.problems.filter(p => p.source !== doc.filename);
 
   saveDB(db);
+  await syncToGitHub();
   res.json({ success: true, message: `Removed document "${doc.filename}" and its problem statements.` });
 });
 
@@ -1376,7 +1499,7 @@ app.get('/api/admin/teams', adminAuthMiddleware, (req, res) => {
 });
 
 // Admin: Reset Spin for a Team
-app.post('/api/admin/teams/reset-spin', adminAuthMiddleware, (req, res) => {
+app.post('/api/admin/teams/reset-spin', adminAuthMiddleware, async (req, res) => {
   const { teamId } = req.body;
   if (!teamId) return res.status(400).json({ error: 'Team ID required' });
   const rawId = teamId.trim().toLowerCase();
@@ -1385,12 +1508,12 @@ app.post('/api/admin/teams/reset-spin', adminAuthMiddleware, (req, res) => {
 
   team.spins = [];
   saveDB(db);
-  scheduleGitHubSync();
+  await syncToGitHub();
   res.json({ success: true, message: `Spin reset for team "${team.teamName}". They can spin again.` });
 });
 
 // Admin: Manually Assign Problem to a Team
-app.post('/api/admin/teams/assign-problem', adminAuthMiddleware, (req, res) => {
+app.post('/api/admin/teams/assign-problem', adminAuthMiddleware, async (req, res) => {
   const { teamId, problemId } = req.body;
   if (!teamId || !problemId) return res.status(400).json({ error: 'Team ID and Problem ID required' });
   const rawId = teamId.trim().toLowerCase();
@@ -1415,7 +1538,7 @@ app.post('/api/admin/teams/assign-problem', adminAuthMiddleware, (req, res) => {
   }];
   team.hasEntered = true;
   saveDB(db);
-  scheduleGitHubSync();
+  await syncToGitHub();
   res.json({ success: true, message: `Problem "${problem.title}" assigned to team "${team.teamName}".` });
 });
 
