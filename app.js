@@ -552,7 +552,8 @@
         body: JSON.stringify({
           domain: activeDomain,
           seenIds,
-          sessionToken: teamSession ? teamSession.sessionToken : null
+          sessionToken: teamSession ? teamSession.sessionToken : null,
+          teamId: teamSession ? teamSession.team?.teamId : null
         })
       });
 
