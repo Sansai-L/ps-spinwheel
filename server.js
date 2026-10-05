@@ -441,6 +441,10 @@ app.delete('/api/domains/:name', adminAuthMiddleware, (req, res) => {
   });
 });
 
+// In-process spin lock: prevents two concurrent requests for the SAME team
+// from both passing the 1-spin check within the same lambda instance.
+const spinningTeams = new Set();
+
 // Problem Statement Wheel Spin Endpoint
 // ATOMIC: Checks 1-spin limit AND saves spin in a single request to prevent race
 // conditions across multiple serverless Vercel lambda instances.
@@ -468,7 +472,7 @@ app.post('/api/spin', (req, res) => {
     }
   }
 
-  // ── Strict 1-spin limit check ──────────────────────────────────────────────
+  // ── Strict 1-spin limit check (persistent) ────────────────────────────────
   if (team && !team.isAdmin && team.spins && team.spins.length >= 1) {
     return res.status(403).json({
       error: 'Each team is allowed to spin only once! You have already been assigned a problem statement.',
@@ -476,6 +480,18 @@ app.post('/api/spin', (req, res) => {
       problem: team.spins[0]
     });
   }
+
+  // ── In-process spin lock (same lambda, concurrent requests) ───────────────
+  // Prevents two simultaneous requests for the same team from both passing
+  // the spins.length check before either has finished writing.
+  const lockKey = (team && team.teamId) ? team.teamId.toLowerCase() : (reqTeamId || '').toLowerCase();
+  if (lockKey && spinningTeams.has(lockKey)) {
+    return res.status(429).json({
+      error: 'Spin already in progress for this team. Please wait a moment.',
+      alreadySpun: false
+    });
+  }
+  if (lockKey) spinningTeams.add(lockKey);
 
   const domainProblems = db.problems.filter(p => p.domain.toLowerCase() === domain.toLowerCase());
 
@@ -525,6 +541,9 @@ app.post('/api/spin', (req, res) => {
     saveDB(db);
     scheduleGitHubSync();
   }
+
+  // Release in-process lock
+  if (lockKey) spinningTeams.delete(lockKey);
 
   res.json({
     problem: selectedProblem,
