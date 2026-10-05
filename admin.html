@@ -124,14 +124,18 @@
       </div>
 
       <form id="adminLoginForm" autocomplete="off">
+        <div style="background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.25);border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:16px;font-size:0.8rem;color:#7dd3fc;display:flex;align-items:center;justify-content:space-between;">
+          <span>Credentials: <strong>admin</strong> / <strong>admin123</strong></span>
+          <button type="button" id="fillAdminCredsBtn" style="background:none;border:none;color:var(--accent-cyan);font-weight:700;cursor:pointer;font-size:0.78rem;text-decoration:underline;">Auto-fill</button>
+        </div>
         <div class="form-group">
           <label class="form-label" for="adminUsername">Username</label>
-          <input type="text" id="adminUsername" class="form-input" placeholder="Enter admin username" required autocomplete="username">
+          <input type="text" id="adminUsername" class="form-input" placeholder="admin" value="admin" required autocomplete="username">
         </div>
         <div class="form-group">
           <label class="form-label" for="adminPassword">Password</label>
           <div class="password-input-wrap">
-            <input type="password" id="adminPassword" class="form-input" placeholder="Enter admin password" required autocomplete="current-password">
+            <input type="password" id="adminPassword" class="form-input" placeholder="admin123" value="admin123" required autocomplete="current-password">
             <button type="button" id="toggleAdminPwd" class="btn-toggle-eye" title="Toggle visibility">👁️</button>
           </div>
         </div>
@@ -447,6 +451,6 @@
   <!-- Toast Notifications -->
   <div id="toastContainer" class="toast-container"></div>
 
-  <script src="admin-app.js"></script>
+  <script src="admin-app.js?v=20261005_3"></script>
 </body>
 </html>
