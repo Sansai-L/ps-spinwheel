@@ -110,9 +110,17 @@ function loadDB() {
       problems: [...sampleProblems],
       documents: (loaded && loaded.documents) || [],
       domains: (loaded && loaded.domains && loaded.domains.length > 0) ? loaded.domains : [
-        "Artificial Intelligence & ML",
+        "Smart Automation",
+        "Healthcare & MedTech",
+        "Agriculture & Rural Development",
+        "Disaster Management",
+        "Smart Education & EdTech",
         "Cybersecurity & Privacy",
+        "Travel & Tourism",
+        "Transportation & Logistics",
+        "SpaceTech & Environment",
         "Web & Mobile Development",
+        "Artificial Intelligence & ML",
         "Internet of Things (IoT)",
         "Cloud & DevOps"
       ]
@@ -387,17 +395,21 @@ const handleAdminVerify = (req, res) => {
 app.get('/api/admin/verify', handleAdminVerify);
 app.get('/api/verify', handleAdminVerify);
 
+// Domain matching helper: checks specific domain, track, or tags
+function matchesDomain(p, domainName) {
+  if (!p || !domainName) return false;
+  const d = domainName.trim().toLowerCase();
+  return (p.domain && p.domain.toLowerCase() === d) ||
+         (p.track && p.track.toLowerCase() === d) ||
+         (Array.isArray(p.domains) && p.domains.some(x => x.toLowerCase() === d)) ||
+         (Array.isArray(p.tags) && p.tags.some(t => t.toLowerCase() === d));
+}
+
 // Domain Endpoints
 app.get('/api/domains', (req, res) => {
-  const domainCounts = {};
-  db.domains.forEach(d => { domainCounts[d] = 0; });
-  db.problems.forEach(p => {
-    domainCounts[p.domain] = (domainCounts[p.domain] || 0) + 1;
-  });
-
-  const domainsList = db.domains.map(d => ({
+  const domainsList = (db.domains || []).map(d => ({
     name: d,
-    count: domainCounts[d] || 0
+    count: (db.problems || []).filter(p => matchesDomain(p, d)).length
   }));
 
   res.json({ domains: domainsList, totalProblems: db.problems.length });
@@ -493,7 +505,7 @@ app.post('/api/spin', (req, res) => {
   }
   if (lockKey) spinningTeams.add(lockKey);
 
-  const domainProblems = db.problems.filter(p => p.domain.toLowerCase() === domain.toLowerCase());
+  const domainProblems = db.problems.filter(p => matchesDomain(p, domain));
 
   if (domainProblems.length === 0) {
     return res.status(404).json({
@@ -560,7 +572,7 @@ app.get('/api/problems', (req, res) => {
   let list = db.problems;
 
   if (domain && domain !== 'All') {
-    list = list.filter(p => p.domain.toLowerCase() === domain.toLowerCase());
+    list = list.filter(p => matchesDomain(p, domain));
   }
 
   if (search) {
@@ -1437,9 +1449,17 @@ app.post('/api/reset-data', adminAuthMiddleware, (req, res) => {
     problems: [...sampleProblems],
     documents: [],
     domains: [
-      "Artificial Intelligence & ML",
+      "Smart Automation",
+      "Healthcare & MedTech",
+      "Agriculture & Rural Development",
+      "Disaster Management",
+      "Smart Education & EdTech",
       "Cybersecurity & Privacy",
+      "Travel & Tourism",
+      "Transportation & Logistics",
+      "SpaceTech & Environment",
       "Web & Mobile Development",
+      "Artificial Intelligence & ML",
       "Internet of Things (IoT)",
       "Cloud & DevOps"
     ],
