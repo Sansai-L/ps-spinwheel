@@ -1,20 +1,5 @@
 {
-  "problems": [
-    {
-      "id": "ps_1791223584962_1t22",
-      "domain": "Artificial Intelligence & ML",
-      "title": "Real-Time River Flood Warning System",
-      "description": "Problem:\nRiver gauge sensor latency prevents early evacuation.\n\nExpected Solution:\nBuild a streaming LSTM model predicting gauge surge 6 hours in advance.",
-      "difficulty": "Advanced",
-      "source": "Manual Entry",
-      "tags": [
-        "AI",
-        "Hydrology",
-        "LSTM"
-      ],
-      "createdAt": "2026-10-05T18:06:24.962Z"
-    }
-  ],
+  "problems": [],
   "documents": [],
   "domains": [
     "Artificial Intelligence & ML",
