@@ -1521,38 +1521,158 @@ async function extractTextFromPDF(buffer) {
   return clean;
 }
 
-// Intelligent Text Statement Splitter
+// Intelligent Text Statement Splitter with dedicated support for user's PDF format
+// (Title | Problem | Expected Solution)
 function parseStatementsFromText(text, targetDomain, sourceName) {
   const problems = [];
   const clean = text
     .replace(/--\s*\d+\s+of\s+\d+\s*--/gi, '')
-    .replace(/\f/g, '\n\n')
+    .replace(/\f/g, '\n')
     .replace(/\r\n/g, '\n')
     .trim();
 
-  // Pattern matching statement headers:
-  // e.g. "Problem Statement 1:", "Problem Statement:", "Challenge 2:", "1. ", "### Problem", "Case 1:"
+  // Check if text matches the "Title -> Problem -> Expected Solution" PDF format
+  const hasProblemKeywords = /(?:^|\n)\s*Problem\s*(?:\n|:)/i.test(clean);
+  const hasExpectedSolutionKeywords = /(?:^|\n)\s*Expected\s+Solution\s*(?:\n|:)/i.test(clean);
+
+  if (hasProblemKeywords && hasExpectedSolutionKeywords) {
+    // ── SPECIFIC "Title | Problem | Expected Solution" PDF PARSER ──
+    const sections = clean.split(/(?=\n\s*Problem\s*(?:\n|:))/i);
+    let currentCategory = '';
+
+    for (let i = 0; i < sections.length; i++) {
+      const sec = sections[i];
+      const probMatch = sec.match(/^\s*Problem\s*(?:\n|:)/i);
+      if (!probMatch) continue; // Skip initial preamble/header
+
+      let title = '';
+      if (i > 0) {
+        const prevSec = sections[i - 1];
+        const expIdx = prevSec.search(/Expected\s+Solution/i);
+        let candidateTitleLines = [];
+
+        if (expIdx !== -1) {
+          const afterExp = prevSec.substring(expIdx);
+          const expLines = afterExp.split('\n').map(l => l.trim()).filter(Boolean);
+          if (expLines.length > 2) {
+            const bottomLines = [];
+            for (let b = expLines.length - 1; b >= 1; b--) {
+              const line = expLines[b];
+              if (line.toLowerCase().startsWith('suggested tech:') || line.endsWith('.') || line.length > 110) {
+                break;
+              }
+              bottomLines.unshift(line);
+            }
+            candidateTitleLines = bottomLines;
+          }
+        } else {
+          // Document header preamble
+          const prevLines = prevSec.split('\n').map(l => l.trim()).filter(Boolean);
+          candidateTitleLines = prevLines.filter(l => 
+            !l.toLowerCase().includes('problem statements') &&
+            !l.toLowerCase().includes('challenges') &&
+            !l.toLowerCase().includes('top 20') &&
+            !l.includes('Title | Problem') &&
+            !l.toLowerCase().startsWith('sih 202')
+          );
+        }
+
+        if (candidateTitleLines.length === 1) {
+          title = candidateTitleLines[0];
+        } else if (candidateTitleLines.length >= 2) {
+          const firstLine = candidateTitleLines[0];
+          // Check if first line is a section banner (e.g. "Smart Automation", "HealthTech", "SpaceTech")
+          if (firstLine.length < 35 && !firstLine.includes('System') && !firstLine.includes('App') && !firstLine.includes('Platform')) {
+            currentCategory = firstLine;
+            title = candidateTitleLines.slice(1).join(' ');
+          } else {
+            title = candidateTitleLines.join(' ');
+          }
+        }
+      }
+
+      // Extract Problem text and Expected Solution text
+      const afterProbHeader = sec.replace(/^\s*Problem\s*(?:\n|:)\s*/i, '');
+      const expSolMatch = afterProbHeader.search(/(?:^|\n)\s*Expected\s+Solution\s*(?:\n|:)\s*/i);
+
+      let problemText = '';
+      let solutionText = '';
+
+      if (expSolMatch !== -1) {
+        problemText = afterProbHeader.substring(0, expSolMatch).trim();
+        const afterSolHeader = afterProbHeader.substring(expSolMatch).replace(/^\s*Expected\s+Solution\s*(?:\n|:)\s*/i, '');
+        solutionText = afterSolHeader.trim();
+      } else {
+        problemText = afterProbHeader.trim();
+      }
+
+      // Clean trailing title/banner lines from solutionText
+      const solLines = solutionText.split('\n').map(l => l.trim()).filter(Boolean);
+      const cleanedSolLines = [];
+      for (const line of solLines) {
+        if (cleanedSolLines.some(l => l.toLowerCase().startsWith('suggested tech:')) && line.length < 80 && !line.endsWith('.')) {
+          break;
+        }
+        cleanedSolLines.push(line);
+      }
+      const finalSolutionText = cleanedSolLines.join('\n');
+
+      // Extract suggested tech tags
+      const techMatch = finalSolutionText.match(/Suggested\s+tech\s*:\s*([^.\n]+)/i);
+      const tags = [targetDomain];
+      if (currentCategory && currentCategory !== targetDomain) tags.push(currentCategory);
+      if (techMatch && techMatch[1]) {
+        const techList = techMatch[1]
+          .split(/[,/]/)
+          .map(t => t.trim().replace(/^\(|\)$/g, ''))
+          .filter(t => t.length > 1 && t.length < 30);
+        tags.push(...techList);
+      }
+
+      // Determine difficulty heuristic
+      let diff = 'Intermediate';
+      const fullText = (title + ' ' + problemText + ' ' + finalSolutionText).toLowerCase();
+      if (fullText.includes('reinforcement learning') || fullText.includes('deep-learning') || fullText.includes('advanced') || fullText.includes('complex') || fullText.includes('segmentation') || fullText.includes('explainable ai')) {
+        diff = 'Advanced';
+      } else if (fullText.includes('gamified') || fullText.includes('gamification') || fullText.includes('awareness') || fullText.includes('beginner') || fullText.includes('simple')) {
+        diff = 'Beginner';
+      }
+
+      const fullDescription = `Problem:\n${problemText}\n\nExpected Solution:\n${finalSolutionText}`;
+
+      problems.push({
+        id: 'ps_doc_' + Date.now() + '_' + problems.length + '_' + Math.random().toString(36).substring(2, 5),
+        domain: targetDomain, // Fully assigned to the single target domain selected by user
+        title: title || `Problem Statement #${problems.length + 1}`,
+        description: fullDescription,
+        difficulty: diff,
+        source: sourceName,
+        tags: [...new Set(tags)],
+        createdAt: new Date().toISOString()
+      });
+    }
+
+    if (problems.length > 0) {
+      return problems;
+    }
+  }
+
+  // ── FALLBACK FOR GENERIC DOCUMENTS / NUMBERED LISTS ──
   const splitPattern = /(?:^|\n)(?=(?:(?:Problem\s+(?:Statement\s+)?|PS\s*|Challenge\s*|Task\s*|Topic\s*|Q\s*)(?:#?\d+[\.:\-\)]|:|\s*\n)|\d+[\.:\-\)]\s+[A-Z]|#{1,3}\s+(?:Problem|Challenge|Task|\d+)))/i;
-  
   let chunks = clean.split(splitPattern).map(c => c.trim()).filter(Boolean);
 
-  // If pattern split didn't find multiple items, split by double newlines or paragraphs
   if (chunks.length <= 1) {
     chunks = clean.split(/\n\s*\n+/).map(c => c.trim()).filter(c => c.length >= 25);
   }
-
-  // If still 1 chunk and length > 20, treat entire document content as a single statement
   if (chunks.length === 0 && clean.length > 20) {
     chunks = [clean];
   }
-
-  // Filter out leading intro chunk if it's just a document title / header without a description
   if (chunks.length > 1) {
     const first = chunks[0];
     const firstLines = first.split('\n').map(l => l.trim()).filter(Boolean);
     const hasStatementMarker = /^(?:Problem|PS|Challenge|Task|Q|1[\.:\-\)])/i.test(firstLines[0]);
     if (!hasStatementMarker && (first.length < 90 || firstLines.length <= 2)) {
-      chunks.shift(); // remove intro title chunk
+      chunks.shift();
     }
   }
 
@@ -1563,11 +1683,9 @@ function parseStatementsFromText(text, targetDomain, sourceName) {
     let titleCandidate = lines[0];
     let descCandidate = lines.slice(1).join('\n').trim();
 
-    // Clean up title prefixes like "Problem Statement 1: ", "1. ", "Challenge 2 - "
     titleCandidate = titleCandidate.replace(/^(?:Problem\s+(?:Statement\s+)?|PS\s*|Challenge\s*|Topic\s*|Q\s*|Task\s*)?(?:#?\d+[\.:\-\)]|:|\s*-)\s*/i, '');
     titleCandidate = titleCandidate.replace(/^[\*#\-_]+\s*/, '').replace(/\s*[\*#\-_]+$/, '');
 
-    // If description is empty or very short, use title or fallback
     if (!descCandidate || descCandidate.length < 15) {
       if (titleCandidate.length > 60) {
         descCandidate = titleCandidate;
@@ -1578,7 +1696,6 @@ function parseStatementsFromText(text, targetDomain, sourceName) {
       }
     }
 
-    // Determine difficulty heuristic
     let diff = 'Intermediate';
     const lower = chunk.toLowerCase();
     if (lower.includes('advanced') || lower.includes('high') || lower.includes('complex') || lower.includes('expert')) {
