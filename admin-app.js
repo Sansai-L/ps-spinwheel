@@ -74,6 +74,7 @@
   const psSearchInput = document.getElementById('psSearchInput');
   const psDomainFilter = document.getElementById('psDomainFilter');
   const psTableBody = document.getElementById('psTableBody');
+  const clearAllPsBtn = document.getElementById('clearAllPsBtn');
   const showAddPsFormBtn = document.getElementById('showAddPsFormBtn');
   const addPsFormWrap = document.getElementById('addPsFormWrap');
   const cancelAddPsBtn = document.getElementById('cancelAddPsBtn');
@@ -988,6 +989,30 @@
     newDomainName.addEventListener('keydown', e => { if (e.key === 'Enter') addDomain(); });
 
     // Problems
+    if (clearAllPsBtn) {
+      clearAllPsBtn.addEventListener('click', async () => {
+        if (!confirm('⚠️ Are you sure you want to permanently delete ALL problem statements and documents? This will completely empty the problem statement repository.')) {
+          return;
+        }
+        try {
+          const res = await fetch('/api/admin/clear-all-problems', {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + adminToken }
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            showToast('All problem statements have been deleted successfully. The repository is now fresh and empty.', 'success');
+            loadProblems();
+            loadDomains();
+            loadDocuments();
+          } else {
+            showToast(data.error || 'Failed to clear problem statements', 'error');
+          }
+        } catch (err) {
+          showToast('Error: ' + err.message, 'error');
+        }
+      });
+    }
     showAddPsFormBtn.addEventListener('click', () => {
       addPsFormWrap.classList.toggle('hidden');
       populateUploadDomainSelect();
