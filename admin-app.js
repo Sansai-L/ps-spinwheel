@@ -113,7 +113,9 @@
         showDashboard();
         loadTabData(activeTab);
       } else {
-        handleAuthFailure();
+        localStorage.removeItem('spinquest_admin_token');
+        adminToken = null;
+        showLogin();
       }
     } else {
       showLogin();
@@ -135,7 +137,7 @@
     localStorage.removeItem('spinquest_admin_token');
     adminToken = null;
     showLogin();
-    showToast(msg, 'error');
+    if (msg) showToast(msg, 'error');
   }
 
   // ─── AUTH ───────────────────────────────────────────────────────────────────
@@ -143,29 +145,47 @@
   function showDashboard() { loginScreen.classList.add('hidden'); dashboard.classList.remove('hidden'); }
 
   async function handleLogin(e) {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     loginError.classList.add('hidden');
+    loginError.textContent = '';
     const btn = loginForm.querySelector('button[type="submit"]');
-    btn.textContent = 'Signing in…'; btn.disabled = true;
+    const uVal = (adminUsername.value || '').trim();
+    const pVal = (adminPassword.value || '').trim();
+
+    if (!uVal || !pVal) {
+      loginError.textContent = 'Please enter both username and password';
+      loginError.classList.remove('hidden');
+      return;
+    }
+
+    if (btn) {
+      btn.textContent = 'Signing in…';
+      btn.disabled = true;
+    }
+
     try {
       const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: adminUsername.value, password: adminPassword.value })
+        body: JSON.stringify({ username: uVal, password: pVal })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Login failed');
+      if (!res.ok) throw new Error(data.error || 'Login failed. Please check credentials.');
       adminToken = data.token;
       localStorage.setItem('spinquest_admin_token', adminToken);
-      adminWelcomeText.textContent = `Logged in as ${adminUsername.value}`;
+      if (adminWelcomeText) adminWelcomeText.textContent = `Logged in as ${uVal}`;
       showDashboard();
-      loadTabData(activeTab);
+      await loadTabData(activeTab);
       showToast('Admin access granted ✅', 'success');
     } catch (err) {
-      loginError.textContent = err.message;
+      console.error('Admin login error:', err);
+      loginError.textContent = err.message || 'Login failed. Please check credentials.';
       loginError.classList.remove('hidden');
     } finally {
-      btn.textContent = 'Sign In as Admin'; btn.disabled = false;
+      if (btn) {
+        btn.textContent = 'Sign In as Admin';
+        btn.disabled = false;
+      }
     }
   }
 
@@ -197,11 +217,11 @@
     teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="9">Loading teams...</td></tr>`;
     try {
       const res = await fetch('/api/admin/teams', { headers: { 'Authorization': 'Bearer ' + adminToken } });
-      if (res.status === 401 || res.status === 403) {
+      if (res.status === 401) {
         handleAuthFailure('Admin session expired. Please log in again.');
         return;
       }
-      if (!res.ok) throw new Error('Failed to load teams');
+      if (!res.ok) throw new Error('Failed to load teams (HTTP ' + res.status + ')');
       const data = await res.json();
       allTeams = data.teams || [];
       renderTeamsStats(data);
@@ -209,6 +229,7 @@
       renderTeamsTable(allTeams);
       setupPdfDownloadBtn();
     } catch (err) {
+      console.error('loadTeams error:', err);
       teamsTableBody.innerHTML = `<tr class="empty-table-row"><td colspan="9" style="color:#f43f5e;">Error: ${err.message}</td></tr>`;
     }
   }
@@ -890,6 +911,15 @@
       toggleAdminPwd.textContent = isPass ? '🙈' : '👁️';
     });
 
+    const fillCredsBtn = document.getElementById('fillAdminCredsBtn');
+    if (fillCredsBtn) {
+      fillCredsBtn.addEventListener('click', () => {
+        if (adminUsername) adminUsername.value = 'admin';
+        if (adminPassword) adminPassword.value = 'admin123';
+        showToast('Credentials filled: admin / admin123', 'info');
+      });
+    }
+
     // Tabs
     tabBtns.forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.atab)));
 
@@ -977,5 +1007,9 @@
     };
   }
 
-  window.addEventListener('DOMContentLoaded', init);
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
