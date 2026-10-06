@@ -201,6 +201,18 @@
               🔍 View Full Statement
             </button>
           </div>
+
+          <!-- GitHub Repo Placing Option on Assigned Challenge Card -->
+          <div id="assignedCardGithubRow" style="margin-top: 14px; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px dashed var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 6px; font-size: 0.82rem;">
+              <span>🔗</span>
+              <span style="color: var(--text-muted);">Team Repository:</span>
+              <span id="assignedCardGithubValue" style="color: var(--text-primary); font-family: var(--font-mono, monospace); font-size: 0.8rem;">Not linked yet</span>
+            </div>
+            <button type="button" id="assignedCardGithubActionBtn" class="btn btn-outline btn-sm" style="font-size: 0.75rem; padding: 4px 10px;">
+              + Place GitHub Link
+            </button>
+          </div>
         </div>
       </section>
 
@@ -228,14 +240,39 @@
               <span class="team-info-label">Team Name</span>
               <span class="team-info-value" id="teamInfoName">—</span>
             </div>
-            <div class="team-info-row" id="teamGithubRow" style="display:none;">
-              <span class="team-info-label">GitHub</span>
-              <a class="team-info-link" id="teamInfoGithub" href="#" target="_blank" rel="noopener">—</a>
-            </div>
             <div class="team-info-row">
               <span class="team-info-label">Spin Status</span>
               <span class="team-info-value team-spin-counter" id="teamSpinStatusBadge" style="color:var(--accent-emerald);">0 / 1 Available</span>
             </div>
+
+            <!-- Interactive GitHub Repository Section on Main Page -->
+            <div class="team-github-section" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-color);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <span class="team-info-label" style="display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                  <span>🔗</span> GitHub Repository
+                </span>
+                <button type="button" id="editGithubBtn" class="btn-text-subtle hidden" style="font-size: 0.72rem; color: var(--accent-cyan); cursor: pointer; background: none; border: none; padding: 0;">
+                  ✏️ Edit
+                </button>
+              </div>
+
+              <!-- Display Mode (when GitHub link is saved) -->
+              <div id="teamGithubDisplay" class="hidden" style="background: rgba(6,182,212,0.06); border: 1px solid rgba(6,182,212,0.25); border-radius: 8px; padding: 7px 10px; display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+                <a id="teamInfoGithub" class="team-info-link" href="#" target="_blank" rel="noopener" style="font-size: 0.78rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; max-width: 175px; color: var(--accent-cyan); text-decoration: none;" title="Open GitHub Repository">
+                  —
+                </a>
+                <span style="font-size: 0.72rem; color: var(--accent-emerald); font-weight: 600;" title="Saved to team record">✓ Saved</span>
+              </div>
+
+              <!-- Input Form Mode (to place or change GitHub link) -->
+              <form id="teamGithubForm" style="display: flex; gap: 6px; margin-top: 4px;">
+                <input type="url" id="mainGithubInput" class="form-input" placeholder="https://github.com/org/repo" style="padding: 6px 8px; font-size: 0.78rem; flex: 1;" required>
+                <button type="submit" id="saveGithubBtn" class="btn btn-primary btn-sm" style="padding: 6px 10px; font-size: 0.75rem; white-space: nowrap;">
+                  Save
+                </button>
+              </form>
+            </div>
+
             <!-- Quick Download Box in sidebar once spun -->
             <div id="teamSidebarPdfBox" class="hidden" style="margin-top:6px;">
               <button id="teamSidebarDownloadPdfBtn" class="btn btn-accent btn-full btn-sm">
