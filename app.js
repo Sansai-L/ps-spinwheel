@@ -88,7 +88,8 @@
 
   const teamNavPill = document.getElementById('teamNavPill');
   const teamNavName = document.getElementById('teamNavName');
-  const switchTeamBtn = document.getElementById('switchTeamBtn');
+  const logoutBtn = document.getElementById('logoutBtn') || document.getElementById('switchTeamBtn');
+  const switchTeamBtn = logoutBtn;
   const teamInfoId = document.getElementById('teamInfoId');
   const teamInfoName = document.getElementById('teamInfoName');
   const teamInfoGithub = document.getElementById('teamInfoGithub');
@@ -306,18 +307,21 @@
     entryErrorMsg.classList.remove('hidden');
   }
 
-  function handleSwitchTeam() {
-    if (!confirm('Are you sure you want to switch teams? Your current session will end.')) return;
+  function handleLogout() {
+    const currentName = teamSession?.team?.teamName || 'your team';
+    if (!confirm(`Are you sure you want to log out of "${currentName}"?`)) return;
     localStorage.removeItem('spinquest_team_session');
     teamSession = null;
     teamHasSpun = false;
     assignedProblem = null;
-    entryTeamId.value = '';
-    entryTeamName.value = '';
-    entryGithubLink.value = '';
+    if (entryTeamId) entryTeamId.value = '';
+    if (entryTeamName) entryTeamName.value = '';
+    if (entryGithubLink) entryGithubLink.value = '';
     unlockWheel();
     showEntryGate();
+    showToast('Logged out successfully. 🚪', 'info');
   }
+  const handleSwitchTeam = handleLogout;
 
   // ─── DOMAIN API ─────────────────────────────────────────────────────────────
   async function fetchDomains() {
@@ -1007,8 +1011,8 @@
 
   // ─── EVENT LISTENERS ────────────────────────────────────────────────────────
   function setupEventListeners() {
-    teamEntryForm.addEventListener('submit', handleTeamRegister);
-    switchTeamBtn.addEventListener('click', handleSwitchTeam);
+    if (teamEntryForm) teamEntryForm.addEventListener('submit', handleTeamRegister);
+    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
 
     spinCenterBtn.addEventListener('click', triggerSpin);
     spinMainBtn.addEventListener('click', triggerSpin);
