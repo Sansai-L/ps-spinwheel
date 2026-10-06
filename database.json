@@ -768,26 +768,182 @@
         "Node"
       ],
       "createdAt": "2026-10-05T18:08:05.599Z"
-    }
-  ],
-  "documents": [
-    {
-      "id": "doc_1791223703136",
-      "filename": "20_Software_(AIML)_Problem statement.pdf",
-      "domain": "Artificial Intelligence & ML",
-      "extractedCount": 20,
-      "uploadedAt": "2026-10-05T18:08:23.136Z",
-      "size": 12294
     },
     {
-      "id": "doc_1791223685599",
-      "filename": "20_(WebApp)_Problem statement.pdf",
-      "domain": "Web & Mobile Development",
-      "extractedCount": 20,
-      "uploadedAt": "2026-10-05T18:08:05.599Z",
-      "size": 12405
+      "id": "ps_cyber_01",
+      "domain": "Cybersecurity & Privacy",
+      "title": "BGP Route Hijack Early Warning System",
+      "problem": "Rogue BGP route announcements target critical financial gateways and internet routing tables, redirecting sensitive network traffic without immediate detection.",
+      "expectedSolution": "A real-time network observatory that monitors BGP routing tables for illegitimate announcements and triggers automated mitigation/re-announcement workflows within 30 seconds.",
+      "description": "Problem:\nRogue BGP route announcements target critical financial gateways and internet routing tables, redirecting sensitive network traffic without immediate detection.\n\nExpected Solution:\nA real-time network observatory that monitors BGP routing tables for illegitimate announcements and triggers automated mitigation/re-announcement workflows within 30 seconds.",
+      "difficulty": "Advanced",
+      "source": "Cyber Defense Scenarios",
+      "tags": [
+        "Cybersecurity",
+        "Networking",
+        "BGP",
+        "Cloud Security"
+      ],
+      "createdAt": "2026-10-06T16:40:27.141Z"
+    },
+    {
+      "id": "ps_cyber_02",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Automated API Token Leakage Revocation Bot",
+      "problem": "Developers accidentally commit sensitive API keys and cryptographic secrets to public git repositories, creating severe breach exposure.",
+      "expectedSolution": "A continuous repository scanner that detects committed credentials in real time and invokes instant revocation and rotation webhooks across cloud and SaaS providers.",
+      "description": "Problem:\nDevelopers accidentally commit sensitive API keys and cryptographic secrets to public git repositories, creating severe breach exposure.\n\nExpected Solution:\nA continuous repository scanner that detects committed credentials in real time and invokes instant revocation and rotation webhooks across cloud and SaaS providers.",
+      "difficulty": "Intermediate",
+      "source": "Cyber Defense Scenarios",
+      "tags": [
+        "Cybersecurity",
+        "DevSecOps",
+        "API Security",
+        "Git"
+      ],
+      "createdAt": "2026-10-06T16:40:27.142Z"
+    },
+    {
+      "id": "ps_cyber_03",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Post-Mortem Memory Dump Forensic Analyzer",
+      "problem": "Analyzing raw RAM dumps from compromised production servers to trace stealthy kernel rootkits and DLL injection processes is slow and complex.",
+      "expectedSolution": "A browser-based forensic visualization tool that parses raw memory dumps, reconstructs kernel process trees, and flags malicious memory injections and hooks.",
+      "description": "Problem:\nAnalyzing raw RAM dumps from compromised production servers to trace stealthy kernel rootkits and DLL injection processes is slow and complex.\n\nExpected Solution:\nA browser-based forensic visualization tool that parses raw memory dumps, reconstructs kernel process trees, and flags malicious memory injections and hooks.",
+      "difficulty": "Advanced",
+      "source": "Cyber Defense Scenarios",
+      "tags": [
+        "Cybersecurity",
+        "Forensics",
+        "Memory Analysis",
+        "Linux"
+      ],
+      "createdAt": "2026-10-06T16:40:27.142Z"
+    },
+    {
+      "id": "ps_iot_01",
+      "domain": "Internet of Things (IoT)",
+      "title": "Autonomous Micro-Grid Power Redistribution",
+      "problem": "Urban micro-grids suffer severe transformer stress and blackouts during peak hours due to unscheduled EV charging and fluctuating rooftop solar generation.",
+      "expectedSolution": "An intelligent IoT edge controller for neighborhood micro-grids that balances solar battery storage and EV charging stations dynamically during peak grid demand.",
+      "description": "Problem:\nUrban micro-grids suffer severe transformer stress and blackouts during peak hours due to unscheduled EV charging and fluctuating rooftop solar generation.\n\nExpected Solution:\nAn intelligent IoT edge controller for neighborhood micro-grids that balances solar battery storage and EV charging stations dynamically during peak grid demand.",
+      "difficulty": "Intermediate",
+      "source": "IoT Smart City Challenges",
+      "tags": [
+        "IoT",
+        "Smart Grid",
+        "Clean Energy",
+        "Edge Computing"
+      ],
+      "createdAt": "2026-10-06T16:40:27.142Z"
+    },
+    {
+      "id": "ps_iot_02",
+      "domain": "Internet of Things (IoT)",
+      "title": "AI Traffic Light Synchronization for Emergency Convoys",
+      "problem": "Emergency ambulances and fire convoys lose critical survival time stuck in congested city traffic intersections.",
+      "expectedSolution": "An IoT acoustic and visual sensor network mounted on traffic lights that detects sirens 500 meters away and coordinates an automated dynamic green corridor.",
+      "description": "Problem:\nEmergency ambulances and fire convoys lose critical survival time stuck in congested city traffic intersections.\n\nExpected Solution:\nAn IoT acoustic and visual sensor network mounted on traffic lights that detects sirens 500 meters away and coordinates an automated dynamic green corridor.",
+      "difficulty": "Intermediate",
+      "source": "IoT Smart City Challenges",
+      "tags": [
+        "IoT",
+        "Emergency Services",
+        "Smart Traffic",
+        "Sensors"
+      ],
+      "createdAt": "2026-10-06T16:40:27.142Z"
+    },
+    {
+      "id": "ps_iot_03",
+      "domain": "Internet of Things (IoT)",
+      "title": "Underground Storm Drain Overflow & Toxic Gas Monitoring",
+      "problem": "Municipal underground sewage ducts experience silent methane accumulation and flash flood overflows before surface sirens can respond.",
+      "expectedSolution": "ATEX-certified low-power IoT sensor array deployed in municipal drain networks measuring gas concentrations and water velocity, transmitting telemetry to flood management units.",
+      "description": "Problem:\nMunicipal underground sewage ducts experience silent methane accumulation and flash flood overflows before surface sirens can respond.\n\nExpected Solution:\nATEX-certified low-power IoT sensor array deployed in municipal drain networks measuring gas concentrations and water velocity, transmitting telemetry to flood management units.",
+      "difficulty": "Advanced",
+      "source": "IoT Smart City Challenges",
+      "tags": [
+        "IoT",
+        "Environmental Sensing",
+        "Disaster Prevention",
+        "LoRaWAN"
+      ],
+      "createdAt": "2026-10-06T16:40:27.142Z"
+    },
+    {
+      "id": "ps_iot_04",
+      "domain": "Internet of Things (IoT)",
+      "title": "Drone Landing Pad Beacon for Medical Supply Drops",
+      "problem": "Medical cargo drones carrying blood, organs, and medicines face landing failures during low visibility, high wind, or rain on hospital rooftops.",
+      "expectedSolution": "An encrypted multi-spectral IoT infrared and radio beacon pad providing millimeter-precision landing guidance and real-time wind shear alerts to cargo drones.",
+      "description": "Problem:\nMedical cargo drones carrying blood, organs, and medicines face landing failures during low visibility, high wind, or rain on hospital rooftops.\n\nExpected Solution:\nAn encrypted multi-spectral IoT infrared and radio beacon pad providing millimeter-precision landing guidance and real-time wind shear alerts to cargo drones.",
+      "difficulty": "Intermediate",
+      "source": "IoT Smart City Challenges",
+      "tags": [
+        "IoT",
+        "Drones",
+        "Healthcare Logistics",
+        "Hardware"
+      ],
+      "createdAt": "2026-10-06T16:40:27.142Z"
+    },
+    {
+      "id": "ps_cloud_01",
+      "domain": "Cloud & DevOps",
+      "title": "Automated Multi-Region Disaster Recovery & Failover Pipeline",
+      "problem": "Cloud applications face critical data loss and extended downtime during regional cloud outages due to manual disaster recovery failover processes.",
+      "expectedSolution": "An automated multi-region DR framework using Terraform and Ansible with continuous health checks, automated cross-region database replication verification, and instantaneous DNS failover routing. Tech: Terraform, AWS/GCP, Docker, Prometheus, Route53/Cloudflare.",
+      "description": "Problem:\nCloud applications face critical data loss and extended downtime during regional cloud outages due to manual disaster recovery failover processes.\n\nExpected Solution:\nAn automated multi-region DR framework using Terraform and Ansible with continuous health checks, automated cross-region database replication verification, and instantaneous DNS failover routing. Tech: Terraform, AWS/GCP, Docker, Prometheus, Route53/Cloudflare.",
+      "difficulty": "Hard",
+      "source": "Default",
+      "tags": [
+        "Cloud & DevOps",
+        "Disaster Recovery",
+        "Terraform",
+        "Kubernetes",
+        "Prometheus"
+      ],
+      "createdAt": "2026-10-06T16:46:30.956Z"
+    },
+    {
+      "id": "ps_cloud_02",
+      "domain": "Cloud & DevOps",
+      "title": "Zero-Trust Infrastructure Access and Secrets Management for Cloud Workloads",
+      "problem": "Hardcoded API credentials and static SSH keys expose cloud infrastructure to unauthorized lateral movement and security breaches across microservices.",
+      "expectedSolution": "A dynamic zero-trust secrets management engine utilizing HashiCorp Vault, short-lived OIDC tokens, and automated key rotation across Kubernetes clusters and serverless functions. Tech: HashiCorp Vault, Docker, OIDC, Kubernetes RBAC, Python/Go.",
+      "description": "Problem:\nHardcoded API credentials and static SSH keys expose cloud infrastructure to unauthorized lateral movement and security breaches across microservices.\n\nExpected Solution:\nA dynamic zero-trust secrets management engine utilizing HashiCorp Vault, short-lived OIDC tokens, and automated key rotation across Kubernetes clusters and serverless functions. Tech: HashiCorp Vault, Docker, OIDC, Kubernetes RBAC, Python/Go.",
+      "difficulty": "Intermediate",
+      "source": "Default",
+      "tags": [
+        "Cloud & DevOps",
+        "Zero Trust",
+        "HashiCorp Vault",
+        "Secrets Management",
+        "Security"
+      ],
+      "createdAt": "2026-10-06T16:46:30.957Z"
+    },
+    {
+      "id": "ps_cloud_03",
+      "domain": "Cloud & DevOps",
+      "title": "Intelligent Kubernetes Resource Profiling and Autoscaling Optimizer",
+      "problem": "Microservice workloads in Kubernetes frequently over-provision CPU and memory limits, resulting in massive cloud cost overruns and poor resource utilization.",
+      "expectedSolution": "An AI-powered resource optimization daemon that analyzes real-time Prometheus telemetry, dynamically tunes pod vertical/horizontal autoscaling parameters, and reduces cluster cloud costs without performance degradation. Tech: Kubernetes, Prometheus, Python/Go, Grafana, ML algorithms.",
+      "description": "Problem:\nMicroservice workloads in Kubernetes frequently over-provision CPU and memory limits, resulting in massive cloud cost overruns and poor resource utilization.\n\nExpected Solution:\nAn AI-powered resource optimization daemon that analyzes real-time Prometheus telemetry, dynamically tunes pod vertical/horizontal autoscaling parameters, and reduces cluster cloud costs without performance degradation. Tech: Kubernetes, Prometheus, Python/Go, Grafana, ML algorithms.",
+      "difficulty": "Hard",
+      "source": "Default",
+      "tags": [
+        "Cloud & DevOps",
+        "Kubernetes",
+        "Autoscaling",
+        "Cost Optimization",
+        "Prometheus"
+      ],
+      "createdAt": "2026-10-06T16:46:30.957Z"
     }
   ],
+  "documents": [],
   "domains": [
     "Artificial Intelligence & ML",
     "Cybersecurity & Privacy",
@@ -818,18 +974,10 @@
         "sess_1791190697819_pwrbqd9",
         "sess_1791190711969_p1tzxp7",
         "sess_1791192345825_tg6ptqi",
-        "sess_1791284081290_akxp88u",
-        "sess_1791285708294_szw3291",
-        "sess_1791285711131_peadfjt",
-        "sess_1791287002931_hclx6re",
-        "sess_1791303675379_llf8103",
-        "sess_1791303801229_7oyo1e3",
-        "sess_1791303846923_tjr1mpx",
-        "sess_1791303915204_tjybgwz",
-        "sess_1791304218458_curf1on"
+        "sess_1791277849694_5s6mu8t",
+        "sess_1791277849735_d4812q1"
       ],
-      "spins": [],
-      "spinResetAt": "2026-10-06T16:12:38.586Z"
+      "spins": []
     },
     {
       "id": 2,
@@ -847,13 +995,12 @@
       "utr": "626676234759",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": true,
+      "hasEntered": false,
       "registeredAt": null,
       "sessionTokens": [
-        "sess_1791304390569_9k0vi8j"
+        "sess_1791277849765_zs09830"
       ],
-      "spins": [],
-      "spinResetAt": "2026-10-06T16:33:26.939Z"
+      "spins": []
     },
     {
       "id": 3,
@@ -2947,9 +3094,6 @@
     "adm.YWRtaW46MTc5MTE5Mzc1MjczNA.0547db42faf4a36711c0120c1a8123f27c37b90e2e401cb9622d80b34a002b68",
     "adm.YWRtaW46MTc5MTE5Mzc1Mjc0OQ.ad565ddf3e504ff3fda0a9a4dea6f531417d6027c1d02e7d6d160b0090daaab0",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NTg.970137b4028e3993363b17be46bc1591213b1a51e1963fa678503c5117c058b7",
-    "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NjU.3091a723a4961e52a5c560655b49d09df472447fb73dfe3f0f846d59c9bade37",
-    "adm.YWRtaW46MTc5MTIyMzU4NDI5MA.d9f15611240baa095819f2079e0fdf44e5365414be3b00d7be09132a547fe1cd",
-    "adm.YWRtaW46MTc5MTI4NTcyNDIyMw.33a892702e6253aa4e43fa517b2ad1e3b1ad9adec154cb375ef41cdb289930c1",
-    "adm.YWRtaW46MTc5MTMwNDQwNjUyOQ.9910af29d78241642b3cb122023b7dd387569a23a0a501dd14b6c93affc436ac"
+    "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NjU.3091a723a4961e52a5c560655b49d09df472447fb73dfe3f0f846d59c9bade37"
   ]
 }
