@@ -820,28 +820,8 @@
         "sess_1791192345825_tg6ptqi",
         "sess_1791284081290_akxp88u"
       ],
-      "spins": [
-        {
-          "id": "ps_doc_1791223685599_7_ovl",
-          "problemId": "ps_doc_1791223685599_7_ovl",
-          "domain": "Web & Mobile Development",
-          "title": "Smart Community Health Monitoring and Early Warning System for Water-Borne Diseases",
-          "problemTitle": "Smart Community Health Monitoring and Early Warning System for Water-Borne Diseases",
-          "description": "Problem:\nWater-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.\n\nExpected Solution:\nA data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
-          "problemDescription": "Problem:\nWater-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.\n\nExpected Solution:\nA data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
-          "difficulty": "Intermediate",
-          "problemDifficulty": "Intermediate",
-          "source": "20_(WebApp)_Problem statement.pdf",
-          "tags": [
-            "Web & Mobile Development",
-            "MedTech / HealthTech",
-            "Flutter",
-            "React Native",
-            "Node"
-          ],
-          "spunAt": "2026-10-06T10:54:50.989Z"
-        }
-      ]
+      "spins": [],
+      "spinResetAt": "2026-10-06T11:21:46.837Z"
     },
     {
       "id": 2,
@@ -2957,6 +2937,7 @@
     "adm.YWRtaW46MTc5MTE5Mzc1Mjc0OQ.ad565ddf3e504ff3fda0a9a4dea6f531417d6027c1d02e7d6d160b0090daaab0",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NTg.970137b4028e3993363b17be46bc1591213b1a51e1963fa678503c5117c058b7",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NjU.3091a723a4961e52a5c560655b49d09df472447fb73dfe3f0f846d59c9bade37",
-    "adm.YWRtaW46MTc5MTIyMzU4NDI5MA.d9f15611240baa095819f2079e0fdf44e5365414be3b00d7be09132a547fe1cd"
+    "adm.YWRtaW46MTc5MTIyMzU4NDI5MA.d9f15611240baa095819f2079e0fdf44e5365414be3b00d7be09132a547fe1cd",
+    "adm.YWRtaW46MTc5MTI4NTcwNTcwNQ.3e62647dd91da3ac9ef7dc9b7eebc88c77d98fc6506106e2d7b77b665bba7bba"
   ]
 }
