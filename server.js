@@ -195,6 +195,23 @@ let lastGitHubFetchTime = 0;
 let isPullingFromGitHub = false;
 let gitHubSyncLock = false;
 
+// ─── HIGH-CONCURRENCY SYNC QUEUE ─────────────────────────────────────────────
+// For 150 simultaneous users: debounce GitHub syncs so many rapid writes
+// are batched into a single GitHub PUT instead of 150 separate API calls.
+let syncPending = false;
+let syncDebounceTimer = null;
+
+function debouncedSync(delayMs = 2000) {
+  if (!syncPending) {
+    syncPending = true;
+  }
+  clearTimeout(syncDebounceTimer);
+  syncDebounceTimer = setTimeout(async () => {
+    syncPending = false;
+    try { await syncToGitHub(); } catch (e) {}
+  }, delayMs);
+}
+
 // Merge remote teams into local db.teams preserving assigned spins and honoring admin resets
 function mergeTeams(remoteTeams = []) {
   if (!db.teams) db.teams = [];
@@ -391,11 +408,15 @@ let db = loadDB();
 // Asynchronously pull latest on startup
 pullLatestFromGitHub().catch(() => {});
 
-// Middleware
+// Middleware — body size limit protects against large payload attacks under high concurrency
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '2mb' }));
+app.use(express.urlencoded({ extended: false, limit: '2mb' }));
 
-// Keep database fresh from GitHub across serverless microVM restarts
+// ─── GITHUB PULL THROTTLE ─────────────────────────────────────────────────────
+// For 150 concurrent users: pull GitHub at most once per 20 seconds,
+// but ONLY await it on a true cold start (lastGitHubFetchTime === 0).
+// All other refreshes are fire-and-forget to keep response times fast.
 app.use(async (req, res, next) => {
   const now = Date.now();
   const needsFresh = req.path === '/api/team/register' ||
@@ -405,13 +426,13 @@ app.use(async (req, res, next) => {
                      req.path === '/api/domains' ||
                      req.path.startsWith('/api/admin/');
 
-  // Cold start (lastGitHubFetchTime === 0) or interval expired: strictly await pull for critical endpoints
-  if (!lastGitHubFetchTime || (now - lastGitHubFetchTime > 10000 && needsFresh)) {
-    try {
-      await pullLatestFromGitHub();
-    } catch (e) {}
-  } else if (now - lastGitHubFetchTime > 30000) {
+  if (!lastGitHubFetchTime) {
+    // True cold start — await exactly one pull to bootstrap in-memory db
+    try { await pullLatestFromGitHub(); } catch (e) {}
+  } else if (now - lastGitHubFetchTime > 20000 && needsFresh) {
+    // Stale data — refresh fire-and-forget so we don't block the response
     pullLatestFromGitHub().catch(() => {});
+    lastGitHubFetchTime = now; // Optimistically update to prevent stampede
   }
   next();
 });
@@ -828,7 +849,9 @@ app.post('/api/spin', async (req, res) => {
       team.sessionTokens.push(sessionToken);
     }
     saveDB(db);
-    await syncToGitHub();
+    // Fire-and-forget: response does NOT wait for GitHub — spin is already saved in-memory.
+    // debouncedSync batches rapid simultaneous spin saves into one GitHub PUT.
+    debouncedSync(1500);
   }
 
   // Release in-process lock
@@ -1253,7 +1276,7 @@ app.post('/api/team/register', async (req, res) => {
 
   db.teams.unshift(newTeam);
   saveDB(db);
-  await syncToGitHub();
+  scheduleGitHubSync(); // Fire-and-forget — login response not blocked by GitHub API
 
   res.json({
     success: true,
@@ -1386,7 +1409,7 @@ app.post('/api/team/log-spin', async (req, res) => {
   team.spins = [assignedRecord]; // Exactly 1 problem statement stored
   team.hasEntered = true;
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(1500); // Non-blocking — data already saved in memory
   res.json({ success: true, spinCount: 1, assignedProblem: assignedRecord });
 });
 
@@ -1418,9 +1441,11 @@ app.post('/api/team/sync-spin', async (req, res) => {
         spunAt: problem.spunAt || new Date().toISOString()
       }];
       saveDB(db);
-      await syncToGitHub();
+      debouncedSync(2000); // Batched sync — safe for high concurrency
     }
     return res.json({ success: true, synced: true, teamId: team.teamId });
+  } else {
+    return res.status(404).json({ error: 'Team not found', synced: false });
   }
 });
 
@@ -1452,7 +1477,7 @@ app.post('/api/team/github', async (req, res) => {
 
   team.githubLink = cleanLink;
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000); // Non-blocking — GitHub link update batched
 
   res.json({
     success: true,
@@ -1764,8 +1789,10 @@ app.post('/api/admin/teams/assign-problem', adminAuthMiddleware, async (req, res
     domain: problem.domain,
     title: problem.title,
     problemTitle: problem.title,
-    description: problem.description,
-    problemDescription: problem.description,
+    problem: problem.problem || '',
+    expectedSolution: problem.expectedSolution || '',
+    description: problem.description || problem.problem || '',
+    problemDescription: problem.description || problem.problem || '',
     difficulty: problem.difficulty || 'Intermediate',
     problemDifficulty: problem.difficulty || 'Intermediate',
     source: problem.source || 'Admin Assigned',
@@ -2310,5 +2337,18 @@ if (require.main === module) {
     console.log(`Server running at http://localhost:${PORT}`);
   });
 }
+
+// ─── GLOBAL ERROR HANDLER ─────────────────────────────────────────────────────
+// Catches any unhandled errors from route handlers. Without this, Express
+// may return a blank 500 response on Vercel serverless with no message.
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.error('Unhandled server error:', err && err.message ? err.message : err);
+  if (res.headersSent) return;
+  res.status(500).json({
+    error: 'Internal server error. Please try again.',
+    details: process.env.NODE_ENV !== 'production' ? (err && err.message) : undefined
+  });
+});
 
 module.exports = app;
