@@ -342,6 +342,7 @@
         <button class="admin-tab" data-atab="tabProblems">📋 Problem Statements</button>
         <button class="admin-tab" data-atab="tabUpload">📤 Upload Documents</button>
         <button class="admin-tab" data-atab="tabDocuments">🗂️ Uploaded Files</button>
+        <button class="admin-tab" data-atab="tabAddTeams" style="color:#34d399;">➕ Add Teams</button>
       </div>
 
       <!-- ── TAB: TEAMS ACTIVITY ─────────────────────────────────── -->
@@ -559,6 +560,104 @@
           <button id="resetDataBtn" class="btn-text-subtle" title="Restore default problem statements">↺ Restore Default Problem Statements</button>
         </div>
       </div>
+
+      <!-- ── TAB: ADD TEAMS ─────────────────────────────────────────── -->
+      <div id="tabAddTeams" class="admin-tab-content hidden" style="margin-top: -20px; padding: 0 0 20px;">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start;">
+
+          <!-- Left: Add Team Form -->
+          <div class="upload-section" style="margin-bottom:0;">
+            <h3 style="font-size:1.05rem;font-weight:800;margin-bottom:4px;">➕ Add New Team</h3>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:18px;">Add teams beyond the original 101. New teams can log in and spin immediately.</p>
+
+            <form id="addTeamForm" autocomplete="off">
+              <div class="form-group">
+                <label class="form-label">Reg ID / Team ID <span style="color:#f43f5e;">*</span></label>
+                <input type="text" id="newTeamRegId" class="form-input" placeholder="e.g. CODIENYCH-2026-0102" required maxlength="40">
+                <small style="color:var(--text-muted);font-size:0.72rem;">Must be unique. Teams log in using this ID.</small>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Team Name <span style="color:#f43f5e;">*</span></label>
+                <input type="text" id="newTeamName" class="form-input" placeholder="e.g. The Code Wizards" required maxlength="80">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Domain / Track</label>
+                <select id="newTeamDomain" class="form-select">
+                  <option value="Artificial Intelligence &amp; ML">Artificial Intelligence &amp; ML</option>
+                  <option value="Web &amp; Mobile Development">Web &amp; Mobile Development</option>
+                  <option value="Internet of Things (IoT)">Internet of Things (IoT)</option>
+                  <option value="Cybersecurity &amp; Privacy">Cybersecurity &amp; Privacy</option>
+                  <option value="Cloud &amp; DevOps">Cloud &amp; DevOps</option>
+                </select>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div class="form-group">
+                  <label class="form-label">Leader Name</label>
+                  <input type="text" id="newTeamLeader" class="form-input" placeholder="Team leader name" maxlength="60">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Phone</label>
+                  <input type="text" id="newTeamPhone" class="form-input" placeholder="+91 XXXXXXXXXX" maxlength="20">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">College / Institution</label>
+                <input type="text" id="newTeamCollege" class="form-input" placeholder="College name" maxlength="100">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Members (comma-separated)</label>
+                <input type="text" id="newTeamMembers" class="form-input" placeholder="Name1, Name2, Name3" maxlength="200">
+              </div>
+              <div id="addTeamMsg" class="hidden" style="margin-bottom:10px;padding:8px 12px;border-radius:6px;font-size:0.83rem;font-weight:600;"></div>
+              <button type="submit" id="addTeamSubmitBtn" class="btn btn-accent btn-full">
+                <span id="addTeamBtnLabel">➕ Add Team</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Right: Custom Teams List -->
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+              <div>
+                <h3 style="font-size:1.05rem;font-weight:800;margin-bottom:2px;">📋 Custom Added Teams</h3>
+                <p style="font-size:0.78rem;color:var(--text-muted);">Teams added by admin beyond the original 101</p>
+              </div>
+              <button id="refreshCustomTeamsBtn" class="btn btn-secondary btn-sm">🔄 Refresh</button>
+            </div>
+
+            <div id="customTeamsCount" style="margin-bottom:10px;font-size:0.8rem;color:var(--text-muted);">Loading...</div>
+
+            <div style="max-height:520px;overflow-y:auto;border:1px solid var(--border-color);border-radius:var(--radius-md);">
+              <table class="teams-table" style="min-width:auto;">
+                <thead>
+                  <tr>
+                    <th>Reg ID</th>
+                    <th>Team Name</th>
+                    <th>Domain</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="customTeamsTableBody">
+                  <tr class="empty-table-row"><td colspan="4">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="margin-top:12px;padding:10px 14px;background:rgba(255,193,7,0.06);border:1px solid rgba(255,193,7,0.2);border-radius:8px;font-size:0.78rem;color:#fbbf24;">
+              ⚠️ Deleting a custom team removes their login access. Their spin data in Teams Activity is unaffected.
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile: stack on small screens -->
+        <style>
+          @media(max-width:860px){
+            #tabAddTeams > div { grid-template-columns: 1fr !important; }
+          }
+        </style>
+      </div>
+      <!-- /tabAddTeams -->
 
     </div><!-- /admin-content -->
   </div><!-- /adminDashboard -->
