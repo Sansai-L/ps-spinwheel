@@ -35,33 +35,8 @@
         "sess_1791277849735_d4812q1",
         "sess_1791303846923_tjr1mpx"
       ],
-      "spins": [
-        {
-          "id": "ps_doc_1791223685599_2_ytq",
-          "problemId": "ps_doc_1791223685599_2_ytq",
-          "domain": "Web & Mobile Development",
-          "title": "Dynamic Route Rationalization Model Using AI/ML",
-          "problemTitle": "Dynamic Route Rationalization Model Using AI/ML",
-          "problem": "Transit and delivery routes are often static and don't adapt to changing demand or traffic patterns, causing inefficiency.",
-          "expectedSolution": "An AI/ML model that analyzes demand and traffic data to dynamically rationalize and recommend optimal routes. Suggested tech: Python, optimization/ML libraries (OR-Tools, Scikit-learn), React dashboard, cloud database.",
-          "description": "Problem:\nTransit and delivery routes are often static and don't adapt to changing demand or traffic patterns, causing inefficiency.\n\nExpected Solution:\nAn AI/ML model that analyzes demand and traffic data to dynamically rationalize and recommend optimal routes. Suggested tech: Python, optimization/ML libraries (OR-Tools, Scikit-learn), React dashboard, cloud database.",
-          "problemDescription": "Problem:\nTransit and delivery routes are often static and don't adapt to changing demand or traffic patterns, causing inefficiency.\n\nExpected Solution:\nAn AI/ML model that analyzes demand and traffic data to dynamically rationalize and recommend optimal routes. Suggested tech: Python, optimization/ML libraries (OR-Tools, Scikit-learn), React dashboard, cloud database.",
-          "difficulty": "Intermediate",
-          "problemDifficulty": "Intermediate",
-          "source": "20_(WebApp)_Problem statement.pdf",
-          "tags": [
-            "Web & Mobile Development",
-            "Smart Automation",
-            "Python",
-            "optimization",
-            "ML libraries (OR-Tools",
-            "Scikit-learn",
-            "React dashboard",
-            "cloud database"
-          ],
-          "spunAt": "2026-10-06T16:50:12.917Z"
-        }
-      ]
+      "spins": [],
+      "spinResetAt": "2026-10-06T16:51:52.309Z"
     },
     {
       "id": 2,
