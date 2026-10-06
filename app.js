@@ -248,8 +248,7 @@
     const teamName = entryTeamName.value.trim();
     const githubLink = entryGithubLink.value.trim();
 
-    if (!teamId) { showEntryError('Please enter your Team ID.'); return; }
-    if (!teamName) { showEntryError('Please enter your Team Name.'); return; }
+    if (!teamId) { showEntryError('Please enter your Reg ID / Team ID.'); return; }
 
     entrySubmitLabel.textContent = 'Entering...';
     entrySubmitBtn.disabled = true;
