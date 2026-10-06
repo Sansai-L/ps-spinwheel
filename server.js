@@ -602,11 +602,10 @@ function matchesDomain(p, domainName) {
   if (!p || !domainName) return false;
   const d = domainName.trim().toLowerCase();
 
-  // 1. Direct equality checks
+  // 1. Direct equality checks on primary domain / track
   if (p.domain && p.domain.toLowerCase() === d) return true;
   if (p.track && p.track.toLowerCase() === d) return true;
   if (Array.isArray(p.domains) && p.domains.some(x => x && x.toLowerCase() === d)) return true;
-  if (Array.isArray(p.tags) && p.tags.some(t => t && t.toLowerCase() === d)) return true;
 
   // 2. Normalized checks (handles &, and, app, mobile, spaces, punctuation)
   const norm = str => (str || '').toLowerCase()
@@ -640,9 +639,13 @@ function matchesDomain(p, domainName) {
       };
       if (matchP(p.domain) || matchP(p.track)) return true;
       if (Array.isArray(p.domains) && p.domains.some(matchP)) return true;
-      if (Array.isArray(p.tags) && p.tags.some(matchP)) return true;
+      // Only check tags if problem does NOT have an explicit domain set
+      if (!p.domain && Array.isArray(p.tags) && p.tags.some(matchP)) return true;
     }
   }
+
+  // If problem has no explicit domain, check exact tag match as final fallback
+  if (!p.domain && Array.isArray(p.tags) && p.tags.some(t => t && t.toLowerCase() === d)) return true;
 
   return false;
 }
