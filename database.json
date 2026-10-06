@@ -1137,9 +1137,390 @@
         "Kernel Security"
       ],
       "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_1",
+      "domain": "Cloud & DevOps",
+      "title": "AI-Based Early Warning and Landslide Risk Monitoring System in NER",
+      "problem": "Landslide-prone regions in the North Eastern Region lack a way to continuously monitor risk in real time from GIS and remote sensing data at the scale needed for early warning.",
+      "expectedSolution": "A scalable cloud architecture that continuously ingests live GIS/remote sensing data and runs machine learning models to predict landslides in real time, deployed on scalable compute infrastructure (e.g. AWS EC2, GCP Compute Engine).",
+      "description": "Problem:\nLandslide-prone regions in the North Eastern Region lack a way to continuously monitor risk in real time from GIS and remote sensing data at the scale needed for early warning.\n\nExpected Solution:\nA scalable cloud architecture that continuously ingests live GIS/remote sensing data and runs machine learning models to predict landslides in real time, deployed on scalable compute infrastructure (e.g. AWS EC2, GCP Compute Engine).",
+      "difficulty": "Advanced",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "AWS EC2",
+        "GCP Compute Engine",
+        "Cloud Architecture",
+        "GIS",
+        "Remote Sensing"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_2",
+      "domain": "Cloud & DevOps",
+      "title": "AI-Based Smart Logistics and Accessibility Intelligence Platform",
+      "problem": "Logistics operations often face traffic disruptions and fleet-routing inefficiencies without a resilient, real-time system to adapt on the fly.",
+      "expectedSolution": "A smart logistics platform with real-time fleet routing that stays available during traffic disruptions, built on centralized cloud databases, real-time APIs, and a highly available cloud architecture.",
+      "description": "Problem:\nLogistics operations often face traffic disruptions and fleet-routing inefficiencies without a resilient, real-time system to adapt on the fly.\n\nExpected Solution:\nA smart logistics platform with real-time fleet routing that stays available during traffic disruptions, built on centralized cloud databases, real-time APIs, and a highly available cloud architecture.",
+      "difficulty": "Intermediate",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Cloud Architecture",
+        "High Availability",
+        "Real-Time APIs",
+        "Cloud Databases"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_3",
+      "domain": "Cloud & DevOps",
+      "title": "Real-Time National Land Acquisition & Management System",
+      "problem": "Sensitive government land-acquisition documents need a secure, national-scale system for monitoring and management, which doesn't currently exist at that scale.",
+      "expectedSolution": "A national-scale monitoring system for land-acquisition documents, built with cloud auto-scaling, robust load balancers, and highly secure cloud storage (e.g. AWS S3) to handle sensitive data reliably.",
+      "description": "Problem:\nSensitive government land-acquisition documents need a secure, national-scale system for monitoring and management, which doesn't currently exist at that scale.\n\nExpected Solution:\nA national-scale monitoring system for land-acquisition documents, built with cloud auto-scaling, robust load balancers, and highly secure cloud storage (e.g. AWS S3) to handle sensitive data reliably.",
+      "difficulty": "Intermediate",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "AWS S3",
+        "Auto-Scaling",
+        "Load Balancing",
+        "Cloud Security"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_4",
+      "domain": "Cloud & DevOps",
+      "title": "Telemedicine Access for Rural Healthcare",
+      "problem": "Rural populations often lack access to doctors, and existing telemedicine solutions struggle to scale reliable, low-latency video care to remote areas.",
+      "expectedSolution": "A telemedicine application supporting remote health delivery and real-time patient interactions, built with scalable WebRTC video conferencing, secure cloud databases for health records, and low-latency global delivery networks.",
+      "description": "Problem:\nRural populations often lack access to doctors, and existing telemedicine solutions struggle to scale reliable, low-latency video care to remote areas.\n\nExpected Solution:\nA telemedicine application supporting remote health delivery and real-time patient interactions, built with scalable WebRTC video conferencing, secure cloud databases for health records, and low-latency global delivery networks.",
+      "difficulty": "Intermediate",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "WebRTC",
+        "Cloud Databases",
+        "CDN",
+        "Low-Latency",
+        "Healthcare Cloud"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_5",
+      "domain": "Cloud & DevOps",
+      "title": "Digital Platform for Centralized Alumni Data Management",
+      "problem": "Institutions need a centralized way to manage alumni data at scale, supporting many concurrent users, rich search, and media uploads without performance issues.",
+      "expectedSolution": "A scalable, cloud-hosted web portal for centralized alumni data management, built with scalable hosting and database services to handle concurrent traffic, complex search queries, and high-volume media uploads.",
+      "description": "Problem:\nInstitutions need a centralized way to manage alumni data at scale, supporting many concurrent users, rich search, and media uploads without performance issues.\n\nExpected Solution:\nA scalable, cloud-hosted web portal for centralized alumni data management, built with scalable hosting and database services to handle concurrent traffic, complex search queries, and high-volume media uploads.",
+      "difficulty": "Beginner",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Cloud Hosting",
+        "Scalable Databases",
+        "Media Storage",
+        "Cloud Management"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_6",
+      "domain": "Cloud & DevOps",
+      "title": "Automated IAM Role Rightsizing Engine",
+      "problem": "Cloud IAM roles often accumulate excessive permissions over time, increasing security risk, but manually auditing and rightsizing them is tedious and error-prone.",
+      "expectedSolution": "A cloud-native tool that continuously analyzes AWS CloudTrail (or equivalent) logs to identify over-provisioned IAM permissions and automatically generates minimal-privilege policies.",
+      "description": "Problem:\nCloud IAM roles often accumulate excessive permissions over time, increasing security risk, but manually auditing and rightsizing them is tedious and error-prone.\n\nExpected Solution:\nA cloud-native tool that continuously analyzes AWS CloudTrail (or equivalent) logs to identify over-provisioned IAM permissions and automatically generates minimal-privilege policies.",
+      "difficulty": "Advanced",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "AWS CloudTrail",
+        "IAM",
+        "Least Privilege",
+        "Policy Automation",
+        "Cloud Security"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_7",
+      "domain": "Cloud & DevOps",
+      "title": "Serverless Threat Intelligence Aggregator",
+      "problem": "Security teams struggle to keep firewall rules current against fast-changing global threats when updates are done manually.",
+      "expectedSolution": "An event-driven serverless pipeline that ingests global security feeds in real time, normalizes the data, and automatically updates Cloud Web Application Firewall (WAF) rules to block malicious IPs.",
+      "description": "Problem:\nSecurity teams struggle to keep firewall rules current against fast-changing global threats when updates are done manually.\n\nExpected Solution:\nAn event-driven serverless pipeline that ingests global security feeds in real time, normalizes the data, and automatically updates Cloud Web Application Firewall (WAF) rules to block malicious IPs.",
+      "difficulty": "Advanced",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Serverless",
+        "AWS Lambda",
+        "Cloud WAF",
+        "Event-Driven",
+        "DevOps"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_8",
+      "domain": "Cloud & DevOps",
+      "title": "Cross-Region Disaster Recovery Drill Scheduler",
+      "problem": "Organizations often can't verify their disaster recovery plans actually work, because running realistic DR drills manually is risky and resource-intensive.",
+      "expectedSolution": "An automated framework that safely clones a production cloud environment to a secondary region, runs synthetic tests to validate Recovery Time Objectives (RTO), and tears down the infrastructure afterward.",
+      "description": "Problem:\nOrganizations often can't verify their disaster recovery plans actually work, because running realistic DR drills manually is risky and resource-intensive.\n\nExpected Solution:\nAn automated framework that safely clones a production cloud environment to a secondary region, runs synthetic tests to validate Recovery Time Objectives (RTO), and tears down the infrastructure afterward.",
+      "difficulty": "Advanced",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Disaster Recovery",
+        "Multi-Region",
+        "RTO",
+        "Infrastructure as Code",
+        "AWS"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_9",
+      "domain": "Cloud & DevOps",
+      "title": "AI-Driven Cloud Cost Anomaly Detector",
+      "problem": "Unexpected cloud cost spikes often go unnoticed until the billing cycle ends, by which point significant budget has already been wasted.",
+      "expectedSolution": "A monitoring system that ingests raw cloud billing data streams and uses machine learning to detect and alert engineering teams to abnormal cost spikes in real time.",
+      "description": "Problem:\nUnexpected cloud cost spikes often go unnoticed until the billing cycle ends, by which point significant budget has already been wasted.\n\nExpected Solution:\nA monitoring system that ingests raw cloud billing data streams and uses machine learning to detect and alert engineering teams to abnormal cost spikes in real time.",
+      "difficulty": "Intermediate",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "FinOps",
+        "Cloud Cost Management",
+        "Billing Telemetry",
+        "Anomaly Detection"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_10",
+      "domain": "Cloud & DevOps",
+      "title": "Multi-Cloud Carbon Footprint Optimizer",
+      "problem": "Cloud workloads are often scheduled without regard to the carbon intensity of the region they run in, increasing environmental impact unnecessarily.",
+      "expectedSolution": "A workload scheduler that analyzes real-time carbon intensity across cloud provider regions and automatically shifts non-latency-sensitive batch jobs to regions powered by renewable energy.",
+      "description": "Problem:\nCloud workloads are often scheduled without regard to the carbon intensity of the region they run in, increasing environmental impact unnecessarily.\n\nExpected Solution:\nA workload scheduler that analyzes real-time carbon intensity across cloud provider regions and automatically shifts non-latency-sensitive batch jobs to regions powered by renewable energy.",
+      "difficulty": "Advanced",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Multi-Cloud",
+        "Green Cloud",
+        "Workload Scheduling",
+        "Sustainability"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_11",
+      "domain": "Cloud & DevOps",
+      "title": "Spot Instance Orchestrator for ML Workloads",
+      "problem": "Spot instances offer major cost savings for ML training but can be reclaimed at any time, and handling that disruption manually risks losing training progress.",
+      "expectedSolution": "A fault-tolerant cloud framework that runs distributed ML training jobs on spot instances, automatically saving state and migrating workloads when instances are reclaimed.",
+      "description": "Problem:\nSpot instances offer major cost savings for ML training but can be reclaimed at any time, and handling that disruption manually risks losing training progress.\n\nExpected Solution:\nA fault-tolerant cloud framework that runs distributed ML training jobs on spot instances, automatically saving state and migrating workloads when instances are reclaimed.",
+      "difficulty": "Advanced",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "AWS EC2 Spot",
+        "Fault Tolerance",
+        "Distributed Systems",
+        "Cloud Cost"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_12",
+      "domain": "Cloud & DevOps",
+      "title": "Ephemeral Developer Environments Platform",
+      "problem": "Setting up consistent development environments per feature branch is time-consuming, and idle environments often keep running and waste cloud resources.",
+      "expectedSolution": "A self-service portal where developers can spin up fully configured, containerized cloud workspaces for specific feature branches that automatically tear down after a period of inactivity.",
+      "description": "Problem:\nSetting up consistent development environments per feature branch is time-consuming, and idle environments often keep running and waste cloud resources.\n\nExpected Solution:\nA self-service portal where developers can spin up fully configured, containerized cloud workspaces for specific feature branches that automatically tear down after a period of inactivity.",
+      "difficulty": "Intermediate",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Containers",
+        "Docker",
+        "Kubernetes",
+        "DevOps",
+        "CI/CD",
+        "Ephemeral Envs"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_13",
+      "domain": "Cloud & DevOps",
+      "title": "Zero-Downtime Database Migration Validator",
+      "problem": "Migrating databases to the cloud is risky because verifying data integrity during migration, without disrupting live transactions, is difficult to do reliably.",
+      "expectedSolution": "A tool that replicates on-premise relational databases to cloud-managed services while continuously validating data integrity between source and target, without impacting live transactions.",
+      "description": "Problem:\nMigrating databases to the cloud is risky because verifying data integrity during migration, without disrupting live transactions, is difficult to do reliably.\n\nExpected Solution:\nA tool that replicates on-premise relational databases to cloud-managed services while continuously validating data integrity between source and target, without impacting live transactions.",
+      "difficulty": "Advanced",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Database Migration",
+        "AWS DMS",
+        "Data Replication",
+        "Cloud Migration"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_14",
+      "domain": "Cloud & DevOps",
+      "title": "Multi-Cloud Kubernetes Dashboard",
+      "problem": "Teams running Kubernetes across multiple cloud providers lack a single place to view cluster health and resource usage, forcing them to juggle separate dashboards.",
+      "expectedSolution": "A unified control plane application that aggregates resource utilization, pod health, and deployment statuses across Kubernetes clusters hosted on AWS, GCP, and Azure simultaneously.",
+      "description": "Problem:\nTeams running Kubernetes across multiple cloud providers lack a single place to view cluster health and resource usage, forcing them to juggle separate dashboards.\n\nExpected Solution:\nA unified control plane application that aggregates resource utilization, pod health, and deployment statuses across Kubernetes clusters hosted on AWS, GCP, and Azure simultaneously.",
+      "difficulty": "Advanced",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Kubernetes",
+        "Multi-Cloud",
+        "AWS EKS",
+        "GCP GKE",
+        "Azure AKS",
+        "Control Plane"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_15",
+      "domain": "Cloud & DevOps",
+      "title": "Automated Multi-Tier Data Archiver",
+      "problem": "Cloud storage costs increase unnecessarily when infrequently accessed data stays on expensive, high-performance storage tiers.",
+      "expectedSolution": "An intelligent object storage manager that analyzes file access patterns and automatically transitions data between hot, warm, and deep-archive cloud storage tiers to optimize cost.",
+      "description": "Problem:\nCloud storage costs increase unnecessarily when infrequently accessed data stays on expensive, high-performance storage tiers.\n\nExpected Solution:\nAn intelligent object storage manager that analyzes file access patterns and automatically transitions data between hot, warm, and deep-archive cloud storage tiers to optimize cost.",
+      "difficulty": "Intermediate",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Object Storage",
+        "S3 Lifecycle",
+        "Data Archiving",
+        "Cloud Cost Optimization"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_16",
+      "domain": "Cloud & DevOps",
+      "title": "Edge-to-Cloud Retail Video Analytics",
+      "problem": "Streaming raw retail video feeds continuously to the cloud for analytics is bandwidth-heavy and costly, making it hard to scale across many store locations.",
+      "expectedSolution": "A hybrid architecture where edge devices process video feeds locally to extract metadata, sending only lightweight batched JSON payloads to a centralized cloud data lake for analytics.",
+      "description": "Problem:\nStreaming raw retail video feeds continuously to the cloud for analytics is bandwidth-heavy and costly, making it hard to scale across many store locations.\n\nExpected Solution:\nA hybrid architecture where edge devices process video feeds locally to extract metadata, sending only lightweight batched JSON payloads to a centralized cloud data lake for analytics.",
+      "difficulty": "Advanced",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Edge Computing",
+        "Hybrid Cloud",
+        "Data Lake",
+        "Cloud Architecture"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_17",
+      "domain": "Cloud & DevOps",
+      "title": "Multi-Tenant SaaS API Rate Limiter",
+      "problem": "In a shared multi-tenant SaaS environment, one tenant's heavy API usage can degrade performance for others if requests aren't properly isolated and limited.",
+      "expectedSolution": "A highly scalable API gateway plugin using cloud-managed caching that strictly isolates and enforces API request quotas for different tenants in a shared SaaS environment.",
+      "description": "Problem:\nIn a shared multi-tenant SaaS environment, one tenant's heavy API usage can degrade performance for others if requests aren't properly isolated and limited.\n\nExpected Solution:\nA highly scalable API gateway plugin using cloud-managed caching that strictly isolates and enforces API request quotas for different tenants in a shared SaaS environment.",
+      "difficulty": "Intermediate",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "SaaS Architecture",
+        "API Gateway",
+        "Multi-Tenant",
+        "Redis",
+        "Rate Limiting"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_18",
+      "domain": "Cloud & DevOps",
+      "title": "Cloud-Native Log Analytics Engine",
+      "problem": "Traditional log-indexing systems become expensive at scale, making it hard for teams to retain and query large volumes of logs cost-effectively.",
+      "expectedSolution": "A cost-effective log querying platform that stores logs directly in cheap cloud object storage and queries them on-demand using serverless SQL engines, bypassing traditional indexing costs.",
+      "description": "Problem:\nTraditional log-indexing systems become expensive at scale, making it hard for teams to retain and query large volumes of logs cost-effectively.\n\nExpected Solution:\nA cost-effective log querying platform that stores logs directly in cheap cloud object storage and queries them on-demand using serverless SQL engines, bypassing traditional indexing costs.",
+      "difficulty": "Intermediate",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Cloud Storage",
+        "Serverless SQL",
+        "AWS Athena",
+        "Log Analytics",
+        "Object Storage"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_19",
+      "domain": "Cloud & DevOps",
+      "title": "Cross-Cloud Chaos Engineering Tool",
+      "problem": "Teams often don't know how their microservices will actually behave during real infrastructure failures until an outage happens in production.",
+      "expectedSolution": "A testing suite that intentionally injects failures (e.g. terminating random instances, dropping network packets) into cloud infrastructure to test the auto-healing and failover capabilities of microservices.",
+      "description": "Problem:\nTeams often don't know how their microservices will actually behave during real infrastructure failures until an outage happens in production.\n\nExpected Solution:\nA testing suite that intentionally injects failures (e.g. terminating random instances, dropping network packets) into cloud infrastructure to test the auto-healing and failover capabilities of microservices.",
+      "difficulty": "Advanced",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Chaos Engineering",
+        "Resilience",
+        "Fault Injection",
+        "Microservices",
+        "Failover"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_cloud_1791311129717_20",
+      "domain": "Cloud & DevOps",
+      "title": "Serverless Black Friday Checkout Pipeline",
+      "problem": "E-commerce checkout systems often buckle under massive, unpredictable traffic spikes (e.g. Black Friday sales), leading to database deadlocks and failed orders.",
+      "expectedSolution": "A highly decoupled, asynchronous checkout flow using cloud message queues and serverless functions, architected to handle massive traffic spikes without database deadlocks.",
+      "description": "Problem:\nE-commerce checkout systems often buckle under massive, unpredictable traffic spikes (e.g. Black Friday sales), leading to database deadlocks and failed orders.\n\nExpected Solution:\nA highly decoupled, asynchronous checkout flow using cloud message queues and serverless functions, architected to handle massive traffic spikes without database deadlocks.",
+      "difficulty": "Advanced",
+      "source": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "tags": [
+        "Cloud & DevOps",
+        "Serverless",
+        "Message Queues",
+        "AWS SQS",
+        "AWS Lambda",
+        "High Concurrency"
+      ],
+      "createdAt": "2026-10-06T18:25:29.713Z"
     }
   ],
   "documents": [
+    {
+      "id": "doc_1791311129717",
+      "filename": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
+      "domain": "Cloud & DevOps",
+      "extractedCount": 20,
+      "uploadedAt": "2026-10-06T18:25:29.713Z",
+      "size": 205000
+    },
     {
       "id": "doc_1791310849091",
       "filename": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
