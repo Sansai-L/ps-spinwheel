@@ -1,6 +1,383 @@
 {
-  "problems": [],
-  "documents": [],
+  "problems": [
+    {
+      "id": "ps_doc_1791308564667_0_yg0",
+      "domain": "Web & Mobile Development",
+      "title": "Conversational Image Recognition Chatbot",
+      "problem": "Users often need quick answers about objects or scenes they encounter, but typing out detailed text queries is slow and doesn't always capture what they're looking at.",
+      "expectedSolution": "A chatbot that accepts both images and natural-language queries, combining image recognition with conversational AI to identify objects/scenes and answer follow-up questions. Suggested tech: Python, computer vision models, NLP/LLM APIs, web/mobile chat interface.",
+      "description": "Problem:\nUsers often need quick answers about objects or scenes they encounter, but typing out detailed text queries is slow and doesn't always capture what they're looking at.\n\nExpected Solution:\nA chatbot that accepts both images and natural-language queries, combining image recognition with conversational AI to identify objects/scenes and answer follow-up questions. Suggested tech: Python, computer vision models, NLP/LLM APIs, web/mobile chat interface.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Smart Automation",
+        "Python",
+        "computer vision models",
+        "NLP",
+        "LLM APIs",
+        "web",
+        "mobile chat interface"
+      ],
+      "createdAt": "2026-10-06T17:42:44.667Z"
+    },
+    {
+      "id": "ps_doc_1791308564667_1_v73",
+      "domain": "Web & Mobile Development",
+      "title": "AI-based Traffic Management System",
+      "problem": "Fixed-timing traffic signals can't adapt to real-time traffic conditions, which leads to congestion and inefficient flow.",
+      "expectedSolution": "An AI-based system that analyzes live traffic data and dynamically adjusts signal timing to optimize flow, with a monitoring dashboard for traffic authorities. Suggested tech: Python, computer vision/reinforcement learning, FastAPI backend, React dashboard.",
+      "description": "Problem:\nFixed-timing traffic signals can't adapt to real-time traffic conditions, which leads to congestion and inefficient flow.\n\nExpected Solution:\nAn AI-based system that analyzes live traffic data and dynamically adjusts signal timing to optimize flow, with a monitoring dashboard for traffic authorities. Suggested tech: Python, computer vision/reinforcement learning, FastAPI backend, React dashboard.",
+      "difficulty": "Advanced",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Smart Automation",
+        "Python",
+        "computer vision",
+        "reinforcement learning",
+        "FastAPI backend",
+        "React dashboard"
+      ],
+      "createdAt": "2026-10-06T17:42:44.667Z"
+    },
+    {
+      "id": "ps_doc_1791308564667_2_x4f",
+      "domain": "Web & Mobile Development",
+      "title": "Dynamic Route Rationalization Model Using AI/ML",
+      "problem": "Transit and delivery routes are often static and don't adapt to changing demand or traffic patterns, causing inefficiency.",
+      "expectedSolution": "An AI/ML model that analyzes demand and traffic data to dynamically rationalize and recommend optimal routes. Suggested tech: Python, optimization/ML libraries (OR-Tools, Scikit-learn), React dashboard, cloud database.",
+      "description": "Problem:\nTransit and delivery routes are often static and don't adapt to changing demand or traffic patterns, causing inefficiency.\n\nExpected Solution:\nAn AI/ML model that analyzes demand and traffic data to dynamically rationalize and recommend optimal routes. Suggested tech: Python, optimization/ML libraries (OR-Tools, Scikit-learn), React dashboard, cloud database.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Smart Automation",
+        "Python",
+        "optimization",
+        "ML libraries (OR-Tools",
+        "Scikit-learn",
+        "React dashboard",
+        "cloud database"
+      ],
+      "createdAt": "2026-10-06T17:42:44.667Z"
+    },
+    {
+      "id": "ps_doc_1791308564667_3_6p3",
+      "domain": "Web & Mobile Development",
+      "title": "Online Issuance of Caste and Other Certificates with Real-Time Monitoring",
+      "problem": "Applying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.",
+      "expectedSolution": "A web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
+      "description": "Problem:\nApplying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.\n\nExpected Solution:\nA web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Smart Automation",
+        "React",
+        "Next"
+      ],
+      "createdAt": "2026-10-06T17:42:44.667Z"
+    },
+    {
+      "id": "ps_doc_1791308564667_4_mt2",
+      "domain": "Web & Mobile Development",
+      "title": "Tyre Maintenance and Operation App for Dumpers",
+      "problem": "Dumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.",
+      "expectedSolution": "A mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
+      "description": "Problem:\nDumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.\n\nExpected Solution:\nA mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Smart Automation",
+        "React Native",
+        "Flutter",
+        "Node"
+      ],
+      "createdAt": "2026-10-06T17:42:44.667Z"
+    },
+    {
+      "id": "ps_doc_1791308564667_5_f6p",
+      "domain": "Web & Mobile Development",
+      "title": "Web/App Platform Integrating Diverse Services to Enhance Urban Living",
+      "problem": "City residents often need to navigate multiple disconnected platforms for different municipal and urban services, creating friction and confusion.",
+      "expectedSolution": "A unified web/app platform that integrates diverse urban services (e.g. utility payments, civic complaints, local information) into a single, easy-to-use interface. Suggested tech: React/Next.js, React Native/Flutter, microservices backend (Node.js/Django), API gateway.",
+      "description": "Problem:\nCity residents often need to navigate multiple disconnected platforms for different municipal and urban services, creating friction and confusion.\n\nExpected Solution:\nA unified web/app platform that integrates diverse urban services (e.g. utility payments, civic complaints, local information) into a single, easy-to-use interface. Suggested tech: React/Next.js, React Native/Flutter, microservices backend (Node.js/Django), API gateway.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Smart Automation",
+        "React",
+        "Next"
+      ],
+      "createdAt": "2026-10-06T17:42:44.667Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_6_mhb",
+      "domain": "Web & Mobile Development",
+      "title": "Emotional Well-being Tracker Using Web/App Development",
+      "problem": "People often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.",
+      "expectedSolution": "A web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+      "description": "Problem:\nPeople often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.\n\nExpected Solution:\nA web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+      "difficulty": "Beginner",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "HealthTech",
+        "React",
+        "Flutter",
+        "Node"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_7_kj7",
+      "domain": "Web & Mobile Development",
+      "title": "Smart Community Health Monitoring and Early Warning System for Water-Borne Diseases",
+      "problem": "Water-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.",
+      "expectedSolution": "A data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
+      "description": "Problem:\nWater-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.\n\nExpected Solution:\nA data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "MedTech / HealthTech",
+        "Flutter",
+        "React Native",
+        "Node"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_8_zh0",
+      "domain": "Web & Mobile Development",
+      "title": "Telemedicine Access for Rural Healthcare",
+      "problem": "Rural populations often lack access to doctors and specialists, and traveling to healthcare facilities can be costly or impractical.",
+      "expectedSolution": "A web platform enabling secure video consultations between rural patients and doctors, with integrated digital health records. Suggested tech: React, WebRTC for video calling, Node.js/Django backend, encrypted health record storage.",
+      "description": "Problem:\nRural populations often lack access to doctors and specialists, and traveling to healthcare facilities can be costly or impractical.\n\nExpected Solution:\nA web platform enabling secure video consultations between rural patients and doctors, with integrated digital health records. Suggested tech: React, WebRTC for video calling, Node.js/Django backend, encrypted health record storage.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "MedTech / HealthTech",
+        "React",
+        "WebRTC for video calling",
+        "Node"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_9_uzm",
+      "domain": "Web & Mobile Development",
+      "title": "AyurSutra - Panchakarma Patient Management and Therapy Scheduling Software",
+      "problem": "Panchakarma therapy centers need a specialized way to manage patient records, treatment plans, and therapy scheduling, which generic healthcare software doesn't handle well.",
+      "expectedSolution": "A specialized patient management and therapy-scheduling web app tailored to Panchakarma/Ayurvedic treatment workflows, covering treatment plans, appointments, and records. Suggested tech: React/Angular, Node.js/Django backend, PostgreSQL.",
+      "description": "Problem:\nPanchakarma therapy centers need a specialized way to manage patient records, treatment plans, and therapy scheduling, which generic healthcare software doesn't handle well.\n\nExpected Solution:\nA specialized patient management and therapy-scheduling web app tailored to Panchakarma/Ayurvedic treatment workflows, covering treatment plans, appointments, and records. Suggested tech: React/Angular, Node.js/Django backend, PostgreSQL.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "MedTech / HealthTech",
+        "React",
+        "Angular",
+        "Node"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_10_3aq",
+      "domain": "Web & Mobile Development",
+      "title": "Interactive Gaming Web/App Platform Focused on Children's Rights",
+      "problem": "Children often don't have accessible, engaging ways to learn about their rights, leaving them less aware of the protections available to them.",
+      "expectedSolution": "An interactive, game-based web/app platform that teaches children about their rights through age-appropriate stories, quizzes, and challenges. Suggested tech: React/Flutter, gamification engine, cloud backend for progress tracking.",
+      "description": "Problem:\nChildren often don't have accessible, engaging ways to learn about their rights, leaving them less aware of the protections available to them.\n\nExpected Solution:\nAn interactive, game-based web/app platform that teaches children about their rights through age-appropriate stories, quizzes, and challenges. Suggested tech: React/Flutter, gamification engine, cloud backend for progress tracking.",
+      "difficulty": "Beginner",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Education / Legal",
+        "React",
+        "Flutter",
+        "gamification engine"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_11_or1",
+      "domain": "Web & Mobile Development",
+      "title": "Gamified Environmental Education Platform for Schools and Colleges",
+      "problem": "Traditional environmental education in schools and colleges often fails to engage students, limiting awareness and behavior change around sustainability.",
+      "expectedSolution": "An interactive, gamified web/app learning platform that teaches environmental concepts through challenges, quizzes, and rewards tailored for students. Suggested tech: React/Flutter, gamification engine, cloud backend for progress tracking.",
+      "description": "Problem:\nTraditional environmental education in schools and colleges often fails to engage students, limiting awareness and behavior change around sustainability.\n\nExpected Solution:\nAn interactive, gamified web/app learning platform that teaches environmental concepts through challenges, quizzes, and rewards tailored for students. Suggested tech: React/Flutter, gamification engine, cloud backend for progress tracking.",
+      "difficulty": "Beginner",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Smart Education",
+        "React",
+        "Flutter",
+        "gamification engine"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_12_kji",
+      "domain": "Web & Mobile Development",
+      "title": "Digital Platform for Centralized Alumni Data Management and Engagement",
+      "problem": "Institutions often struggle to maintain updated alumni records and keep alumni engaged with the institution and current students.",
+      "expectedSolution": "A web platform that centralizes alumni data and enables ongoing engagement through directories, events, mentorship matching, and networking features. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL.",
+      "description": "Problem:\nInstitutions often struggle to maintain updated alumni records and keep alumni engaged with the institution and current students.\n\nExpected Solution:\nA web platform that centralizes alumni data and enables ongoing engagement through directories, events, mentorship matching, and networking features. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Smart Education",
+        "React",
+        "Next"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_13_p1t",
+      "domain": "Web & Mobile Development",
+      "title": "Crisis Management and Relief Platform Using a Web/App Platform",
+      "problem": "During crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.",
+      "expectedSolution": "A web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
+      "description": "Problem:\nDuring crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.\n\nExpected Solution:\nA web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Disaster Management",
+        "React",
+        "Next"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_14_7vm",
+      "domain": "Web & Mobile Development",
+      "title": "Disaster Preparedness and Response Education System for Schools and Colleges",
+      "problem": "Students and staff in schools and colleges often lack structured training on how to prepare for and respond to disasters.",
+      "expectedSolution": "An e-learning system tailored for schools and colleges that delivers disaster preparedness lessons, drills, and scenario simulations through a web/mobile interface. Suggested tech: React/Next.js (PWA), React\nNative/Flutter, Node.js backend, cloud content delivery.",
+      "description": "Problem:\nStudents and staff in schools and colleges often lack structured training on how to prepare for and respond to disasters.\n\nExpected Solution:\nAn e-learning system tailored for schools and colleges that delivers disaster preparedness lessons, drills, and scenario simulations through a web/mobile interface. Suggested tech: React/Next.js (PWA), React\nNative/Flutter, Node.js backend, cloud content delivery.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Disaster Management",
+        "React",
+        "Next"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_15_9am",
+      "domain": "Web & Mobile Development",
+      "title": "Gamified Cybersecurity Awareness Web/Mobile Application",
+      "problem": "Many users lack awareness of basic cybersecurity practices, making them vulnerable to phishing, scams, and other common threats.",
+      "expectedSolution": "A gamified web/mobile app that teaches cybersecurity best practices through interactive challenges, simulated phishing scenarios, and quizzes with rewards. Suggested tech: React/Flutter, gamification engine, Node.js backend, cloud database.",
+      "description": "Problem:\nMany users lack awareness of basic cybersecurity practices, making them vulnerable to phishing, scams, and other common threats.\n\nExpected Solution:\nA gamified web/mobile app that teaches cybersecurity best practices through interactive challenges, simulated phishing scenarios, and quizzes with rewards. Suggested tech: React/Flutter, gamification engine, Node.js backend, cloud database.",
+      "difficulty": "Beginner",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Cybersecurity",
+        "React",
+        "Flutter",
+        "gamification engine",
+        "Node"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_16_ovh",
+      "domain": "Web & Mobile Development",
+      "title": "Smart Tourist Safety Monitoring & Incident Response System",
+      "problem": "Tourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to monitor tourist safety and respond quickly to incidents.",
+      "expectedSolution": "A mobile app for tourists with safety monitoring and SOS alerts, paired with a web dashboard for authorities to track incidents and coordinate rapid response. Suggested tech: React Native/Flutter, geofencing APIs, Node.js backend, React dashboard.",
+      "description": "Problem:\nTourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to monitor tourist safety and respond quickly to incidents.\n\nExpected Solution:\nA mobile app for tourists with safety monitoring and SOS alerts, paired with a web dashboard for authorities to track incidents and coordinate rapid response. Suggested tech: React Native/Flutter, geofencing APIs, Node.js backend, React dashboard.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Travel & Tourism",
+        "React Native",
+        "Flutter",
+        "geofencing APIs",
+        "Node"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_17_ih4",
+      "domain": "Web & Mobile Development",
+      "title": "Digital Farm Management Portal for Implementing Biosecurity Measures",
+      "problem": "Farms lack a centralized way to track and enforce biosecurity measures, making compliance and outbreak prevention difficult.",
+      "expectedSolution": "A web portal for farmers to log and track biosecurity practices, livestock/crop health records, and compliance checklists. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL.",
+      "description": "Problem:\nFarms lack a centralized way to track and enforce biosecurity measures, making compliance and outbreak prevention difficult.\n\nExpected Solution:\nA web portal for farmers to log and track biosecurity practices, livestock/crop health records, and compliance checklists. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Agriculture & Rural Dev",
+        "React",
+        "Next"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_18_8ln",
+      "domain": "Web & Mobile Development",
+      "title": "Smart Crop Advisory System for Small and Marginal Farmers",
+      "problem": "Small and marginal farmers often lack timely, localized crop advisory guidance suited to their limited resources and local conditions.",
+      "expectedSolution": "A mobile app that delivers simple, localized crop advisory guidance based on soil, weather, and market conditions, designed for low-literacy and low-connectivity contexts. Suggested tech: Flutter/React Native, offline-first architecture, Bhashini API (for local languages), cloud sync backend.",
+      "description": "Problem:\nSmall and marginal farmers often lack timely, localized crop advisory guidance suited to their limited resources and local conditions.\n\nExpected Solution:\nA mobile app that delivers simple, localized crop advisory guidance based on soil, weather, and market conditions, designed for low-literacy and low-connectivity contexts. Suggested tech: Flutter/React Native, offline-first architecture, Bhashini API (for local languages), cloud sync backend.",
+      "difficulty": "Beginner",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Agriculture & Rural Dev",
+        "Flutter",
+        "React Native",
+        "offline-first architecture",
+        "cloud sync backend"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    },
+    {
+      "id": "ps_doc_1791308564668_19_xmj",
+      "domain": "Web & Mobile Development",
+      "title": "Real-Time Public Transport Tracking for Small Cities",
+      "problem": "Commuters in small cities often lack reliable, real-time visibility into public transport arrival times, leading to wasted waiting time.",
+      "expectedSolution": "A GPS-integrated mobile app tailored for smaller transit systems that shows commuters real-time bus/transport locations and estimated arrival times. Suggested tech: React Native/Flutter, GPS/live location APIs, Node.js backend, WebSockets.",
+      "description": "Problem:\nCommuters in small cities often lack reliable, real-time visibility into public transport arrival times, leading to wasted waiting time.\n\nExpected Solution:\nA GPS-integrated mobile app tailored for smaller transit systems that shows commuters real-time bus/transport locations and estimated arrival times. Suggested tech: React Native/Flutter, GPS/live location APIs, Node.js backend, WebSockets.",
+      "difficulty": "Intermediate",
+      "source": "20_(WebApp)_Problem statement.pdf",
+      "tags": [
+        "Web & Mobile Development",
+        "Transportation & Logistics",
+        "React Native",
+        "Flutter",
+        "GPS",
+        "live location APIs",
+        "Node"
+      ],
+      "createdAt": "2026-10-06T17:42:44.668Z"
+    }
+  ],
+  "documents": [
+    {
+      "id": "doc_1791308564668",
+      "filename": "20_(WebApp)_Problem statement.pdf",
+      "domain": "Web & Mobile Development",
+      "extractedCount": 20,
+      "uploadedAt": "2026-10-06T17:42:44.668Z",
+      "size": 12405
+    }
+  ],
   "domains": [
     "Artificial Intelligence & ML",
     "Cybersecurity & Privacy",
@@ -2155,5 +2532,6 @@
     "adm.YWRtaW46MTc5MTE5Mzc1Mjc0OQ.ad565ddf3e504ff3fda0a9a4dea6f531417d6027c1d02e7d6d160b0090daaab0",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NTg.970137b4028e3993363b17be46bc1591213b1a51e1963fa678503c5117c058b7",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NjU.3091a723a4961e52a5c560655b49d09df472447fb73dfe3f0f846d59c9bade37"
-  ]
+  ],
+  "customTeams": []
 }
