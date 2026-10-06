@@ -995,10 +995,9 @@ app.delete('/api/documents/:id', adminAuthMiddleware, async (req, res) => {
 app.post('/api/team/register', (req, res) => {
   const { teamId, teamName, githubLink } = req.body;
   if (!teamId || !teamId.trim()) return res.status(400).json({ error: 'Reg ID / Team ID is required' });
-  if (!teamName || !teamName.trim()) return res.status(400).json({ error: 'Team Name is required' });
 
   const rawId = teamId.trim();
-  const rawName = teamName.trim();
+  const rawName = (teamName || '').trim();
 
   // String normalizer for flexible case/punctuation-insensitive matching
   const norm = str => (str || '').toLowerCase().replace(/[^a-z0-9]/g, '').trim();
@@ -1020,20 +1019,9 @@ app.post('/api/team/register', (req, res) => {
     });
   }
 
-  // 2. Validate Team Name matches the Reg ID
-  const inputNormName = norm(rawName);
-  const authNormName = norm(matchedAuth.teamName);
-  const isAdminNameMatch = matchedAuth.isAdmin && (inputNormName.includes('admin') || inputNormName === 'adminteam');
-  const isNameMatch = inputNormName === authNormName || isAdminNameMatch;
-
-  if (!isNameMatch) {
-    return res.status(400).json({
-      error: `Team Name does not match Reg ID "${matchedAuth.regId}". Please enter your registered team name ("${matchedAuth.teamName}").`
-    });
-  }
-
+  // 2. Team Name is optional. If left blank or provided, resolve canonical name from master list
   const canonicalTeamId = matchedAuth.regId;
-  const canonicalTeamName = matchedAuth.teamName;
+  const canonicalTeamName = matchedAuth.teamName || rawName || `Team ${matchedAuth.regId}`;
   const teamDomain = matchedAuth.domain;
 
   if (!db.teams) db.teams = [];
