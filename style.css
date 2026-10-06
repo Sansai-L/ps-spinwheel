@@ -244,6 +244,12 @@ body {
   border-color: var(--accent-cyan);
 }
 
+.logout-btn:hover {
+  background: rgba(244, 63, 94, 0.1) !important;
+  color: #f43f5e !important;
+  border-color: rgba(244, 63, 94, 0.45) !important;
+}
+
 .btn-full {
   width: 100%;
 }
