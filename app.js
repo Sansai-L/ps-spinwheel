@@ -43,12 +43,13 @@
   ];
 
   function getDomainTheme(name) {
-    const found = DOMAIN_THEMES.find(t => t.name.toLowerCase() === name.toLowerCase());
+    const safeName = (name || activeDomain || 'Artificial Intelligence & ML').toString().trim();
+    const found = DOMAIN_THEMES.find(t => t.name.toLowerCase() === safeName.toLowerCase());
     if (found) return found;
     let hash = 0;
-    for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    for (let i = 0; i < safeName.length; i++) hash = safeName.charCodeAt(i) + ((hash << 5) - hash);
     const c = (hash & 0x00FFFFFF).toString(16).toUpperCase();
-    return { name, icon: '💡', color: '#' + '00000'.substring(0, 6 - c.length) + c, dark: '#1e293b' };
+    return { name: safeName, icon: '💡', color: '#' + '00000'.substring(0, 6 - c.length) + c, dark: '#1e293b' };
   }
 
   // ─── DOM REFS ───────────────────────────────────────────────────────────────
@@ -219,10 +220,29 @@
   }
 
   function renderTeamInfo(team) {
-    teamNavName.textContent = team.teamName;
-    teamInfoId.textContent = team.teamId;
-    teamInfoName.textContent = team.teamName;
+    teamNavName.textContent = team ? (team.teamName || team.teamId) : '—';
+    teamInfoId.textContent = team ? team.teamId : '—';
+    teamInfoName.textContent = team ? (team.teamName || team.teamId) : '—';
     updateGithubUI(team ? team.githubLink : '');
+
+    if (team && team.isAdmin) {
+      teamSpinStatusBadge.textContent = 'Admin Mode (Unlimited Spins)';
+      teamSpinStatusBadge.style.color = '#a855f7';
+      if (assignedProblem) {
+        teamSidebarPdfBox.classList.remove('hidden');
+      } else {
+        teamSidebarPdfBox.classList.add('hidden');
+      }
+    } else if (teamHasSpun) {
+      teamSpinStatusBadge.textContent = '1 / 1 (Used)';
+      teamSpinStatusBadge.style.color = '#38bdf8';
+      teamSidebarPdfBox.classList.remove('hidden');
+    } else {
+      teamSpinStatusBadge.textContent = '0 / 1 (Available)';
+      teamSpinStatusBadge.style.color = 'var(--accent-emerald)';
+      teamSidebarPdfBox.classList.add('hidden');
+    }
+  }
 
   function updateGithubUI(githubUrl) {
     const clean = (githubUrl || '').trim();
@@ -307,25 +327,6 @@
     if (mainGithubInput) {
       mainGithubInput.focus();
       mainGithubInput.select();
-    }
-  }
-
-    if (team && team.isAdmin) {
-      teamSpinStatusBadge.textContent = 'Admin Mode (Unlimited Spins)';
-      teamSpinStatusBadge.style.color = '#a855f7';
-      if (assignedProblem) {
-        teamSidebarPdfBox.classList.remove('hidden');
-      } else {
-        teamSidebarPdfBox.classList.add('hidden');
-      }
-    } else if (teamHasSpun) {
-      teamSpinStatusBadge.textContent = '1 / 1 (Used)';
-      teamSpinStatusBadge.style.color = '#38bdf8';
-      teamSidebarPdfBox.classList.remove('hidden');
-    } else {
-      teamSpinStatusBadge.textContent = '0 / 1 (Available)';
-      teamSpinStatusBadge.style.color = 'var(--accent-emerald)';
-      teamSidebarPdfBox.classList.add('hidden');
     }
   }
 
@@ -529,6 +530,9 @@
   }
 
   function drawWheel() {
+    if (!ctx && wheelCanvas) {
+      ctx = wheelCanvas.getContext('2d');
+    }
     if (!ctx) return;
     const width = wheelCanvas.width;
     const center = width / 2;
@@ -657,6 +661,7 @@
     teamSpinStatusBadge.style.color = 'var(--accent-emerald)';
     teamSidebarPdfBox.classList.add('hidden');
     recentSpinsList.innerHTML = `<div class="empty-state">No spins yet. Choose a domain and spin! (1 spin allowed)</div>`;
+    drawWheel();
   }
 
   function renderAssignedProblemList(problem) {
