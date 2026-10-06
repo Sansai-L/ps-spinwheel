@@ -93,7 +93,14 @@
   const teamInfoId = document.getElementById('teamInfoId');
   const teamInfoName = document.getElementById('teamInfoName');
   const teamInfoGithub = document.getElementById('teamInfoGithub');
-  const teamGithubRow = document.getElementById('teamGithubRow');
+  const teamGithubDisplay = document.getElementById('teamGithubDisplay');
+  const teamGithubForm = document.getElementById('teamGithubForm');
+  const mainGithubInput = document.getElementById('mainGithubInput');
+  const editGithubBtn = document.getElementById('editGithubBtn');
+  const saveGithubBtn = document.getElementById('saveGithubBtn');
+  const assignedCardGithubRow = document.getElementById('assignedCardGithubRow');
+  const assignedCardGithubValue = document.getElementById('assignedCardGithubValue');
+  const assignedCardGithubActionBtn = document.getElementById('assignedCardGithubActionBtn');
   const teamSpinStatusBadge = document.getElementById('teamSpinStatusBadge');
   const teamSidebarPdfBox = document.getElementById('teamSidebarPdfBox');
   const teamSidebarDownloadPdfBtn = document.getElementById('teamSidebarDownloadPdfBtn');
@@ -215,13 +222,93 @@
     teamNavName.textContent = team.teamName;
     teamInfoId.textContent = team.teamId;
     teamInfoName.textContent = team.teamName;
-    if (team.githubLink) {
-      teamInfoGithub.textContent = team.githubLink;
-      teamInfoGithub.href = team.githubLink;
-      teamGithubRow.style.display = 'flex';
+    updateGithubUI(team ? team.githubLink : '');
+
+  function updateGithubUI(githubUrl) {
+    const clean = (githubUrl || '').trim();
+    if (clean) {
+      if (teamInfoGithub) {
+        teamInfoGithub.textContent = clean;
+        teamInfoGithub.href = clean;
+      }
+      if (teamGithubDisplay) teamGithubDisplay.classList.remove('hidden');
+      if (teamGithubForm) teamGithubForm.classList.add('hidden');
+      if (editGithubBtn) editGithubBtn.classList.remove('hidden');
+      if (mainGithubInput) mainGithubInput.value = clean;
+
+      if (assignedCardGithubValue) {
+        assignedCardGithubValue.innerHTML = `<a href="${escapeHTML(clean)}" target="_blank" rel="noopener" style="color:var(--accent-cyan); text-decoration:underline;">${escapeHTML(clean)}</a>`;
+      }
+      if (assignedCardGithubActionBtn) {
+        assignedCardGithubActionBtn.innerHTML = `✏️ Edit Link`;
+      }
     } else {
-      teamGithubRow.style.display = 'none';
+      if (teamGithubDisplay) teamGithubDisplay.classList.add('hidden');
+      if (teamGithubForm) teamGithubForm.classList.remove('hidden');
+      if (editGithubBtn) editGithubBtn.classList.add('hidden');
+      if (mainGithubInput) mainGithubInput.value = '';
+
+      if (assignedCardGithubValue) {
+        assignedCardGithubValue.textContent = 'Not linked yet';
+      }
+      if (assignedCardGithubActionBtn) {
+        assignedCardGithubActionBtn.innerHTML = `+ Place GitHub Link`;
+      }
     }
+  }
+
+  async function handleSaveGithub(e) {
+    if (e) e.preventDefault();
+    const githubLink = (mainGithubInput ? mainGithubInput.value : '').trim();
+    if (!githubLink) {
+      showToast('Please enter your GitHub repository URL', 'warning');
+      return;
+    }
+
+    if (saveGithubBtn) {
+      saveGithubBtn.disabled = true;
+      saveGithubBtn.textContent = 'Saving...';
+    }
+
+    try {
+      const res = await fetch('/api/team/github', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionToken: teamSession?.sessionToken,
+          teamId: teamSession?.team?.teamId,
+          githubLink
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to save GitHub link');
+
+      if (teamSession && teamSession.team) {
+        teamSession.team.githubLink = githubLink;
+        localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
+      }
+
+      updateGithubUI(githubLink);
+      showToast('GitHub repository link placed successfully! 🚀', 'success');
+    } catch (err) {
+      showToast(err.message, 'error');
+    } finally {
+      if (saveGithubBtn) {
+        saveGithubBtn.disabled = false;
+        saveGithubBtn.textContent = 'Save';
+      }
+    }
+  }
+
+  function handleEditGithub() {
+    if (teamGithubDisplay) teamGithubDisplay.classList.add('hidden');
+    if (teamGithubForm) teamGithubForm.classList.remove('hidden');
+    if (mainGithubInput) {
+      mainGithubInput.focus();
+      mainGithubInput.select();
+    }
+  }
 
     if (team && team.isAdmin) {
       teamSpinStatusBadge.textContent = 'Admin Mode (Unlimited Spins)';
@@ -1013,6 +1100,9 @@
   function setupEventListeners() {
     if (teamEntryForm) teamEntryForm.addEventListener('submit', handleTeamRegister);
     if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+    if (teamGithubForm) teamGithubForm.addEventListener('submit', handleSaveGithub);
+    if (editGithubBtn) editGithubBtn.addEventListener('click', handleEditGithub);
+    if (assignedCardGithubActionBtn) assignedCardGithubActionBtn.addEventListener('click', handleEditGithub);
 
     spinCenterBtn.addEventListener('click', triggerSpin);
     spinMainBtn.addEventListener('click', triggerSpin);
