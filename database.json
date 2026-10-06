@@ -852,29 +852,8 @@
       "sessionTokens": [
         "sess_1791304390569_9k0vi8j"
       ],
-      "spins": [
-        {
-          "id": "ps_doc_1791223703136_7_5qv",
-          "problemId": "ps_doc_1791223703136_7_5qv",
-          "domain": "Artificial Intelligence & ML",
-          "title": "Deep Learning web application to automate tree enumeration in forest areas",
-          "problemTitle": "Deep Learning web application to automate tree enumeration in forest areas",
-          "description": "Problem:\nManually counting and enumerating trees across large forest areas is slow, labor-intensive, and hard to scale.\n\nExpected Solution:\nA deep-learning web application that uses image segmentation on aerial or satellite imagery to automatically detect and count trees across forest areas. Suggested tech: Python, deep-learning segmentation models (U-Net/Mask R-CNN), React web app, cloud image processing.",
-          "problemDescription": "Problem:\nManually counting and enumerating trees across large forest areas is slow, labor-intensive, and hard to scale.\n\nExpected Solution:\nA deep-learning web application that uses image segmentation on aerial or satellite imagery to automatically detect and count trees across forest areas. Suggested tech: Python, deep-learning segmentation models (U-Net/Mask R-CNN), React web app, cloud image processing.",
-          "difficulty": "Advanced",
-          "problemDifficulty": "Advanced",
-          "source": "20_Software_(AIML)_Problem statement.pdf",
-          "tags": [
-            "Artificial Intelligence & ML",
-            "Environment & Forestry",
-            "Python",
-            "Mask R-CNN",
-            "React web app",
-            "cloud image processing"
-          ],
-          "spunAt": "2026-10-06T16:33:11.713Z"
-        }
-      ]
+      "spins": [],
+      "spinResetAt": "2026-10-06T16:33:26.939Z"
     },
     {
       "id": 3,
@@ -2970,6 +2949,7 @@
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NTg.970137b4028e3993363b17be46bc1591213b1a51e1963fa678503c5117c058b7",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NjU.3091a723a4961e52a5c560655b49d09df472447fb73dfe3f0f846d59c9bade37",
     "adm.YWRtaW46MTc5MTIyMzU4NDI5MA.d9f15611240baa095819f2079e0fdf44e5365414be3b00d7be09132a547fe1cd",
-    "adm.YWRtaW46MTc5MTI4NTcyNDIyMw.33a892702e6253aa4e43fa517b2ad1e3b1ad9adec154cb375ef41cdb289930c1"
+    "adm.YWRtaW46MTc5MTI4NTcyNDIyMw.33a892702e6253aa4e43fa517b2ad1e3b1ad9adec154cb375ef41cdb289930c1",
+    "adm.YWRtaW46MTc5MTMwNDQwNjUyOQ.9910af29d78241642b3cb122023b7dd387569a23a0a501dd14b6c93affc436ac"
   ]
 }
