@@ -772,9 +772,382 @@
         "Transformers"
       ],
       "createdAt": "2026-10-06T18:12:13.024Z"
+    },
+    {
+      "id": "ps_cyber_1791310849090_1",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Real-Time Deepfake Video and Audio Detector for Public Grievance Portals",
+      "problem": "A high-throughput, low-latency API and web dashboard that concurrently analyzes video/audio inputs and detects deepfakes.",
+      "expectedSolution": "Confidence score, manipulated region highlight, and audio spectral analysis.",
+      "description": "Problem:\nA high-throughput, low-latency API and web dashboard that concurrently analyzes video/audio inputs and detects deepfakes.\n\nExpected Solution:\nConfidence score, manipulated region highlight, and audio spectral analysis.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Deepfake Detection",
+        "Computer Vision",
+        "Audio Spectral Analysis",
+        "API Security"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849090_2",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Adversarial AI Attack Defense Firewall for Large Language Models",
+      "problem": "An inline containerized security proxy that inspects enterprise user queries for prompt-injections and jailbreaks, neutralizing adversarial inputs before passing them to the main LLM.",
+      "expectedSolution": "Adversarial inputs neutralized without adding latency to the main LLM pipeline.",
+      "description": "Problem:\nAn inline containerized security proxy that inspects enterprise user queries for prompt-injections and jailbreaks, neutralizing adversarial inputs before passing them to the main LLM.\n\nExpected Solution:\nAdversarial inputs neutralized without adding latency to the main LLM pipeline.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "LLM Security",
+        "Prompt Injection",
+        "WAF",
+        "Adversarial Defense"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849090_3",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Virtualized Software-Only SCADA Protocol Fuzzer & Virtual Honeypot",
+      "problem": "A containerized simulation environment that emulates Modbus/DNP3 industrial networks, injects malformed protocol packets, and tests control logic for flaws.",
+      "expectedSolution": "Web dashboard displaying network health and intrusion logs.",
+      "description": "Problem:\nA containerized simulation environment that emulates Modbus/DNP3 industrial networks, injects malformed protocol packets, and tests control logic for flaws.\n\nExpected Solution:\nWeb dashboard displaying network health and intrusion logs.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "SCADA",
+        "Industrial Security",
+        "Modbus",
+        "DNP3",
+        "Honeypot",
+        "Fuzzing"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849090_4",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Connected Fleet API Security Gateway & MQTT Telematics Anomaly Detector",
+      "problem": "A cloud middleware proxy that intercepts vehicle-to-cloud (V2C) MQTT JSON payloads, tracking speed anomalies and timestamp jumps via API telemetry.",
+      "expectedSolution": "Admin map dashboard showing fleet telemetry and detected anomalies.",
+      "description": "Problem:\nA cloud middleware proxy that intercepts vehicle-to-cloud (V2C) MQTT JSON payloads, tracking speed anomalies and timestamp jumps via API telemetry.\n\nExpected Solution:\nAdmin map dashboard showing fleet telemetry and detected anomalies.",
+      "difficulty": "Intermediate",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "IoT Security",
+        "MQTT",
+        "Fleet Telematics",
+        "API Gateway",
+        "Anomaly Detection"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849090_5",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Connected Medical Device (IoMT) Ransomware Shield",
+      "problem": "An ultra-lightweight software agent for embedded medical operating systems that monitors memory allocations and blocks mass-encryption attacks in real time.",
+      "expectedSolution": "Demonstration in an emulation environment showing blocked ransomware activity.",
+      "description": "Problem:\nAn ultra-lightweight software agent for embedded medical operating systems that monitors memory allocations and blocks mass-encryption attacks in real time.\n\nExpected Solution:\nDemonstration in an emulation environment showing blocked ransomware activity.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "IoMT",
+        "Ransomware Shield",
+        "Embedded Systems",
+        "Memory Monitoring"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849090_6",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Quantum-Resistant Identity Verification Engine for CBDCs",
+      "problem": "A functional public key infrastructure (PKI) prototype and benchmark utilizing post-quantum cryptographic algorithms (such as CRYSTALS-Dilithium) tailored for low-resource software environments.",
+      "expectedSolution": "Working PKI prototype with performance benchmarks for post-quantum algorithms.",
+      "description": "Problem:\nA functional public key infrastructure (PKI) prototype and benchmark utilizing post-quantum cryptographic algorithms (such as CRYSTALS-Dilithium) tailored for low-resource software environments.\n\nExpected Solution:\nWorking PKI prototype with performance benchmarks for post-quantum algorithms.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Post-Quantum Cryptography",
+        "PKI",
+        "CRYSTALS-Dilithium",
+        "CBDC"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849090_7",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Cross-Chain Bridge Exploit Prevention Gateway",
+      "problem": "A state-locking validator node simulator that illustrates automated transaction freezing and asset-locking whenever asset minting on a target chain mismatches burned assets on the source chain.",
+      "expectedSolution": "Simulated validator node demonstrating automated freezing on mismatch detection.",
+      "description": "Problem:\nA state-locking validator node simulator that illustrates automated transaction freezing and asset-locking whenever asset minting on a target chain mismatches burned assets on the source chain.\n\nExpected Solution:\nSimulated validator node demonstrating automated freezing on mismatch detection.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Blockchain Security",
+        "Cross-Chain",
+        "Smart Contracts",
+        "Exploit Prevention"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849090_8",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Deep-Fuzzy Smart Contract Fuzzer for Flash Loan Vulnerability Hunting",
+      "problem": "A CLI fuzzing tool that generates multi-transaction execution logs to identify economic oracle manipulation vulnerabilities in smart contracts prior to deployment.",
+      "expectedSolution": "CLI tool producing vulnerability reports and execution logs.",
+      "description": "Problem:\nA CLI fuzzing tool that generates multi-transaction execution logs to identify economic oracle manipulation vulnerabilities in smart contracts prior to deployment.\n\nExpected Solution:\nCLI tool producing vulnerability reports and execution logs.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Smart Contracts",
+        "DeFi Security",
+        "Flash Loan",
+        "Fuzzing",
+        "Oracle Security"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849090_9",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Graph-Based Cloud Security Infrastructure Attack Path Visualizer",
+      "problem": "An inventory assessment engine parsing multi-cloud (AWS/Azure) IAM and network configurations into an interactive 3D node-graph.",
+      "expectedSolution": "Interactive 3D node-graph mapping and prioritizing compromise paths.",
+      "description": "Problem:\nAn inventory assessment engine parsing multi-cloud (AWS/Azure) IAM and network configurations into an interactive 3D node-graph.\n\nExpected Solution:\nInteractive 3D node-graph mapping and prioritizing compromise paths.",
+      "difficulty": "Intermediate",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Cloud Security",
+        "IAM",
+        "Attack Graph",
+        "Graph Theory",
+        "Visualization"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849091_10",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Encrypted Database Search Engine using Homomorphic Cryptography",
+      "problem": "A database middleware proxy proof-of-concept that enables applications to perform complex text search queries directly on remote databases.",
+      "expectedSolution": "Search results returned while fields remain fully encrypted at rest and in transit.",
+      "description": "Problem:\nA database middleware proxy proof-of-concept that enables applications to perform complex text search queries directly on remote databases.\n\nExpected Solution:\nSearch results returned while fields remain fully encrypted at rest and in transit.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Homomorphic Encryption",
+        "Database Security",
+        "Privacy-Preserving Search"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849091_11",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Serverless Function (FaaS) Runtime Protection Engine",
+      "problem": "A deployable function wrapper for AWS Lambda/Google Cloud Functions that inspects execution environments and restricts system calls.",
+      "expectedSolution": "Runtime protection that blocks unauthorized external endpoint access.",
+      "description": "Problem:\nA deployable function wrapper for AWS Lambda/Google Cloud Functions that inspects execution environments and restricts system calls.\n\nExpected Solution:\nRuntime protection that blocks unauthorized external endpoint access.",
+      "difficulty": "Intermediate",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Serverless Security",
+        "FaaS",
+        "Runtime Protection",
+        "System Call Inspection"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849091_12",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Secure Distributed Remote Access Gateway for Hybrid Workforce",
+      "problem": "A user client portal and admin policy manager that evaluates endpoint health status, patch configurations, and security posture.",
+      "expectedSolution": "Dynamic access granted to internal apps based on posture evaluation.",
+      "description": "Problem:\nA user client portal and admin policy manager that evaluates endpoint health status, patch configurations, and security posture.\n\nExpected Solution:\nDynamic access granted to internal apps based on posture evaluation.",
+      "difficulty": "Intermediate",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Zero Trust",
+        "Remote Access",
+        "Endpoint Security",
+        "Posture Assessment"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849091_13",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Software Timing and Cache-Side-Channel Binary Code Analyzer",
+      "problem": "A static/dynamic binary analysis tool that scans compiled cryptographic source code to detect software-level side-channel flaws.",
+      "expectedSolution": "Report flagging cache-timing attacks and branch-prediction leakage paths.",
+      "description": "Problem:\nA static/dynamic binary analysis tool that scans compiled cryptographic source code to detect software-level side-channel flaws.\n\nExpected Solution:\nReport flagging cache-timing attacks and branch-prediction leakage paths.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Binary Analysis",
+        "Side-Channel Attacks",
+        "Cache Timing",
+        "Cryptography"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849091_14",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Dynamic Quantum-Secure Air-Traffic Communication Client Application",
+      "problem": "A functioning communication interface showing secure, real-time data exchanges between controllers and pilots.",
+      "expectedSolution": "Data exchanges encrypted using post-quantum cryptography standards.",
+      "description": "Problem:\nA functioning communication interface showing secure, real-time data exchanges between controllers and pilots.\n\nExpected Solution:\nData exchanges encrypted using post-quantum cryptography standards.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Post-Quantum Cryptography",
+        "Aviation Security",
+        "Secure Communications"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849091_15",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Distributed Deep Packet Inspection (DPI) Network Firewall for State Border Gateways",
+      "problem": "A high-throughput software network routing engine that screens packets at line rate.",
+      "expectedSolution": "High-throughput software routing engine with real-time packet inspection, automated rule enforcement, and intrusion logging dashboard.",
+      "description": "Problem:\nA high-throughput software network routing engine that screens packets at line rate.\n\nExpected Solution:\nHigh-throughput software routing engine with real-time packet inspection, automated rule enforcement, and intrusion logging dashboard.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "DPI",
+        "Deep Packet Inspection",
+        "Firewall",
+        "Network Security",
+        "Routing"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849091_16",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Automated CI/CD Software Supply Chain Integrity & Poisoned Dependency Auditor",
+      "problem": "A developer-centric security pipeline and CI/CD plugin (supporting GitHub Actions and GitLab CI) that defends against software supply chain compromises. The tool automatically generates a verified Software Bill of Materials (SBOM) and dynamically inspects third-party dependencies from package registries for typosquatting, dependency confusion, and altered package maintainer signatures before build artifacts are generated.",
+      "expectedSolution": "A CLI utility and CI/CD integration agent that exports CycloneDX/SPDX SBOMs, halts builds upon detecting poisoned packages, and produces a forensic triage report.",
+      "description": "Problem:\nA developer-centric security pipeline and CI/CD plugin (supporting GitHub Actions and GitLab CI) that defends against software supply chain compromises. The tool automatically generates a verified Software Bill of Materials (SBOM) and dynamically inspects third-party dependencies from package registries for typosquatting, dependency confusion, and altered package maintainer signatures before build artifacts are generated.\n\nExpected Solution:\nA CLI utility and CI/CD integration agent that exports CycloneDX/SPDX SBOMs, halts builds upon detecting poisoned packages, and produces a forensic triage report.",
+      "difficulty": "Intermediate",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Supply Chain Security",
+        "CI/CD",
+        "SBOM",
+        "Dependency Auditing"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849091_17",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Autonomous Memory Forensics & Fileless Malware Triage Engine",
+      "problem": "A fast, software-only incident response engine designed to automate the parsing and investigation of volatile memory (RAM dumps). The engine identifies stealthy in-memory threats that evade traditional disk-based antivirus, including process hollowing, reflected DLL injections, and user/kernel-space rootkits.",
+      "expectedSolution": "A web-based analytical dashboard that accepts raw memory dumps, automatically reconstructs process execution trees, and extracts hidden shellcode and Command & Control (C2) configuration strings.",
+      "description": "Problem:\nA fast, software-only incident response engine designed to automate the parsing and investigation of volatile memory (RAM dumps). The engine identifies stealthy in-memory threats that evade traditional disk-based antivirus, including process hollowing, reflected DLL injections, and user/kernel-space rootkits.\n\nExpected Solution:\nA web-based analytical dashboard that accepts raw memory dumps, automatically reconstructs process execution trees, and extracts hidden shellcode and Command & Control (C2) configuration strings.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Memory Forensics",
+        "Incident Response",
+        "Fileless Malware",
+        "Rootkits"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849091_18",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Active Cyber Deception & Automated Canary Token Orchestrator",
+      "problem": "An enterprise-grade deception technology platform that automatically generates, distributes, and manages dynamic honeytokens (decoy AWS/cloud credentials, synthetic database connection strings, and dummy Kerberos service tickets) across corporate endpoints and internal file shares to catch attackers during internal reconnaissance.",
+      "expectedSolution": "An administrative web console for one-click deployment of decoy artifacts, integrated with a high-fidelity alerting service that instantly flags unauthorized token access.",
+      "description": "Problem:\nAn enterprise-grade deception technology platform that automatically generates, distributes, and manages dynamic honeytokens (decoy AWS/cloud credentials, synthetic database connection strings, and dummy Kerberos service tickets) across corporate endpoints and internal file shares to catch attackers during internal reconnaissance.\n\nExpected Solution:\nAn administrative web console for one-click deployment of decoy artifacts, integrated with a high-fidelity alerting service that instantly flags unauthorized token access.",
+      "difficulty": "Intermediate",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Cyber Deception",
+        "Honeytokens",
+        "Canary Tokens",
+        "Intrusion Detection"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849091_19",
+      "domain": "Cybersecurity & Privacy",
+      "title": "Continuous Behavioral Biometrics & Web Session Hijacking Shield",
+      "problem": "A privacy-first client-side telemetry SDK paired with a backend anomaly detection service for sensitive portals. It continuously models frictionless biometric interactions (keystroke flight/dwell timing, cursor velocity vectors) to verify user presence and neutralize session hijacking and automated headless browser attacks in real time.",
+      "expectedSolution": "A lightweight client-server middleware architecture that outputs real-time session confidence scores and dynamically challenges the user with step-up verification if anomalies are detected.",
+      "description": "Problem:\nA privacy-first client-side telemetry SDK paired with a backend anomaly detection service for sensitive portals. It continuously models frictionless biometric interactions (keystroke flight/dwell timing, cursor velocity vectors) to verify user presence and neutralize session hijacking and automated headless browser attacks in real time.\n\nExpected Solution:\nA lightweight client-server middleware architecture that outputs real-time session confidence scores and dynamically challenges the user with step-up verification if anomalies are detected.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "Behavioral Biometrics",
+        "Session Hijacking",
+        "Bot Detection",
+        "Telemetry SDK"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
+    },
+    {
+      "id": "ps_cyber_1791310849091_20",
+      "domain": "Cybersecurity & Privacy",
+      "title": "eBPF-Powered Container Runtime Zero-Day & Privilege Escalation Sentinel",
+      "problem": "An ultra-low-overhead Linux kernel security monitoring agent utilizing extended Berkeley Packet Filter (eBPF) technology for Kubernetes and Docker clusters. It monitors critical system calls in real time to detect container breakout attempts, namespace escapes, and local privilege escalation vulnerabilities.",
+      "expectedSolution": "A deployable Kubernetes DaemonSet accompanied by an alerting dashboard that detects and programmatically terminates compromised container pods under simulated breakout scenarios.",
+      "description": "Problem:\nAn ultra-low-overhead Linux kernel security monitoring agent utilizing extended Berkeley Packet Filter (eBPF) technology for Kubernetes and Docker clusters. It monitors critical system calls in real time to detect container breakout attempts, namespace escapes, and local privilege escalation vulnerabilities.\n\nExpected Solution:\nA deployable Kubernetes DaemonSet accompanied by an alerting dashboard that detects and programmatically terminates compromised container pods under simulated breakout scenarios.",
+      "difficulty": "Advanced",
+      "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "tags": [
+        "Cybersecurity & Privacy",
+        "eBPF",
+        "Container Security",
+        "Kubernetes",
+        "Privilege Escalation",
+        "Kernel Security"
+      ],
+      "createdAt": "2026-10-06T18:20:49.086Z"
     }
   ],
   "documents": [
+    {
+      "id": "doc_1791310849091",
+      "filename": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+      "domain": "Cybersecurity & Privacy",
+      "extractedCount": 20,
+      "uploadedAt": "2026-10-06T18:20:49.086Z",
+      "size": 195000
+    },
     {
       "id": "doc_1791310333026",
       "filename": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
@@ -823,35 +1196,9 @@
         "sess_1791190711969_p1tzxp7",
         "sess_1791192345825_tg6ptqi",
         "sess_1791277849694_5s6mu8t",
-        "sess_1791277849735_d4812q1",
-        "sess_1791308784449_rqrh2d7"
+        "sess_1791277849735_d4812q1"
       ],
-      "spins": [
-        {
-          "id": "ps_webapp_1791309924414_14",
-          "problemId": "ps_webapp_1791309924414_14",
-          "domain": "Web & Mobile Development",
-          "title": "Crisis Management and Relief Platform Using a Web/App Platform",
-          "problemTitle": "Crisis Management and Relief Platform Using a Web/App Platform",
-          "problem": "During crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.",
-          "expectedSolution": "A web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
-          "description": "Problem:\nDuring crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.\n\nExpected Solution:\nA web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
-          "problemDescription": "Problem:\nDuring crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.\n\nExpected Solution:\nA web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
-          "difficulty": "Advanced",
-          "problemDifficulty": "Advanced",
-          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
-          "tags": [
-            "Web & Mobile Development",
-            "Disaster Management",
-            "React",
-            "Next.js",
-            "WebSockets",
-            "Node.js",
-            "Real-time"
-          ],
-          "spunAt": "2026-10-06T18:16:55.647Z"
-        }
-      ]
+      "spins": []
     },
     {
       "id": 2,
