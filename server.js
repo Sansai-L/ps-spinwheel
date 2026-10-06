@@ -1176,7 +1176,7 @@ app.post('/api/team/register', async (req, res) => {
   const norm = str => (str || '').toLowerCase().replace(/[^a-z0-9]/g, '').trim();
 
   // 1. Verify Reg ID against authorized master list (100 teams from PDF + Admin bypass)
-  const matchedAuth = authorizedTeams.find(t => {
+  let matchedAuth = authorizedTeams.find(t => {
     // Exact Reg ID match (e.g. CODIENYCH-2026-0001)
     if (t.regId.toLowerCase() === rawId.toLowerCase()) return true;
     // Numeric index match (e.g. "1" or "0001" -> CODIENYCH-2026-0001)
@@ -1185,6 +1185,28 @@ app.post('/api/team/register', async (req, res) => {
     if (t.isAdmin && (rawId.toUpperCase() === 'CODIENYCH-ADMIN' || rawId.toUpperCase() === 'ADMIN-TEAM' || rawId.toUpperCase() === 'ADMIN')) return true;
     return false;
   });
+
+  // 1b. If not in the static list, check admin-added custom teams in db.customTeams
+  if (!matchedAuth && Array.isArray(db.customTeams)) {
+    const customMatch = db.customTeams.find(t =>
+      t.regId && t.regId.toLowerCase() === rawId.toLowerCase()
+    );
+    if (customMatch) {
+      // Shape it to match authorizedTeams format
+      matchedAuth = {
+        regId: customMatch.regId,
+        teamName: customMatch.teamName || rawName || customMatch.regId,
+        domain: customMatch.domain || 'Artificial Intelligence & ML',
+        leader: customMatch.leader || '',
+        college: customMatch.college || '',
+        members: customMatch.members || '',
+        phone: customMatch.phone || '',
+        email: customMatch.email || '',
+        isAdmin: false,
+        isCustom: true
+      };
+    }
+  }
 
   if (!matchedAuth) {
     return res.status(403).json({
@@ -1771,6 +1793,74 @@ app.post('/api/admin/teams/reset-spin', adminAuthMiddleware, async (req, res) =>
   saveDB(db);
   await syncToGitHub();
   res.json({ success: true, message: `Spin reset for team "${team.teamName}". They can spin again.` });
+});
+
+// ─── ADMIN: CUSTOM TEAMS (ADD BEYOND ORIGINAL 101) ───────────────────────────
+
+// List all custom (admin-added) teams
+app.get('/api/admin/teams/custom', adminAuthMiddleware, (req, res) => {
+  if (!db.customTeams) db.customTeams = [];
+  res.json({ customTeams: db.customTeams, total: db.customTeams.length });
+});
+
+// Add a new custom team
+app.post('/api/admin/teams/add-custom', adminAuthMiddleware, async (req, res) => {
+  const { regId, teamName, domain, leader, college, members, phone, email } = req.body;
+  if (!regId || !regId.trim()) return res.status(400).json({ error: 'Reg ID is required' });
+  if (!teamName || !teamName.trim()) return res.status(400).json({ error: 'Team Name is required' });
+
+  const cleanRegId = regId.trim();
+  if (!db.customTeams) db.customTeams = [];
+
+  // Check uniqueness across both static and custom lists
+  const alreadyInStatic = authorizedTeams.some(t => t.regId.toLowerCase() === cleanRegId.toLowerCase());
+  const alreadyInCustom = db.customTeams.some(t => t.regId.toLowerCase() === cleanRegId.toLowerCase());
+  if (alreadyInStatic || alreadyInCustom) {
+    return res.status(409).json({ error: `Reg ID "${cleanRegId}" already exists. Please choose a unique ID.` });
+  }
+
+  const newCustomTeam = {
+    id: 'custom_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+    regId: cleanRegId,
+    teamName: teamName.trim(),
+    domain: domain || 'Artificial Intelligence & ML',
+    leader: (leader || '').trim(),
+    college: (college || '').trim(),
+    members: (members || '').trim(),
+    phone: (phone || '').trim(),
+    email: (email || '').trim(),
+    addedAt: new Date().toISOString()
+  };
+
+  db.customTeams.push(newCustomTeam);
+  saveDB(db);
+  await syncToGitHub();
+
+  res.json({
+    success: true,
+    team: newCustomTeam,
+    message: `Team "${newCustomTeam.teamName}" (${cleanRegId}) added successfully! They can now log in and spin.`
+  });
+});
+
+// Delete a custom team (removes login access; does NOT delete their spin record)
+app.delete('/api/admin/teams/delete-custom/:teamId', adminAuthMiddleware, async (req, res) => {
+  const cleanId = decodeURIComponent(req.params.teamId).trim().toLowerCase();
+  if (!db.customTeams) db.customTeams = [];
+
+  const idx = db.customTeams.findIndex(t => t.regId.toLowerCase() === cleanId);
+  if (idx === -1) {
+    return res.status(404).json({ error: `Custom team "${cleanId}" not found` });
+  }
+
+  const removed = db.customTeams.splice(idx, 1)[0];
+  saveDB(db);
+  await syncToGitHub();
+
+  res.json({
+    success: true,
+    message: `Custom team "${removed.teamName}" (${removed.regId}) removed. Their spin history is preserved in Teams Activity.`
+  });
 });
 
 // Admin: Manually Assign Problem to a Team
