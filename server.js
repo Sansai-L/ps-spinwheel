@@ -576,14 +576,54 @@ const handleAdminVerify = (req, res) => {
 app.get('/api/admin/verify', handleAdminVerify);
 app.get('/api/verify', handleAdminVerify);
 
-// Domain matching helper: checks specific domain, track, or tags
+// Domain matching helper: checks specific domain, track, tags, or normalized keywords
 function matchesDomain(p, domainName) {
   if (!p || !domainName) return false;
   const d = domainName.trim().toLowerCase();
-  return (p.domain && p.domain.toLowerCase() === d) ||
-         (p.track && p.track.toLowerCase() === d) ||
-         (Array.isArray(p.domains) && p.domains.some(x => x.toLowerCase() === d)) ||
-         (Array.isArray(p.tags) && p.tags.some(t => t.toLowerCase() === d));
+
+  // 1. Direct equality checks
+  if (p.domain && p.domain.toLowerCase() === d) return true;
+  if (p.track && p.track.toLowerCase() === d) return true;
+  if (Array.isArray(p.domains) && p.domains.some(x => x && x.toLowerCase() === d)) return true;
+  if (Array.isArray(p.tags) && p.tags.some(t => t && t.toLowerCase() === d)) return true;
+
+  // 2. Normalized checks (handles &, and, app, mobile, spaces, punctuation)
+  const norm = str => (str || '').toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/\bapp\b/g, 'mobile')
+    .replace(/[^a-z0-9]/g, '');
+
+  const normTarget = norm(domainName);
+  if (!normTarget) return false;
+
+  if (p.domain && norm(p.domain) === normTarget) return true;
+  if (p.track && norm(p.track) === normTarget) return true;
+  if (Array.isArray(p.domains) && p.domains.some(x => norm(x) === normTarget)) return true;
+
+  // 3. Domain group aliases & taxonomy matching
+  const groups = [
+    { keys: ['ai', 'ml', 'aiml', 'artificialintelligence', 'machinelearning'] },
+    { keys: ['web', 'mobile', 'app', 'android', 'ios'] },
+    { keys: ['cyber', 'security', 'privacy'] },
+    { keys: ['iot', 'internetofthings', 'embedded', 'hardware'] },
+    { keys: ['cloud', 'devops', 'docker', 'kubernetes'] }
+  ];
+
+  for (const g of groups) {
+    const targetInGroup = g.keys.some(k => normTarget.includes(k));
+    if (targetInGroup) {
+      const matchP = field => {
+        if (!field) return false;
+        const nf = norm(field);
+        return g.keys.some(k => nf.includes(k));
+      };
+      if (matchP(p.domain) || matchP(p.track)) return true;
+      if (Array.isArray(p.domains) && p.domains.some(matchP)) return true;
+      if (Array.isArray(p.tags) && p.tags.some(matchP)) return true;
+    }
+  }
+
+  return false;
 }
 
 // Domain Endpoints
@@ -733,13 +773,18 @@ app.post('/api/spin', async (req, res) => {
   }
   if (lockKey) spinningTeams.add(lockKey);
 
-  const domainProblems = db.problems.filter(p => matchesDomain(p, domain));
+  let domainProblems = db.problems.filter(p => matchesDomain(p, domain));
 
   if (domainProblems.length === 0) {
-    if (lockKey) spinningTeams.delete(lockKey);
-    return res.status(404).json({
-      error: `No problem statements currently available in domain: "${domain}". Admin can upload documents or add problems.`
-    });
+    if (db.problems && db.problems.length > 0) {
+      console.warn(`No direct match for domain "${domain}", falling back to all available problems.`);
+      domainProblems = [...db.problems];
+    } else {
+      if (lockKey) spinningTeams.delete(lockKey);
+      return res.status(404).json({
+        error: `No problem statements currently available in database. Admin can upload documents or add problems.`
+      });
+    }
   }
 
   // Find unseen problems in current cycle
@@ -766,6 +811,8 @@ app.post('/api/spin', async (req, res) => {
       domain: selectedProblem.domain,
       title: selectedProblem.title,
       problemTitle: selectedProblem.title,
+      problem: selectedProblem.problem || '',
+      expectedSolution: selectedProblem.expectedSolution || '',
       description: selectedProblem.description,
       problemDescription: selectedProblem.description,
       difficulty: selectedProblem.difficulty || 'Intermediate',
@@ -1325,6 +1372,8 @@ app.post('/api/team/log-spin', async (req, res) => {
     domain: domain || team.domain,
     title: problem.title || problem.problemTitle,
     problemTitle: problem.title || problem.problemTitle,
+    problem: problem.problem || '',
+    expectedSolution: problem.expectedSolution || '',
     description: problem.description || problem.problemDescription,
     problemDescription: problem.description || problem.problemDescription,
     difficulty: problem.difficulty || problem.problemDifficulty || 'Intermediate',
@@ -1359,6 +1408,8 @@ app.post('/api/team/sync-spin', async (req, res) => {
         domain: domain || problem.domain || team.domain,
         title: problem.title || problem.problemTitle,
         problemTitle: problem.title || problem.problemTitle,
+        problem: problem.problem || '',
+        expectedSolution: problem.expectedSolution || '',
         description: problem.description || problem.problemDescription,
         problemDescription: problem.description || problem.problemDescription,
         difficulty: problem.difficulty || problem.problemDifficulty || 'Intermediate',
