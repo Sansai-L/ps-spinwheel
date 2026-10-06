@@ -138,12 +138,13 @@
 
   async function verifyAndResumeSession() {
     try {
-      const res = await fetch(`/api/team/status?sessionToken=${encodeURIComponent(teamSession.sessionToken)}`);
+      const tid = teamSession.team?.teamId ? `&teamId=${encodeURIComponent(teamSession.team.teamId)}` : '';
+      const res = await fetch(`/api/team/status?sessionToken=${encodeURIComponent(teamSession.sessionToken)}${tid}`);
       if (res.ok) {
         const data = await res.json();
         teamSession.team = data.team;
-        teamHasSpun = data.hasSpun;
-        assignedProblem = data.assignedProblem;
+        teamHasSpun = Boolean(data.hasSpun);
+        assignedProblem = data.assignedProblem || (data.team && data.team.assignedProblem) || (data.team?.spins && data.team.spins[0]) || null;
         teamSession.hasSpun = teamHasSpun;
         teamSession.assignedProblem = assignedProblem;
         localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
@@ -190,18 +191,20 @@
     }
     fetchDomains();
 
+    const activeProblem = assignedProblem || teamSession?.assignedProblem || team?.assignedProblem || (team?.spins && team.spins[0]);
+
     if (team && team.isAdmin) {
       unlockWheel();
-      if (assignedProblem) {
-        assignedCardDomain.textContent = assignedProblem.domain;
-        assignedCardTitle.textContent = assignedProblem.title;
-        assignedCardDesc.textContent = assignedProblem.description;
+      if (activeProblem) {
+        assignedCardDomain.textContent = activeProblem.domain;
+        assignedCardTitle.textContent = activeProblem.title;
+        assignedCardDesc.textContent = activeProblem.description;
         assignedProblemCard.classList.remove('hidden');
         teamSidebarPdfBox.classList.remove('hidden');
-        renderAssignedProblemList(assignedProblem);
+        renderAssignedProblemList(activeProblem);
       }
-    } else if (teamHasSpun && assignedProblem) {
-      lockWheelForAssignedProblem(assignedProblem);
+    } else if (teamHasSpun || activeProblem) {
+      lockWheelForAssignedProblem(activeProblem);
     } else {
       unlockWheel();
     }
@@ -516,6 +519,13 @@
   function lockWheelForAssignedProblem(problem) {
     teamHasSpun = true;
     assignedProblem = problem;
+    if (teamSession) {
+      teamSession.hasSpun = true;
+      teamSession.assignedProblem = problem;
+      try {
+        localStorage.setItem('spinquest_team_session', JSON.stringify(teamSession));
+      } catch (e) {}
+    }
     const parts = extractProblemParts(problem);
 
     // Center Stage Controls Lock
