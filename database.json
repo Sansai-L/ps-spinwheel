@@ -1002,32 +1002,8 @@
         "sess_1791307717510_a4t62p1",
         "sess_1791307721601_uv6dt5j"
       ],
-      "spins": [
-        {
-          "id": "ps_doc_1791223703135_6_p3g",
-          "problemId": "ps_doc_1791223703135_6_p3g",
-          "domain": "Artificial Intelligence & ML",
-          "title": "AI/ML based system for deriving value added parameters using satellite",
-          "problemTitle": "AI/ML based system for deriving value added parameters using satellite",
-          "problem": "Raw satellite imagery is difficult for non-experts to interpret directly, limiting its usefulness for agriculture, urban planning, and environmental monitoring.",
-          "expectedSolution": "A computer-vision-based system that processes raw satellite imagery to automatically derive value-added parameters (e.g. vegetation index, land-use classification) and presents them through a usable interface. Suggested tech: Python, OpenCV/deep-learning models, cloud processing pipeline, web dashboard.",
-          "description": "Problem:\nRaw satellite imagery is difficult for non-experts to interpret directly, limiting its usefulness for agriculture, urban planning, and environmental monitoring.\n\nExpected Solution:\nA computer-vision-based system that processes raw satellite imagery to automatically derive value-added parameters (e.g. vegetation index, land-use classification) and presents them through a usable interface. Suggested tech: Python, OpenCV/deep-learning models, cloud processing pipeline, web dashboard.",
-          "problemDescription": "Problem:\nRaw satellite imagery is difficult for non-experts to interpret directly, limiting its usefulness for agriculture, urban planning, and environmental monitoring.\n\nExpected Solution:\nA computer-vision-based system that processes raw satellite imagery to automatically derive value-added parameters (e.g. vegetation index, land-use classification) and presents them through a usable interface. Suggested tech: Python, OpenCV/deep-learning models, cloud processing pipeline, web dashboard.",
-          "difficulty": "Advanced",
-          "problemDifficulty": "Advanced",
-          "source": "20_Software_(AIML)_Problem statement.pdf",
-          "tags": [
-            "Artificial Intelligence & ML",
-            "SpaceTech",
-            "Python",
-            "OpenCV",
-            "deep-learning models",
-            "cloud processing pipeline",
-            "web dashboard"
-          ],
-          "spunAt": "2026-10-06T17:28:38.045Z"
-        }
-      ]
+      "spins": [],
+      "spinResetAt": "2026-10-06T17:29:31.628Z"
     },
     {
       "id": 3,
