@@ -500,7 +500,7 @@ app.get('/admin-app.js', (req, res) => {
 // Admin Auth Token Store & Stateless Cryptographic Verification
 const ADMIN_CREDENTIALS = {
   username: process.env.ADMIN_USER || 'admin',
-  password: process.env.ADMIN_PASSWORD || 'admin123'
+  password: process.env.ADMIN_PASSWORD || 'goku2007'
 };
 const ADMIN_HMAC_SECRET = process.env.ADMIN_SECRET || 'codienych-spinquest-admin-secret-key-2026';
 const VALID_TOKENS = new Set(['demo-admin-token-2026', ...(db.adminTokens || [])]);
@@ -560,9 +560,9 @@ const handleAdminLogin = (req, res) => {
   const cleanUser = String(username).trim().toLowerCase();
   const cleanPass = String(password).trim();
 
-  const isStandardAdmin = (cleanUser === 'admin') && (cleanPass === 'admin123' || cleanPass === 'admin');
-  const isEnvAdmin = (cleanUser === (process.env.ADMIN_USER || 'admin').toLowerCase()) && (cleanPass === (process.env.ADMIN_PASSWORD || 'admin123'));
-  const isEventAdmin = (cleanUser === 'codienych-admin') && (cleanPass.toLowerCase() === 'admin team' || cleanPass === 'admin123' || cleanPass === 'admin');
+  const isStandardAdmin = (cleanUser === 'admin') && (cleanPass === 'goku2007');
+  const isEnvAdmin = (cleanUser === (process.env.ADMIN_USER || 'admin').toLowerCase()) && (cleanPass === (process.env.ADMIN_PASSWORD || 'goku2007'));
+  const isEventAdmin = (cleanUser === 'codienych-admin') && (cleanPass.toLowerCase() === 'admin team' || cleanPass === 'goku2007');
 
   if (isStandardAdmin || isEnvAdmin || isEventAdmin) {
     const token = createAdminToken(cleanUser);
@@ -577,7 +577,7 @@ const handleAdminLogin = (req, res) => {
       message: 'Login successful'
     });
   }
-  return res.status(401).json({ error: 'Invalid username or password. Default organizer credentials: admin / admin123' });
+  return res.status(401).json({ error: 'Invalid username or password.' });
 };
 
 app.post('/api/admin/login', handleAdminLogin);
