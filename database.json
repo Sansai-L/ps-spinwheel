@@ -413,30 +413,8 @@
         "sess_1791303846923_tjr1mpx",
         "sess_1791308784449_rqrh2d7"
       ],
-      "spins": [
-        {
-          "id": "ps_doc_1791308564667_4_mt2",
-          "problemId": "ps_doc_1791308564667_4_mt2",
-          "domain": "Web & Mobile Development",
-          "title": "Tyre Maintenance and Operation App for Dumpers",
-          "problemTitle": "Tyre Maintenance and Operation App for Dumpers",
-          "problem": "Dumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.",
-          "expectedSolution": "A mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
-          "description": "Problem:\nDumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.\n\nExpected Solution:\nA mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
-          "problemDescription": "Problem:\nDumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.\n\nExpected Solution:\nA mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
-          "difficulty": "Intermediate",
-          "problemDifficulty": "Intermediate",
-          "source": "20_(WebApp)_Problem statement.pdf",
-          "tags": [
-            "Web & Mobile Development",
-            "Smart Automation",
-            "React Native",
-            "Flutter",
-            "Node"
-          ],
-          "spunAt": "2026-10-06T17:45:06.516Z"
-        }
-      ]
+      "spins": [],
+      "spinResetAt": "2026-10-06T17:46:57.815Z"
     },
     {
       "id": 2,
