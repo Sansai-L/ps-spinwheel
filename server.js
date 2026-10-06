@@ -195,6 +195,61 @@ let lastGitHubFetchTime = 0;
 let isPullingFromGitHub = false;
 let gitHubSyncLock = false;
 
+// Merge remote teams into local db.teams preserving assigned spins and honoring admin resets
+function mergeTeams(remoteTeams = []) {
+  if (!db.teams) db.teams = [];
+  const teamMap = new Map();
+
+  for (const rt of remoteTeams) {
+    const key = (rt.teamId || rt.regId || '').toLowerCase();
+    if (key) teamMap.set(key, { ...rt });
+  }
+
+  for (const lt of db.teams) {
+    const key = (lt.teamId || lt.regId || '').toLowerCase();
+    if (!key) continue;
+
+    if (!teamMap.has(key)) {
+      teamMap.set(key, { ...lt });
+    } else {
+      const rt = teamMap.get(key);
+      const localHasSpin = Array.isArray(lt.spins) && lt.spins.length > 0;
+      const remoteHasSpin = Array.isArray(rt.spins) && rt.spins.length > 0;
+
+      const localResetTime = lt.spinResetAt ? new Date(lt.spinResetAt).getTime() : 0;
+      const remoteResetTime = rt.spinResetAt ? new Date(rt.spinResetAt).getTime() : 0;
+      const localSpunTime = localHasSpin && lt.spins[0]?.spunAt ? new Date(lt.spins[0].spunAt).getTime() : 0;
+      const remoteSpunTime = remoteHasSpin && rt.spins[0]?.spunAt ? new Date(rt.spins[0].spunAt).getTime() : 0;
+
+      let spinsToKeep = [];
+      if (localResetTime > remoteSpunTime && localResetTime > localSpunTime) {
+        spinsToKeep = [];
+      } else if (remoteResetTime > localSpunTime && remoteResetTime > remoteSpunTime) {
+        spinsToKeep = [];
+      } else if (localSpunTime > remoteSpunTime) {
+        spinsToKeep = lt.spins;
+      } else if (remoteHasSpin) {
+        spinsToKeep = rt.spins;
+      } else if (localHasSpin) {
+        spinsToKeep = lt.spins;
+      }
+
+      const mergedTokens = Array.from(new Set([...(rt.sessionTokens || []), ...(lt.sessionTokens || [])]));
+
+      teamMap.set(key, {
+        ...rt,
+        ...lt,
+        spins: spinsToKeep,
+        sessionTokens: mergedTokens,
+        spinResetAt: localResetTime > remoteResetTime ? lt.spinResetAt : rt.spinResetAt,
+        hasEntered: spinsToKeep.length > 0 || rt.hasEntered || lt.hasEntered
+      });
+    }
+  }
+
+  db.teams = Array.from(teamMap.values());
+}
+
 // Pull latest database.json from GitHub repo to survive Vercel lambda recycling
 async function pullLatestFromGitHub() {
   if (!GITHUB_TOKEN || isPullingFromGitHub) return;
@@ -229,20 +284,8 @@ async function pullLatestFromGitHub() {
       if (Array.isArray(parsed.domains) && parsed.domains.length > 0) {
         db.domains = parsed.domains;
       }
-      if (Array.isArray(parsed.teams) && parsed.teams.length > 0) {
-        const localSpunMap = new Map();
-        (db.teams || []).forEach(t => {
-          if (t.spins && t.spins.length > 0) {
-            localSpunMap.set((t.teamId || t.regId || '').toLowerCase(), t.spins);
-          }
-        });
-        db.teams = parsed.teams.map(t => {
-          const key = (t.teamId || t.regId || '').toLowerCase();
-          if ((!t.spins || t.spins.length === 0) && localSpunMap.has(key)) {
-            return { ...t, spins: localSpunMap.get(key) };
-          }
-          return t;
-        });
+      if (Array.isArray(parsed.teams)) {
+        mergeTeams(parsed.teams);
       }
       saveDB(db);
       lastGitHubFetchTime = Date.now();
@@ -277,6 +320,15 @@ async function syncToGitHub(retryCount = 2) {
         if (getRes.ok) {
           const fileInfo = await getRes.json();
           sha = fileInfo.sha;
+          if (fileInfo.content) {
+            try {
+              const remoteStr = Buffer.from(fileInfo.content, 'base64').toString('utf8');
+              const remoteDb = JSON.parse(remoteStr);
+              if (remoteDb && Array.isArray(remoteDb.teams)) {
+                mergeTeams(remoteDb.teams);
+              }
+            } catch (e) {}
+          }
         }
 
         const content = Buffer.from(JSON.stringify(db, null, 2)).toString('base64');
@@ -346,15 +398,20 @@ app.use(express.json());
 // Keep database fresh from GitHub across serverless microVM restarts
 app.use(async (req, res, next) => {
   const now = Date.now();
-  if (now - lastGitHubFetchTime > 15000) {
-    lastGitHubFetchTime = now;
-    if (req.method === 'GET' && (req.path === '/api/problems' || req.path === '/api/domains' || req.path.startsWith('/api/admin/'))) {
-      try {
-        await pullLatestFromGitHub();
-      } catch (e) {}
-    } else {
-      pullLatestFromGitHub().catch(() => {});
-    }
+  const needsFresh = req.path === '/api/team/register' ||
+                     req.path === '/api/team/status' ||
+                     req.path === '/api/spin' ||
+                     req.path === '/api/problems' ||
+                     req.path === '/api/domains' ||
+                     req.path.startsWith('/api/admin/');
+
+  // Cold start (lastGitHubFetchTime === 0) or interval expired: strictly await pull for critical endpoints
+  if (!lastGitHubFetchTime || (now - lastGitHubFetchTime > 10000 && needsFresh)) {
+    try {
+      await pullLatestFromGitHub();
+    } catch (e) {}
+  } else if (now - lastGitHubFetchTime > 30000) {
+    pullLatestFromGitHub().catch(() => {});
   }
   next();
 });
@@ -586,7 +643,7 @@ const spinningTeams = new Set();
 // Problem Statement Wheel Spin Endpoint
 // ATOMIC: Checks 1-spin limit AND saves spin in a single request to prevent race
 // conditions across multiple serverless Vercel lambda instances.
-app.post('/api/spin', (req, res) => {
+app.post('/api/spin', async (req, res) => {
   const { domain, seenIds = [], sessionToken, teamId: reqTeamId } = req.body;
 
   if (!domain) {
@@ -594,8 +651,6 @@ app.post('/api/spin', (req, res) => {
   }
 
   // ── Find team: by session token first, then by Reg ID ─────────────────────
-  // Two-step lookup ensures the 1-spin check works even when different lambda
-  // instances handled /register and /spin for the same team.
   let team = null;
   if (db.teams) {
     if (sessionToken) {
@@ -610,7 +665,54 @@ app.post('/api/spin', (req, res) => {
     }
   }
 
+  // Fallback: If not yet in db.teams, resolve from authorized master list
+  if (!team && reqTeamId) {
+    const rawId = reqTeamId.trim();
+    const matchedAuth = authorizedTeams.find(t => {
+      if (t.regId.toLowerCase() === rawId.toLowerCase()) return true;
+      if (/^\d+$/.test(rawId) && (t.id === parseInt(rawId, 10) || t.regId.endsWith('-' + rawId.padStart(4, '0')))) return true;
+      if (t.isAdmin && (rawId.toUpperCase() === 'CODIENYCH-ADMIN' || rawId.toUpperCase() === 'ADMIN-TEAM' || rawId.toUpperCase() === 'ADMIN')) return true;
+      return false;
+    });
+    if (matchedAuth) {
+      team = {
+        id: 'team_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+        teamId: matchedAuth.regId,
+        teamName: matchedAuth.teamName || `Team ${matchedAuth.regId}`,
+        domain: matchedAuth.domain,
+        originalTrack: matchedAuth.originalTrack,
+        leader: matchedAuth.leader,
+        college: matchedAuth.college,
+        members: matchedAuth.members,
+        size: matchedAuth.size,
+        email: matchedAuth.email,
+        phone: matchedAuth.phone,
+        githubLink: '',
+        registeredAt: new Date().toISOString(),
+        sessionTokens: sessionToken ? [sessionToken] : [],
+        isAdmin: Boolean(matchedAuth.isAdmin),
+        spins: []
+      };
+      if (!db.teams) db.teams = [];
+      db.teams.unshift(team);
+    }
+  }
+
   // ── Strict 1-spin limit check (persistent) ────────────────────────────────
+  if (team && !team.isAdmin && (!team.spins || team.spins.length === 0)) {
+    // Fresh pull from GitHub to verify whether another lambda recorded a spin
+    try {
+      await pullLatestFromGitHub();
+      team = db.teams.find(t =>
+        (sessionToken && t.sessionTokens && t.sessionTokens.includes(sessionToken)) ||
+        (reqTeamId && (
+          (t.teamId && t.teamId.toLowerCase() === reqTeamId.trim().toLowerCase()) ||
+          (t.regId && t.regId.toLowerCase() === reqTeamId.trim().toLowerCase())
+        ))
+      ) || team;
+    } catch (e) {}
+  }
+
   if (team && !team.isAdmin && team.spins && team.spins.length >= 1) {
     return res.status(403).json({
       error: 'Each team is allowed to spin only once! You have already been assigned a problem statement.',
@@ -674,11 +776,12 @@ app.post('/api/spin', (req, res) => {
     };
     team.spins = [spinRecord];
     team.hasEntered = true;
+    team.spinResetAt = null;
     if (sessionToken && team.sessionTokens && !team.sessionTokens.includes(sessionToken)) {
       team.sessionTokens.push(sessionToken);
     }
     saveDB(db);
-    scheduleGitHubSync();
+    await syncToGitHub();
   }
 
   // Release in-process lock
@@ -992,7 +1095,7 @@ app.delete('/api/documents/:id', adminAuthMiddleware, async (req, res) => {
 // ─── TEAM REGISTRATION & TRACKING ────────────────────────────────────────────
 
 // Register a new team (or re-session an existing one) — Restrict strictly to authorizedTeams & Admin
-app.post('/api/team/register', (req, res) => {
+app.post('/api/team/register', async (req, res) => {
   const { teamId, teamName, githubLink } = req.body;
   if (!teamId || !teamId.trim()) return res.status(400).json({ error: 'Reg ID / Team ID is required' });
 
@@ -1027,10 +1130,25 @@ app.post('/api/team/register', (req, res) => {
   if (!db.teams) db.teams = [];
   const sessionToken = 'sess_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
 
-  let existing = db.teams.find(t => t.teamId.toLowerCase() === canonicalTeamId.toLowerCase());
+  let existing = db.teams.find(t => 
+    (t.teamId && t.teamId.toLowerCase() === canonicalTeamId.toLowerCase()) ||
+    (t.regId && t.regId.toLowerCase() === canonicalTeamId.toLowerCase())
+  );
+
+  // If local existing has no spins, pull latest from GitHub in case spin was saved in another instance
+  if (!existing || !existing.spins || existing.spins.length === 0) {
+    try {
+      await pullLatestFromGitHub();
+      existing = db.teams.find(t => 
+        (t.teamId && t.teamId.toLowerCase() === canonicalTeamId.toLowerCase()) ||
+        (t.regId && t.regId.toLowerCase() === canonicalTeamId.toLowerCase())
+      ) || existing;
+    } catch (e) {}
+  }
+
   if (existing) {
     if (!existing.sessionTokens) existing.sessionTokens = [];
-    existing.sessionTokens.push(sessionToken);
+    if (!existing.sessionTokens.includes(sessionToken)) existing.sessionTokens.push(sessionToken);
     if (githubLink) existing.githubLink = githubLink.trim();
     if (!existing.college && matchedAuth.college) existing.college = matchedAuth.college;
     if (!existing.leader && matchedAuth.leader) existing.leader = matchedAuth.leader;
@@ -1039,7 +1157,9 @@ app.post('/api/team/register', (req, res) => {
     if (matchedAuth.isAdmin) existing.isAdmin = true;
 
     saveDB(db);
+    scheduleGitHubSync();
     const hasSpun = Boolean(existing.spins && existing.spins.length > 0);
+    const assignedProb = hasSpun ? existing.spins[0] : null;
     return res.json({
       success: true,
       sessionToken,
@@ -1054,11 +1174,14 @@ app.post('/api/team/register', (req, res) => {
         phone: existing.phone || matchedAuth.phone || '',
         email: existing.email || matchedAuth.email || '',
         utr: existing.utr || matchedAuth.utr || '',
-        isAdmin: Boolean(matchedAuth.isAdmin)
+        isAdmin: Boolean(matchedAuth.isAdmin),
+        hasSpun,
+        assignedProblem: assignedProb,
+        spins: existing.spins || []
       },
       isReturning: true,
       hasSpun,
-      assignedProblem: hasSpun ? existing.spins[0] : null
+      assignedProblem: assignedProb
     });
   }
 
@@ -1083,6 +1206,7 @@ app.post('/api/team/register', (req, res) => {
 
   db.teams.unshift(newTeam);
   saveDB(db);
+  await syncToGitHub();
 
   res.json({
     success: true,
@@ -1107,15 +1231,44 @@ app.post('/api/team/register', (req, res) => {
 });
 
 // Get current team session status
-app.get('/api/team/status', (req, res) => {
-  const { sessionToken } = req.query;
-  if (!sessionToken) return res.status(401).json({ error: 'Session token required' });
+app.get('/api/team/status', async (req, res) => {
+  const { sessionToken, teamId } = req.query;
+  if (!sessionToken && !teamId) return res.status(401).json({ error: 'Session token or Team ID required' });
   if (!db.teams) db.teams = [];
 
-  const team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
+  let team = null;
+  if (sessionToken) {
+    team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
+  }
+  if (!team && teamId) {
+    const rawId = teamId.trim().toLowerCase();
+    team = db.teams.find(t =>
+      (t.teamId && t.teamId.toLowerCase() === rawId) ||
+      (t.regId && t.regId.toLowerCase() === rawId)
+    );
+  }
+
+  // If team not found or has no spins in memory, pull fresh from GitHub to verify
+  if (!team || !team.spins || team.spins.length === 0) {
+    try {
+      await pullLatestFromGitHub();
+      if (sessionToken) {
+        team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken)) || team;
+      }
+      if (teamId) {
+        const rawId = teamId.trim().toLowerCase();
+        team = db.teams.find(t =>
+          (t.teamId && t.teamId.toLowerCase() === rawId) ||
+          (t.regId && t.regId.toLowerCase() === rawId)
+        ) || team;
+      }
+    } catch (e) {}
+  }
+
   if (!team) return res.status(404).json({ error: 'Team session not found' });
 
   const hasSpun = Boolean(team.spins && team.spins.length > 0);
+  const assignedProb = hasSpun ? team.spins[0] : null;
   const team_resp = {
     teamId: team.teamId,
     teamName: team.teamName,
@@ -1127,17 +1280,20 @@ app.get('/api/team/status', (req, res) => {
     phone: team.phone || '',
     email: team.email || '',
     utr: team.utr || '',
-    isAdmin: Boolean(team.isAdmin)
+    isAdmin: Boolean(team.isAdmin),
+    hasSpun,
+    assignedProblem: assignedProb,
+    spins: team.spins || []
   };
   res.json({
     team: team_resp,
     hasSpun,
-    assignedProblem: hasSpun ? team.spins[0] : null
+    assignedProblem: assignedProb
   });
 });
 
 // Log a spin result for a team (Strictly allows only ONE spin per team, Admin can test spin)
-app.post('/api/team/log-spin', (req, res) => {
+app.post('/api/team/log-spin', async (req, res) => {
   const { sessionToken, teamId, domain, problem } = req.body;
   if (!sessionToken && !teamId) return res.status(401).json({ error: 'Session token or Team ID required' });
   if (!problem) return res.status(400).json({ error: 'Problem statement data required' });
@@ -1181,12 +1337,12 @@ app.post('/api/team/log-spin', (req, res) => {
   team.spins = [assignedRecord]; // Exactly 1 problem statement stored
   team.hasEntered = true;
   saveDB(db);
-  scheduleGitHubSync();
+  await syncToGitHub();
   res.json({ success: true, spinCount: 1, assignedProblem: assignedRecord });
 });
 
 // Sync client-side spin allocation with server database
-app.post('/api/team/sync-spin', (req, res) => {
+app.post('/api/team/sync-spin', async (req, res) => {
   const { teamId, domain, problem, githubLink } = req.body;
   if (!teamId || !problem) return res.status(400).json({ error: 'Team ID and problem required' });
   if (!db.teams) db.teams = [];
@@ -1211,7 +1367,7 @@ app.post('/api/team/sync-spin', (req, res) => {
         spunAt: problem.spunAt || new Date().toISOString()
       }];
       saveDB(db);
-      scheduleGitHubSync();
+      await syncToGitHub();
     }
     return res.json({ success: true, synced: true, teamId: team.teamId });
   }
@@ -1270,7 +1426,11 @@ app.all('/api/team/problem-pdf', (req, res) => {
       team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
     }
     if (!team && teamIdParam) {
-      team = db.teams.find(t => t.teamId && t.teamId.toLowerCase() === teamIdParam.trim().toLowerCase());
+      const rawParam = teamIdParam.trim().toLowerCase();
+      team = db.teams.find(t => 
+        (t.teamId && t.teamId.toLowerCase() === rawParam) ||
+        (t.regId && t.regId.toLowerCase() === rawParam)
+      );
     }
 
     // Serverless fallback: if lambda instance does not have team in memory, reconstruct from payload
@@ -1495,6 +1655,7 @@ app.post('/api/admin/teams/reset-spin', adminAuthMiddleware, async (req, res) =>
   if (!team) return res.status(404).json({ error: 'Team not found' });
 
   team.spins = [];
+  team.spinResetAt = new Date().toISOString();
   saveDB(db);
   await syncToGitHub();
   res.json({ success: true, message: `Spin reset for team "${team.teamName}". They can spin again.` });
