@@ -821,7 +821,28 @@
         "sess_1791284081290_akxp88u",
         "sess_1791285708294_szw3291"
       ],
-      "spins": [],
+      "spins": [
+        {
+          "id": "ps_doc_1791223685599_11_r0p",
+          "problemId": "ps_doc_1791223685599_11_r0p",
+          "domain": "Web & Mobile Development",
+          "title": "Gamified Environmental Education Platform for Schools and Colleges",
+          "problemTitle": "Gamified Environmental Education Platform for Schools and Colleges",
+          "description": "Problem:\nTraditional environmental education in schools and colleges often fails to engage students, limiting awareness and behavior change around sustainability.\n\nExpected Solution:\nAn interactive, gamified web/app learning platform that teaches environmental concepts through challenges, quizzes, and rewards tailored for students. Suggested tech: React/Flutter, gamification engine, cloud backend for progress tracking.",
+          "problemDescription": "Problem:\nTraditional environmental education in schools and colleges often fails to engage students, limiting awareness and behavior change around sustainability.\n\nExpected Solution:\nAn interactive, gamified web/app learning platform that teaches environmental concepts through challenges, quizzes, and rewards tailored for students. Suggested tech: React/Flutter, gamification engine, cloud backend for progress tracking.",
+          "difficulty": "Beginner",
+          "problemDifficulty": "Beginner",
+          "source": "20_(WebApp)_Problem statement.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Education",
+            "React",
+            "Flutter",
+            "gamification engine"
+          ],
+          "spunAt": "2026-10-06T11:21:48.798Z"
+        }
+      ],
       "spinResetAt": "2026-10-06T11:21:46.837Z"
     },
     {
