@@ -822,29 +822,8 @@
         "sess_1791285708294_szw3291",
         "sess_1791285711131_peadfjt"
       ],
-      "spins": [
-        {
-          "id": "ps_doc_1791223685599_11_r0p",
-          "problemId": "ps_doc_1791223685599_11_r0p",
-          "domain": "Web & Mobile Development",
-          "title": "Gamified Environmental Education Platform for Schools and Colleges",
-          "problemTitle": "Gamified Environmental Education Platform for Schools and Colleges",
-          "description": "Problem:\nTraditional environmental education in schools and colleges often fails to engage students, limiting awareness and behavior change around sustainability.\n\nExpected Solution:\nAn interactive, gamified web/app learning platform that teaches environmental concepts through challenges, quizzes, and rewards tailored for students. Suggested tech: React/Flutter, gamification engine, cloud backend for progress tracking.",
-          "problemDescription": "Problem:\nTraditional environmental education in schools and colleges often fails to engage students, limiting awareness and behavior change around sustainability.\n\nExpected Solution:\nAn interactive, gamified web/app learning platform that teaches environmental concepts through challenges, quizzes, and rewards tailored for students. Suggested tech: React/Flutter, gamification engine, cloud backend for progress tracking.",
-          "difficulty": "Beginner",
-          "problemDifficulty": "Beginner",
-          "source": "20_(WebApp)_Problem statement.pdf",
-          "tags": [
-            "Web & Mobile Development",
-            "Smart Education",
-            "React",
-            "Flutter",
-            "gamification engine"
-          ],
-          "spunAt": "2026-10-06T11:21:48.798Z"
-        }
-      ],
-      "spinResetAt": "2026-10-06T11:21:46.837Z"
+      "spins": [],
+      "spinResetAt": "2026-10-06T11:22:04.685Z"
     },
     {
       "id": 2,
@@ -2961,6 +2940,6 @@
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NTg.970137b4028e3993363b17be46bc1591213b1a51e1963fa678503c5117c058b7",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NjU.3091a723a4961e52a5c560655b49d09df472447fb73dfe3f0f846d59c9bade37",
     "adm.YWRtaW46MTc5MTIyMzU4NDI5MA.d9f15611240baa095819f2079e0fdf44e5365414be3b00d7be09132a547fe1cd",
-    "adm.YWRtaW46MTc5MTI4NTcwNTcwNQ.3e62647dd91da3ac9ef7dc9b7eebc88c77d98fc6506106e2d7b77b665bba7bba"
+    "adm.YWRtaW46MTc5MTI4NTcyNDIyMw.33a892702e6253aa4e43fa517b2ad1e3b1ad9adec154cb375ef41cdb289930c1"
   ]
 }
