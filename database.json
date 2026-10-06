@@ -823,9 +823,35 @@
         "sess_1791190711969_p1tzxp7",
         "sess_1791192345825_tg6ptqi",
         "sess_1791277849694_5s6mu8t",
-        "sess_1791277849735_d4812q1"
+        "sess_1791277849735_d4812q1",
+        "sess_1791308784449_rqrh2d7"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_14",
+          "problemId": "ps_webapp_1791309924414_14",
+          "domain": "Web & Mobile Development",
+          "title": "Crisis Management and Relief Platform Using a Web/App Platform",
+          "problemTitle": "Crisis Management and Relief Platform Using a Web/App Platform",
+          "problem": "During crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.",
+          "expectedSolution": "A web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
+          "description": "Problem:\nDuring crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.\n\nExpected Solution:\nA web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
+          "problemDescription": "Problem:\nDuring crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.\n\nExpected Solution:\nA web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Disaster Management",
+            "React",
+            "Next.js",
+            "WebSockets",
+            "Node.js",
+            "Real-time"
+          ],
+          "spunAt": "2026-10-06T18:16:55.647Z"
+        }
+      ]
     },
     {
       "id": 2,
