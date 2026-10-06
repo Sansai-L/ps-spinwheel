@@ -817,9 +817,31 @@
       "sessionTokens": [
         "sess_1791190697819_pwrbqd9",
         "sess_1791190711969_p1tzxp7",
-        "sess_1791192345825_tg6ptqi"
+        "sess_1791192345825_tg6ptqi",
+        "sess_1791284081290_akxp88u"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_doc_1791223685599_7_ovl",
+          "problemId": "ps_doc_1791223685599_7_ovl",
+          "domain": "Web & Mobile Development",
+          "title": "Smart Community Health Monitoring and Early Warning System for Water-Borne Diseases",
+          "problemTitle": "Smart Community Health Monitoring and Early Warning System for Water-Borne Diseases",
+          "description": "Problem:\nWater-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.\n\nExpected Solution:\nA data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
+          "problemDescription": "Problem:\nWater-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.\n\nExpected Solution:\nA data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "20_(WebApp)_Problem statement.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "MedTech / HealthTech",
+            "Flutter",
+            "React Native",
+            "Node"
+          ],
+          "spunAt": "2026-10-06T10:54:50.989Z"
+        }
+      ]
     },
     {
       "id": 2,
