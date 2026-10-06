@@ -1371,7 +1371,43 @@ app.post('/api/team/sync-spin', async (req, res) => {
     }
     return res.json({ success: true, synced: true, teamId: team.teamId });
   }
-  res.status(404).json({ error: 'Team not found' });
+});
+
+// Update Team GitHub repository link from main page
+app.post('/api/team/github', async (req, res) => {
+  const { sessionToken, teamId, githubLink } = req.body;
+  if (!sessionToken && !teamId) {
+    return res.status(401).json({ error: 'Session token or Team ID required' });
+  }
+
+  const cleanLink = (githubLink || '').trim();
+  if (!db.teams) db.teams = [];
+
+  let team = null;
+  if (sessionToken) {
+    team = db.teams.find(t => t.sessionTokens && t.sessionTokens.includes(sessionToken));
+  }
+  if (!team && teamId) {
+    const rawId = teamId.trim().toLowerCase();
+    team = db.teams.find(t =>
+      (t.teamId && t.teamId.toLowerCase() === rawId) ||
+      (t.regId && t.regId.toLowerCase() === rawId)
+    );
+  }
+
+  if (!team) {
+    return res.status(404).json({ error: 'Team session not found' });
+  }
+
+  team.githubLink = cleanLink;
+  saveDB(db);
+  await syncToGitHub();
+
+  res.json({
+    success: true,
+    githubLink: team.githubLink,
+    message: cleanLink ? 'GitHub repository link saved successfully! 🚀' : 'GitHub link cleared.'
+  });
 });
 
 // Helper: Extract structured problem details for PDF and UI consistency
