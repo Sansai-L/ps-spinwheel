@@ -213,6 +213,7 @@
     else if (tabId === 'tabProblems') await loadProblems();
     else if (tabId === 'tabDocuments') await loadDocuments();
     else if (tabId === 'tabUpload') await populateUploadDomainSelect();
+    else if (tabId === 'tabAddTeams') await loadCustomTeams();
   }
 
   // ─── TEAMS & MASTER SHEET ───────────────────────────────────────────────────
@@ -1043,6 +1044,12 @@
     // Documents
     refreshDocsBtn.addEventListener('click', loadDocuments);
     resetDataBtn.addEventListener('click', resetSampleData);
+
+    // Add Teams tab
+    const addTeamForm = document.getElementById('addTeamForm');
+    const refreshCustomTeamsBtn = document.getElementById('refreshCustomTeamsBtn');
+    if (addTeamForm) addTeamForm.addEventListener('submit', handleAddTeam);
+    if (refreshCustomTeamsBtn) refreshCustomTeamsBtn.addEventListener('click', loadCustomTeams);
   }
 
   // ─── UTILITIES ──────────────────────────────────────────────────────────────
@@ -1080,4 +1087,134 @@
   } else {
     init();
   }
+
+  // ─── ADD TEAMS TAB ──────────────────────────────────────────────────────────
+
+  async function loadCustomTeams() {
+    const tbody = document.getElementById('customTeamsTableBody');
+    const countEl = document.getElementById('customTeamsCount');
+    if (!tbody) return;
+    tbody.innerHTML = `<tr class="empty-table-row"><td colspan="4">Loading...</td></tr>`;
+    try {
+      const res = await fetch('/api/admin/teams/custom', {
+        headers: { 'Authorization': 'Bearer ' + adminToken }
+      });
+      if (!res.ok) throw new Error('Failed to fetch custom teams');
+      const data = await res.json();
+      renderCustomTeams(data.customTeams || []);
+      if (countEl) {
+        countEl.textContent = data.total === 0
+          ? 'No custom teams added yet.'
+          : `${data.total} custom team${data.total !== 1 ? 's' : ''} added by admin`;
+      }
+    } catch (err) {
+      tbody.innerHTML = `<tr class="empty-table-row"><td colspan="4" style="color:#f43f5e;">Error loading teams: ${escHTML(err.message)}</td></tr>`;
+    }
+  }
+
+  function renderCustomTeams(teams) {
+    const tbody = document.getElementById('customTeamsTableBody');
+    if (!tbody) return;
+    if (teams.length === 0) {
+      tbody.innerHTML = `<tr class="empty-table-row"><td colspan="4">No custom teams yet. Use the form to add teams.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = teams.map(t => `
+      <tr>
+        <td>
+          <code style="color:#38bdf8;font-size:0.82rem;">${escHTML(t.regId)}</code>
+          ${t.addedAt ? `<br><small style="color:var(--text-muted);font-size:0.68rem;">${new Date(t.addedAt).toLocaleDateString()}</small>` : ''}
+        </td>
+        <td style="font-size:0.85rem;">${escHTML(t.teamName)}</td>
+        <td><span style="font-size:0.75rem;padding:2px 7px;background:rgba(6,182,212,0.12);color:#38bdf8;border-radius:4px;">${escHTML(t.domain || '—')}</span></td>
+        <td>
+          <button class="btn btn-sm" style="padding:3px 10px;font-size:0.75rem;background:rgba(244,63,94,0.12);color:#f43f5e;border:1px solid rgba(244,63,94,0.25);border-radius:5px;cursor:pointer;"
+            onclick="window._deleteCustomTeam(${JSON.stringify(t.regId)}, ${JSON.stringify(t.teamName)})">
+            🗑️ Remove
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // Expose delete handler globally for inline onclick
+  window._deleteCustomTeam = async function(regId, teamName) {
+    if (!confirm(`Remove custom team "${teamName}" (${regId})?\n\nThis removes their login access. Their spin data is preserved.`)) return;
+    try {
+      const res = await fetch('/api/admin/teams/delete-custom/' + encodeURIComponent(regId), {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer ' + adminToken }
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Delete failed');
+      showToast(data.message || 'Team removed', 'success');
+      await loadCustomTeams();
+    } catch (err) {
+      showToast('Error: ' + err.message, 'error');
+    }
+  };
+
+  async function handleAddTeam(e) {
+    e.preventDefault();
+    const btn = document.getElementById('addTeamSubmitBtn');
+    const label = document.getElementById('addTeamBtnLabel');
+    const msgEl = document.getElementById('addTeamMsg');
+
+    const regId = (document.getElementById('newTeamRegId')?.value || '').trim();
+    const teamName = (document.getElementById('newTeamName')?.value || '').trim();
+    const domain = document.getElementById('newTeamDomain')?.value || '';
+    const leader = (document.getElementById('newTeamLeader')?.value || '').trim();
+    const phone = (document.getElementById('newTeamPhone')?.value || '').trim();
+    const college = (document.getElementById('newTeamCollege')?.value || '').trim();
+    const members = (document.getElementById('newTeamMembers')?.value || '').trim();
+
+    if (!regId || !teamName) {
+      showMsg(msgEl, 'Reg ID and Team Name are required.', 'error');
+      return;
+    }
+
+    if (btn) btn.disabled = true;
+    if (label) label.textContent = 'Adding…';
+    msgEl.classList.add('hidden');
+
+    try {
+      const res = await fetch('/api/admin/teams/add-custom', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + adminToken },
+        body: JSON.stringify({ regId, teamName, domain, leader, college, members, phone })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to add team');
+
+      showMsg(msgEl, '✅ ' + data.message, 'success');
+      showToast(data.message, 'success');
+
+      // Clear form fields
+      document.getElementById('newTeamRegId').value = '';
+      document.getElementById('newTeamName').value = '';
+      document.getElementById('newTeamLeader').value = '';
+      document.getElementById('newTeamPhone').value = '';
+      document.getElementById('newTeamCollege').value = '';
+      document.getElementById('newTeamMembers').value = '';
+
+      // Refresh the list on the right
+      await loadCustomTeams();
+    } catch (err) {
+      showMsg(msgEl, '❌ ' + err.message, 'error');
+    } finally {
+      if (btn) btn.disabled = false;
+      if (label) label.textContent = '➕ Add Team';
+    }
+  }
+
+  function showMsg(el, text, type) {
+    if (!el) return;
+    el.textContent = text;
+    el.style.background = type === 'success' ? 'rgba(52,211,153,0.12)' : 'rgba(244,63,94,0.12)';
+    el.style.color = type === 'success' ? '#34d399' : '#f43f5e';
+    el.style.border = type === 'success' ? '1px solid rgba(52,211,153,0.25)' : '1px solid rgba(244,63,94,0.25)';
+    el.classList.remove('hidden');
+    setTimeout(() => el.classList.add('hidden'), 6000);
+  }
+
 })();
