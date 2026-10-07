@@ -140,6 +140,7 @@ function loadDB() {
   // Ensure teams array always contains all authorized teams with complete metadata
   if (!loaded.teams) loaded.teams = [];
   if (!loaded.adminTokens) loaded.adminTokens = [];
+  if (!loaded.customTeams) loaded.customTeams = [];
 
   if (authorizedTeams && authorizedTeams.length > 0) {
     for (const at of authorizedTeams) {
@@ -181,6 +182,48 @@ function loadDB() {
         if (!existing.originalTrack) existing.originalTrack = at.originalTrack;
         if (!existing.utr) existing.utr = at.utr;
         if (at.isAdmin) existing.isAdmin = true;
+      }
+    }
+  }
+
+  // Seed admin-added custom teams into db.teams so they appear in Teams Activity
+  // alongside the original 100 teams, even before they log in.
+  if (Array.isArray(loaded.customTeams) && loaded.customTeams.length > 0) {
+    for (const ct of loaded.customTeams) {
+      if (!ct.regId) continue;
+      const alreadyInTeams = loaded.teams.find(t =>
+        (t.teamId && t.teamId.toLowerCase() === ct.regId.toLowerCase()) ||
+        (t.regId && t.regId.toLowerCase() === ct.regId.toLowerCase())
+      );
+      if (!alreadyInTeams) {
+        loaded.teams.push({
+          id: ct.id || ('custom_' + ct.regId),
+          teamId: ct.regId,
+          regId: ct.regId,
+          teamName: ct.teamName || ct.regId,
+          originalTrack: ct.domain || 'Custom',
+          domain: ct.domain || 'Artificial Intelligence & ML',
+          size: ct.members ? ct.members.split(',').length + 1 : 1,
+          leader: ct.leader || '',
+          email: ct.email || '',
+          phone: ct.phone || '',
+          college: ct.college || '',
+          members: ct.members || '',
+          utr: '',
+          isAdmin: false,
+          isCustom: true,
+          githubLink: '',
+          hasEntered: false,
+          registeredAt: ct.addedAt || null,
+          sessionTokens: [],
+          spins: []
+        });
+      } else {
+        // Backfill missing fields from customTeams record
+        if (!alreadyInTeams.domain && ct.domain) alreadyInTeams.domain = ct.domain;
+        if (!alreadyInTeams.leader && ct.leader) alreadyInTeams.leader = ct.leader;
+        if (!alreadyInTeams.college && ct.college) alreadyInTeams.college = ct.college;
+        alreadyInTeams.isCustom = true;
       }
     }
   }
