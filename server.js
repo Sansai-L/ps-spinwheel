@@ -714,7 +714,7 @@ app.post('/api/domains', adminAuthMiddleware, async (req, res) => {
   }
   db.domains.push(cleanName);
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000);
   res.json({ success: true, domain: cleanName });
 });
 
@@ -735,7 +735,7 @@ app.delete('/api/domains/:name', adminAuthMiddleware, async (req, res) => {
   const removedCount = prevCount - db.problems.length;
 
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000);
   res.json({
     success: true,
     message: `Domain "${actualDomainName}" and ${removedCount} associated problem statement(s) deleted.`,
@@ -925,7 +925,7 @@ app.get('/api/problems', (req, res) => {
     const q = search.toLowerCase();
     list = list.filter(p => 
       p.title.toLowerCase().includes(q) || 
-      p.description.toLowerCase().includes(q) ||
+      (p.description || p.problem || '').toLowerCase().includes(q) ||
       (p.tags && p.tags.some(t => t.toLowerCase().includes(q)))
     );
   }
@@ -957,7 +957,7 @@ app.post('/api/problems', adminAuthMiddleware, async (req, res) => {
 
   db.problems.unshift(newProblem);
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000);
   res.json({ success: true, problem: newProblem });
 });
 
@@ -972,7 +972,7 @@ app.delete('/api/problems/:id', adminAuthMiddleware, async (req, res) => {
   }
 
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000);
   res.json({ success: true, message: 'Problem statement deleted' });
 });
 
@@ -981,7 +981,7 @@ app.post('/api/admin/clear-all-problems', adminAuthMiddleware, async (req, res) 
   db.problems = [];
   db.documents = [];
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000);
   res.json({ success: true, message: 'All problem statements and documents removed successfully', totalProblems: 0 });
 });
 
@@ -989,7 +989,7 @@ app.delete('/api/problems', adminAuthMiddleware, async (req, res) => {
   db.problems = [];
   db.documents = [];
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000);
   res.json({ success: true, message: 'All problem statements and documents removed successfully', totalProblems: 0 });
 });
 
@@ -1169,7 +1169,7 @@ app.post('/api/upload', adminAuthMiddleware, upload.single('file'), async (req, 
     };
     db.documents.unshift(docRecord);
     saveDB(db);
-    await syncToGitHub();
+    debouncedSync(2000);
 
     res.json({
       success: true,
@@ -1202,7 +1202,7 @@ app.delete('/api/documents/:id', adminAuthMiddleware, async (req, res) => {
   db.problems = db.problems.filter(p => p.source !== doc.filename);
 
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000);
   res.json({ success: true, message: `Removed document "${doc.filename}" and its problem statements.` });
 });
 
@@ -1837,7 +1837,7 @@ app.post('/api/admin/teams/reset-spin', adminAuthMiddleware, async (req, res) =>
   team.spins = [];
   team.spinResetAt = new Date().toISOString();
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000);
   res.json({ success: true, message: `Spin reset for team "${team.teamName}". They can spin again.` });
 });
 
@@ -1880,7 +1880,7 @@ app.post('/api/admin/teams/add-custom', adminAuthMiddleware, async (req, res) =>
 
   db.customTeams.push(newCustomTeam);
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000);
 
   res.json({
     success: true,
@@ -1901,7 +1901,7 @@ app.delete('/api/admin/teams/delete-custom/:teamId', adminAuthMiddleware, async 
 
   const removed = db.customTeams.splice(idx, 1)[0];
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000);
 
   res.json({
     success: true,
@@ -1937,7 +1937,7 @@ app.post('/api/admin/teams/assign-problem', adminAuthMiddleware, async (req, res
   }];
   team.hasEntered = true;
   saveDB(db);
-  await syncToGitHub();
+  debouncedSync(2000);
   res.json({ success: true, message: `Problem "${problem.title}" assigned to team "${team.teamName}".` });
 });
 
