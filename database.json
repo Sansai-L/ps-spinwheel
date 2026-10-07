@@ -3902,5 +3902,19 @@
     "adm.YWRtaW46MTc5MTE5Mzc1Mjc0OQ.ad565ddf3e504ff3fda0a9a4dea6f531417d6027c1d02e7d6d160b0090daaab0",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NTg.970137b4028e3993363b17be46bc1591213b1a51e1963fa678503c5117c058b7",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NjU.3091a723a4961e52a5c560655b49d09df472447fb73dfe3f0f846d59c9bade37"
+  ],
+  "customTeams": [
+    {
+      "id": "custom_1791378901317_igz6",
+      "regId": "CODIENYCH-2026-0101",
+      "teamName": "Code Crew",
+      "domain": "Web & Mobile Development",
+      "leader": "Luckshmitha P",
+      "college": "Velalar college of engineering and technology",
+      "members": "Nivetha R, Monuika S, Logesh G, Praveen K",
+      "phone": "9342837573",
+      "email": "",
+      "addedAt": "2026-10-07T13:15:01.317Z"
+    }
   ]
 }
