@@ -1510,9 +1510,214 @@
         "High Concurrency"
       ],
       "createdAt": "2026-10-06T18:25:29.713Z"
+    },
+    {
+      "id": "ps_iot_1791378299924_1",
+      "domain": "Internet of Things (IoT)",
+      "title": "Gas Leak Detection System",
+      "problem": "Detect hazardous gas leaks in homes, kitchens or labs. An ESP32 reads a gas sensor (simulated with a potentiometer or MQ-2 part), classifies the level as safe, warning or danger, and drives LEDs, a buzzer and an OLED display.",
+      "expectedSolution": "Three-level alert system with instant local alarm and live gas reading on the display. Optional cloud alert when the danger level is crossed.",
+      "description": "Problem:\nDetect hazardous gas leaks in homes, kitchens or labs. An ESP32 reads a gas sensor (simulated with a potentiometer or MQ-2 part), classifies the level as safe, warning or danger, and drives LEDs, a buzzer and an OLED display.\n\nExpected Solution:\nThree-level alert system with instant local alarm and live gas reading on the display. Optional cloud alert when the danger level is crossed.",
+      "difficulty": "Intermediate",
+      "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+      "tags": [
+        "Internet of Things (IoT)",
+        "ESP32",
+        "MQ-2",
+        "Gas Sensor",
+        "OLED",
+        "Buzzer",
+        "Safety"
+      ],
+      "createdAt": "2026-10-07T13:04:59.922Z"
+    },
+    {
+      "id": "ps_iot_1791378299924_2",
+      "domain": "Internet of Things (IoT)",
+      "title": "Smart Irrigation System",
+      "problem": "Automate crop watering to save water. Soil moisture (potentiometer) and DHT22 temperature/humidity are read by the ESP32, which switches a relay-driven pump on or off based on thresholds.",
+      "expectedSolution": "Pump turns on only when soil is dry and off when moisture is restored. Reduces water wastage and shows live moisture data on a dashboard.",
+      "description": "Problem:\nAutomate crop watering to save water. Soil moisture (potentiometer) and DHT22 temperature/humidity are read by the ESP32, which switches a relay-driven pump on or off based on thresholds.\n\nExpected Solution:\nPump turns on only when soil is dry and off when moisture is restored. Reduces water wastage and shows live moisture data on a dashboard.",
+      "difficulty": "Beginner",
+      "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+      "tags": [
+        "Internet of Things (IoT)",
+        "ESP32",
+        "Soil Moisture",
+        "DHT22",
+        "Relay",
+        "Water Management",
+        "Agriculture"
+      ],
+      "createdAt": "2026-10-07T13:04:59.922Z"
+    },
+    {
+      "id": "ps_iot_1791378299924_3",
+      "domain": "Internet of Things (IoT)",
+      "title": "Urban Flood Early Warning",
+      "problem": "Warn people before streets flood. An HC-SR04 ultrasonic sensor measures water level and a potentiometer simulates rainfall intensity. The ESP32 grades the risk and publishes data over MQTT.",
+      "expectedSolution": "Graded flood alerts (normal, watch, danger) with LED/buzzer output and a live water-level dashboard for early evacuation decisions.",
+      "description": "Problem:\nWarn people before streets flood. An HC-SR04 ultrasonic sensor measures water level and a potentiometer simulates rainfall intensity. The ESP32 grades the risk and publishes data over MQTT.\n\nExpected Solution:\nGraded flood alerts (normal, watch, danger) with LED/buzzer output and a live water-level dashboard for early evacuation decisions.",
+      "difficulty": "Intermediate",
+      "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+      "tags": [
+        "Internet of Things (IoT)",
+        "ESP32",
+        "HC-SR04",
+        "Ultrasonic",
+        "MQTT",
+        "Flood Warning",
+        "Smart City"
+      ],
+      "createdAt": "2026-10-07T13:04:59.922Z"
+    },
+    {
+      "id": "ps_iot_1791378299924_4",
+      "domain": "Internet of Things (IoT)",
+      "title": "Peak Load Controller",
+      "problem": "Reduce demand charges by controlling peak electricity load. A potentiometer simulates load current. When it crosses a limit, the ESP32 sheds non-critical loads through relays.",
+      "expectedSolution": "Automatic load shedding above the threshold, restoration when load drops, and an OLED/dashboard showing load and relay status.",
+      "description": "Problem:\nReduce demand charges by controlling peak electricity load. A potentiometer simulates load current. When it crosses a limit, the ESP32 sheds non-critical loads through relays.\n\nExpected Solution:\nAutomatic load shedding above the threshold, restoration when load drops, and an OLED/dashboard showing load and relay status.",
+      "difficulty": "Intermediate",
+      "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+      "tags": [
+        "Internet of Things (IoT)",
+        "ESP32",
+        "Energy Management",
+        "Load Shedding",
+        "Relays",
+        "Smart Grid"
+      ],
+      "createdAt": "2026-10-07T13:04:59.922Z"
+    },
+    {
+      "id": "ps_iot_1791378299925_5",
+      "domain": "Internet of Things (IoT)",
+      "title": "Cold Chain Monitor",
+      "problem": "Keep vaccines and food safe in transit. A DHT22 monitors temperature and humidity continuously and the ESP32 flags any reading outside the allowed range.",
+      "expectedSolution": "Instant breach alerts, a continuous temperature log in the cloud, and proof of safe storage conditions.",
+      "description": "Problem:\nKeep vaccines and food safe in transit. A DHT22 monitors temperature and humidity continuously and the ESP32 flags any reading outside the allowed range.\n\nExpected Solution:\nInstant breach alerts, a continuous temperature log in the cloud, and proof of safe storage conditions.",
+      "difficulty": "Beginner",
+      "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+      "tags": [
+        "Internet of Things (IoT)",
+        "ESP32",
+        "DHT22",
+        "Cold Chain",
+        "Cloud Logging",
+        "Healthcare Logistics"
+      ],
+      "createdAt": "2026-10-07T13:04:59.922Z"
+    },
+    {
+      "id": "ps_iot_1791378299925_6",
+      "domain": "Internet of Things (IoT)",
+      "title": "Smart Parking System",
+      "problem": "Help drivers find free slots. Several HC-SR04 sensors detect whether each slot is occupied, and a servo operates the entry gate based on availability.",
+      "expectedSolution": "Live free-slot count, gate opens only when space is available, and less time spent searching for parking.",
+      "description": "Problem:\nHelp drivers find free slots. Several HC-SR04 sensors detect whether each slot is occupied, and a servo operates the entry gate based on availability.\n\nExpected Solution:\nLive free-slot count, gate opens only when space is available, and less time spent searching for parking.",
+      "difficulty": "Intermediate",
+      "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+      "tags": [
+        "Internet of Things (IoT)",
+        "ESP32",
+        "HC-SR04",
+        "Servo Motor",
+        "Smart Parking",
+        "Smart City"
+      ],
+      "createdAt": "2026-10-07T13:04:59.922Z"
+    },
+    {
+      "id": "ps_iot_1791378299925_7",
+      "domain": "Internet of Things (IoT)",
+      "title": "Fall Detection Band",
+      "problem": "Protect elderly people living alone. An MPU6050 detects a sudden fall from acceleration changes, and an SOS button allows manual help calls.",
+      "expectedSolution": "Fall or SOS triggers a buzzer and an alert message to the caregiver, enabling faster help.",
+      "description": "Problem:\nProtect elderly people living alone. An MPU6050 detects a sudden fall from acceleration changes, and an SOS button allows manual help calls.\n\nExpected Solution:\nFall or SOS triggers a buzzer and an alert message to the caregiver, enabling faster help.",
+      "difficulty": "Advanced",
+      "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+      "tags": [
+        "Internet of Things (IoT)",
+        "ESP32",
+        "MPU6050",
+        "Accelerometer",
+        "Healthcare",
+        "Wearable",
+        "Elderly Care"
+      ],
+      "createdAt": "2026-10-07T13:04:59.922Z"
+    },
+    {
+      "id": "ps_iot_1791378299925_8",
+      "domain": "Internet of Things (IoT)",
+      "title": "Smart Classroom Automation",
+      "problem": "Save electricity in classrooms. A PIR sensor detects occupancy and an LDR measures room brightness. The ESP32 switches lights and fans through relays.",
+      "expectedSolution": "Lights and fans run only when the room is occupied and needed, cutting energy waste automatically.",
+      "description": "Problem:\nSave electricity in classrooms. A PIR sensor detects occupancy and an LDR measures room brightness. The ESP32 switches lights and fans through relays.\n\nExpected Solution:\nLights and fans run only when the room is occupied and needed, cutting energy waste automatically.",
+      "difficulty": "Beginner",
+      "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+      "tags": [
+        "Internet of Things (IoT)",
+        "ESP32",
+        "PIR Sensor",
+        "LDR",
+        "Automation",
+        "Energy Saving",
+        "Smart Building"
+      ],
+      "createdAt": "2026-10-07T13:04:59.922Z"
+    },
+    {
+      "id": "ps_iot_1791378299925_9",
+      "domain": "Internet of Things (IoT)",
+      "title": "Air Quality Monitor",
+      "problem": "Track indoor air quality. A DHT22 gives temperature and humidity while a potentiometer simulates the gas or PM level. The ESP32 converts readings into an AQI category.",
+      "expectedSolution": "AQI category (good, moderate, poor) on the OLED and a cloud dashboard with live and historical readings.",
+      "description": "Problem:\nTrack indoor air quality. A DHT22 gives temperature and humidity while a potentiometer simulates the gas or PM level. The ESP32 converts readings into an AQI category.\n\nExpected Solution:\nAQI category (good, moderate, poor) on the OLED and a cloud dashboard with live and historical readings.",
+      "difficulty": "Intermediate",
+      "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+      "tags": [
+        "Internet of Things (IoT)",
+        "ESP32",
+        "DHT22",
+        "Air Quality",
+        "AQI",
+        "OLED",
+        "Environmental Monitoring"
+      ],
+      "createdAt": "2026-10-07T13:04:59.922Z"
+    },
+    {
+      "id": "ps_iot_1791378299925_10",
+      "domain": "Internet of Things (IoT)",
+      "title": "Smart Door Security",
+      "problem": "Secure a home or lab. A keypad arms and disarms the system, a PIR and door switch detect intrusion, and a siren sounds on a breach.",
+      "expectedSolution": "Siren and push alert on unauthorised entry, with password-controlled arming and a simple event log.",
+      "description": "Problem:\nSecure a home or lab. A keypad arms and disarms the system, a PIR and door switch detect intrusion, and a siren sounds on a breach.\n\nExpected Solution:\nSiren and push alert on unauthorised entry, with password-controlled arming and a simple event log.",
+      "difficulty": "Intermediate",
+      "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+      "tags": [
+        "Internet of Things (IoT)",
+        "ESP32",
+        "Keypad",
+        "PIR",
+        "Door Security",
+        "Intrusion Detection",
+        "Home Security"
+      ],
+      "createdAt": "2026-10-07T13:04:59.922Z"
     }
   ],
   "documents": [
+    {
+      "id": "doc_1791378299925",
+      "filename": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+      "domain": "Internet of Things (IoT)",
+      "extractedCount": 10,
+      "uploadedAt": "2026-10-07T13:04:59.922Z",
+      "size": 145000
+    },
     {
       "id": "doc_1791311129717",
       "filename": "Cloud Computing Hackathon (Top 20 Challenges).pdf",
@@ -1577,11 +1782,9 @@
         "sess_1791190711969_p1tzxp7",
         "sess_1791192345825_tg6ptqi",
         "sess_1791277849694_5s6mu8t",
-        "sess_1791277849735_d4812q1",
-        "sess_1791308784449_rqrh2d7"
+        "sess_1791277849735_d4812q1"
       ],
-      "spins": [],
-      "spinResetAt": "2026-10-06T18:57:48.804Z"
+      "spins": []
     },
     {
       "id": 2,
