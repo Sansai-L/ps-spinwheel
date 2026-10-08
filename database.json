@@ -1774,7 +1774,7 @@
       "members": "Mayukasri s, Deepaka p, Indhumathi m",
       "utr": "130061965577",
       "isAdmin": false,
-      "githubLink": "https://github.com/mahalakshmi-73",
+      "githubLink": "",
       "hasEntered": true,
       "registeredAt": "2026-10-05T08:58:17.819Z",
       "sessionTokens": [
@@ -1891,10 +1891,35 @@
       "utr": "62679954025",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_5",
+          "problemId": "ps_webapp_1791309924414_5",
+          "domain": "Web & Mobile Development",
+          "title": "Tyre Maintenance and Operation App for Dumpers",
+          "problemTitle": "Tyre Maintenance and Operation App for Dumpers",
+          "problem": "Dumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.",
+          "expectedSolution": "A mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
+          "description": "Problem:\nDumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.\n\nExpected Solution:\nA mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
+          "problemDescription": "Problem:\nDumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.\n\nExpected Solution:\nA mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "React Native",
+            "Flutter",
+            "Node.js",
+            "Cloud Database",
+            "Analytics"
+          ],
+          "spunAt": "2026-10-08T06:47:51.021Z"
+        }
+      ]
     },
     {
       "id": 7,
@@ -2904,7 +2929,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442070313_j5rtuwx"
+      ],
       "spins": []
     },
     {
@@ -4719,12 +4746,37 @@
       "isAdmin": false,
       "isCustom": true,
       "githubLink": "https://github.com/Dharshini678-R",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": "2026-10-07T13:32:30.548Z",
       "sessionTokens": [
         "sess_1791441893542_p99ue52"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_1",
+          "problemId": "ps_webapp_1791309924414_1",
+          "domain": "Web & Mobile Development",
+          "title": "Conversational Image Recognition Chatbot",
+          "problemTitle": "Conversational Image Recognition Chatbot",
+          "problem": "Users often need quick answers about objects or scenes they encounter, but typing out detailed text queries is slow and doesn't always capture what they're looking at.",
+          "expectedSolution": "A chatbot that accepts both images and natural-language queries, combining image recognition with conversational AI to identify objects/scenes and answer follow-up questions. Suggested tech: Python, computer vision models, NLP/LLM APIs, web/mobile chat interface.",
+          "description": "Problem:\nUsers often need quick answers about objects or scenes they encounter, but typing out detailed text queries is slow and doesn't always capture what they're looking at.\n\nExpected Solution:\nA chatbot that accepts both images and natural-language queries, combining image recognition with conversational AI to identify objects/scenes and answer follow-up questions. Suggested tech: Python, computer vision models, NLP/LLM APIs, web/mobile chat interface.",
+          "problemDescription": "Problem:\nUsers often need quick answers about objects or scenes they encounter, but typing out detailed text queries is slow and doesn't always capture what they're looking at.\n\nExpected Solution:\nA chatbot that accepts both images and natural-language queries, combining image recognition with conversational AI to identify objects/scenes and answer follow-up questions. Suggested tech: Python, computer vision models, NLP/LLM APIs, web/mobile chat interface.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "Python",
+            "Computer Vision",
+            "NLP",
+            "LLM",
+            "Chatbot"
+          ],
+          "spunAt": "2026-10-08T06:47:49.991Z"
+        }
+      ]
     },
     {
       "id": "custom_1791380156797_h7pa",
