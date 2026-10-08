@@ -2891,13 +2891,37 @@
       "members": "Madhubalan S, Shailesh K M, Sasankanth m",
       "utr": "627639518415",
       "isAdmin": false,
-      "githubLink": "",
-      "hasEntered": false,
+      "githubLink": "https://github.com/SasankanthM/One_piece",
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441736458_5amgckb"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_4",
+          "problemId": "ps_aiml_1791310333026_4",
+          "domain": "Artificial Intelligence & ML",
+          "title": "AI chatbot for mental health support and emotion recognition",
+          "problemTitle": "AI chatbot for mental health support and emotion recognition",
+          "problem": "Many people hesitate to seek mental health support due to stigma, cost, or limited access to counselors, especially when they need immediate emotional support.",
+          "expectedSolution": "An AI chatbot that uses sentiment analysis to understand a user's emotional state through conversation, offer supportive responses, and flag cases that need escalation to a human counselor. Suggested tech: Python, NLP/sentiment analysis models, web/mobile app.",
+          "description": "Problem:\nMany people hesitate to seek mental health support due to stigma, cost, or limited access to counselors, especially when they need immediate emotional support.\n\nExpected Solution:\nAn AI chatbot that uses sentiment analysis to understand a user's emotional state through conversation, offer supportive responses, and flag cases that need escalation to a human counselor. Suggested tech: Python, NLP/sentiment analysis models, web/mobile app.",
+          "problemDescription": "Problem:\nMany people hesitate to seek mental health support due to stigma, cost, or limited access to counselors, especially when they need immediate emotional support.\n\nExpected Solution:\nAn AI chatbot that uses sentiment analysis to understand a user's emotional state through conversation, offer supportive responses, and flag cases that need escalation to a human counselor. Suggested tech: Python, NLP/sentiment analysis models, web/mobile app.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "MedTech",
+            "Python",
+            "Sentiment Analysis",
+            "Emotion Recognition",
+            "NLP"
+          ],
+          "spunAt": "2026-10-08T06:42:43.779Z"
+        }
+      ]
     },
     {
       "id": 52,
@@ -3895,7 +3919,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791441766956_oxs98oo"
+      ],
       "spins": []
     },
     {
