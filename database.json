@@ -2044,7 +2044,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791444726804_hl12gbw"
+      ],
       "spins": []
     },
     {
@@ -3010,7 +3012,7 @@
       "members": "Naveena S, Kaviya E, Kiruthika Anbarasu, Kavya Shree P, Nagammai B",
       "utr": "127640719385",
       "isAdmin": false,
-      "githubLink": "",
+      "githubLink": "https://github.com/naveenasuresh2008-lang/Tech-Innovators/settings/access?guidance_task=",
       "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
@@ -3290,7 +3292,7 @@
       "members": "Shakeen.D, saranraj.d, tamizhselvan.u",
       "utr": "664177666103",
       "isAdmin": false,
-      "githubLink": "",
+      "githubLink": "https://github.com/Sakthi-AI-Developer/Team-S4.git",
       "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
