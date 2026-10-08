@@ -2969,12 +2969,37 @@
       "utr": "130644462988",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441521797_ikc5lsg"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_6",
+          "problemId": "ps_webapp_1791309924414_6",
+          "domain": "Web & Mobile Development",
+          "title": "Web/App Platform Integrating Diverse Services to Enhance Urban Living",
+          "problemTitle": "Web/App Platform Integrating Diverse Services to Enhance Urban Living",
+          "problem": "City residents often need to navigate multiple disconnected platforms for different municipal and urban services, creating friction and confusion.",
+          "expectedSolution": "A unified web/app platform that integrates diverse urban services (e.g. utility payments, civic complaints, local information) into a single, easy-to-use interface. Suggested tech: React/Next.js, React Native/Flutter, microservices backend (Node.js/Django), API gateway.",
+          "description": "Problem:\nCity residents often need to navigate multiple disconnected platforms for different municipal and urban services, creating friction and confusion.\n\nExpected Solution:\nA unified web/app platform that integrates diverse urban services (e.g. utility payments, civic complaints, local information) into a single, easy-to-use interface. Suggested tech: React/Next.js, React Native/Flutter, microservices backend (Node.js/Django), API gateway.",
+          "problemDescription": "Problem:\nCity residents often need to navigate multiple disconnected platforms for different municipal and urban services, creating friction and confusion.\n\nExpected Solution:\nA unified web/app platform that integrates diverse urban services (e.g. utility payments, civic complaints, local information) into a single, easy-to-use interface. Suggested tech: React/Next.js, React Native/Flutter, microservices backend (Node.js/Django), API gateway.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "React",
+            "Next.js",
+            "Flutter",
+            "Microservices",
+            "API Gateway"
+          ],
+          "spunAt": "2026-10-08T06:39:58.796Z"
+        }
+      ]
     },
     {
       "id": 58,
@@ -3256,12 +3281,37 @@
       "utr": "664259525463",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441583833_1uaeles"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_11",
+          "problemId": "ps_webapp_1791309924414_11",
+          "domain": "Web & Mobile Development",
+          "title": "Interactive Gaming Web/App Platform Focused on Children's Rights",
+          "problemTitle": "Interactive Gaming Web/App Platform Focused on Children's Rights",
+          "problem": "Children often don't have accessible, engaging ways to learn about their rights, leaving them less aware of the protections available to them.",
+          "expectedSolution": "An interactive, game-based web/app platform that teaches children about their rights through age-appropriate stories, quizzes, and challenges. Suggested tech: React/Flutter, gamification engine, cloud backend for progress tracking.",
+          "description": "Problem:\nChildren often don't have accessible, engaging ways to learn about their rights, leaving them less aware of the protections available to them.\n\nExpected Solution:\nAn interactive, game-based web/app platform that teaches children about their rights through age-appropriate stories, quizzes, and challenges. Suggested tech: React/Flutter, gamification engine, cloud backend for progress tracking.",
+          "problemDescription": "Problem:\nChildren often don't have accessible, engaging ways to learn about their rights, leaving them less aware of the protections available to them.\n\nExpected Solution:\nAn interactive, game-based web/app platform that teaches children about their rights through age-appropriate stories, quizzes, and challenges. Suggested tech: React/Flutter, gamification engine, cloud backend for progress tracking.",
+          "difficulty": "Beginner",
+          "problemDifficulty": "Beginner",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Education",
+            "Legal",
+            "React",
+            "Flutter",
+            "Gamification",
+            "Cloud"
+          ],
+          "spunAt": "2026-10-08T06:40:00.179Z"
+        }
+      ]
     },
     {
       "id": 69,
