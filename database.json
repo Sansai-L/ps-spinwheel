@@ -3878,10 +3878,37 @@
       "utr": "664300886633",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791441855182_s5eguy7"
+      ],
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_17",
+          "problemId": "ps_webapp_1791309924414_17",
+          "domain": "Web & Mobile Development",
+          "title": "Smart Tourist Safety Monitoring & Incident Response System",
+          "problemTitle": "Smart Tourist Safety Monitoring & Incident Response System",
+          "problem": "Tourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to monitor tourist safety and respond quickly to incidents.",
+          "expectedSolution": "A mobile app for tourists with safety monitoring and SOS alerts, paired with a web dashboard for authorities to track incidents and coordinate rapid response. Suggested tech: React Native/Flutter, geofencing APIs, Node.js backend, React dashboard.",
+          "description": "Problem:\nTourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to monitor tourist safety and respond quickly to incidents.\n\nExpected Solution:\nA mobile app for tourists with safety monitoring and SOS alerts, paired with a web dashboard for authorities to track incidents and coordinate rapid response. Suggested tech: React Native/Flutter, geofencing APIs, Node.js backend, React dashboard.",
+          "problemDescription": "Problem:\nTourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to monitor tourist safety and respond quickly to incidents.\n\nExpected Solution:\nA mobile app for tourists with safety monitoring and SOS alerts, paired with a web dashboard for authorities to track incidents and coordinate rapid response. Suggested tech: React Native/Flutter, geofencing APIs, Node.js backend, React dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Travel & Tourism",
+            "React Native",
+            "Flutter",
+            "Geofencing",
+            "Node.js",
+            "Dashboard"
+          ],
+          "spunAt": "2026-10-08T06:45:21.398Z"
+        }
+      ]
     },
     {
       "id": 81,
@@ -4537,7 +4564,7 @@
       "utr": "",
       "isAdmin": false,
       "isCustom": true,
-      "githubLink": "",
+      "githubLink": "https://github.com/Dharshini678-R",
       "hasEntered": false,
       "registeredAt": "2026-10-07T13:32:30.548Z",
       "sessionTokens": [
