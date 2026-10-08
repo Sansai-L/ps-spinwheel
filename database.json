@@ -2891,7 +2891,7 @@
       "members": "Madhubalan S, Shailesh K M, Sasankanth m",
       "utr": "627639518415",
       "isAdmin": false,
-      "githubLink": "https://github.com/SasankanthM/One_piece",
+      "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
       "sessionTokens": [
@@ -3025,7 +3025,8 @@
       "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
-        "sess_1791441521797_ikc5lsg"
+        "sess_1791441521797_ikc5lsg",
+        "sess_1791441744364_ddez838"
       ],
       "spins": [
         {
@@ -3117,10 +3118,37 @@
       "utr": "427161014161",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791441705546_tbekjda"
+      ],
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_15",
+          "problemId": "ps_aiml_1791310333026_15",
+          "domain": "Artificial Intelligence & ML",
+          "title": "Explainable AI (XAI) model for predicting high-impact rain",
+          "problemTitle": "Explainable AI (XAI) model for predicting high-impact rain",
+          "problem": "Existing rainfall-prediction models often act as \"black boxes,\" making it hard for authorities to trust or act confidently on forecasts of high-impact rain events.",
+          "expectedSolution": "A time-series forecasting model for high-impact rain events that incorporates explainable AI (XAI) techniques, so forecasters can see and trust the reasoning behind each prediction. Suggested tech: Python, time-series ML (LSTM/Prophet), XAI libraries (SHAP/LIME), web dashboard.",
+          "description": "Problem:\nExisting rainfall-prediction models often act as \"black boxes,\" making it hard for authorities to trust or act confidently on forecasts of high-impact rain events.\n\nExpected Solution:\nA time-series forecasting model for high-impact rain events that incorporates explainable AI (XAI) techniques, so forecasters can see and trust the reasoning behind each prediction. Suggested tech: Python, time-series ML (LSTM/Prophet), XAI libraries (SHAP/LIME), web dashboard.",
+          "problemDescription": "Problem:\nExisting rainfall-prediction models often act as \"black boxes,\" making it hard for authorities to trust or act confidently on forecasts of high-impact rain events.\n\nExpected Solution:\nA time-series forecasting model for high-impact rain events that incorporates explainable AI (XAI) techniques, so forecasters can see and trust the reasoning behind each prediction. Suggested tech: Python, time-series ML (LSTM/Prophet), XAI libraries (SHAP/LIME), web dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "Disaster Management",
+            "Explainable AI",
+            "XAI",
+            "LSTM",
+            "SHAP",
+            "LIME"
+          ],
+          "spunAt": "2026-10-08T06:42:22.679Z"
+        }
+      ]
     },
     {
       "id": 60,
@@ -3993,10 +4021,35 @@
       "utr": "201555135845",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_iot_1791378299924_1",
+          "problemId": "ps_iot_1791378299924_1",
+          "domain": "Internet of Things (IoT)",
+          "title": "Gas Leak Detection System",
+          "problemTitle": "Gas Leak Detection System",
+          "problem": "Detect hazardous gas leaks in homes, kitchens or labs. An ESP32 reads a gas sensor (simulated with a potentiometer or MQ-2 part), classifies the level as safe, warning or danger, and drives LEDs, a buzzer and an OLED display.",
+          "expectedSolution": "Three-level alert system with instant local alarm and live gas reading on the display. Optional cloud alert when the danger level is crossed.",
+          "description": "Problem:\nDetect hazardous gas leaks in homes, kitchens or labs. An ESP32 reads a gas sensor (simulated with a potentiometer or MQ-2 part), classifies the level as safe, warning or danger, and drives LEDs, a buzzer and an OLED display.\n\nExpected Solution:\nThree-level alert system with instant local alarm and live gas reading on the display. Optional cloud alert when the danger level is crossed.",
+          "problemDescription": "Problem:\nDetect hazardous gas leaks in homes, kitchens or labs. An ESP32 reads a gas sensor (simulated with a potentiometer or MQ-2 part), classifies the level as safe, warning or danger, and drives LEDs, a buzzer and an OLED display.\n\nExpected Solution:\nThree-level alert system with instant local alarm and live gas reading on the display. Optional cloud alert when the danger level is crossed.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+          "tags": [
+            "Internet of Things (IoT)",
+            "ESP32",
+            "MQ-2",
+            "Gas Sensor",
+            "OLED",
+            "Buzzer",
+            "Safety"
+          ],
+          "spunAt": "2026-10-08T06:42:22.846Z"
+        }
+      ]
     },
     {
       "id": 94,
