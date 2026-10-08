@@ -1910,10 +1910,12 @@
       "members": "Rihan jaith s, Jumana Haseen a m, Shameena s p, Pradhiksha R, Dharshini s",
       "utr": "663391812476",
       "isAdmin": false,
-      "githubLink": "",
+      "githubLink": "https://github.com/mubeena-tech",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791441873449_yk0a7kv"
+      ],
       "spins": []
     },
     {
