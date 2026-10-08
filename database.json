@@ -4078,12 +4078,37 @@
       "utr": "627614889973",
       "isAdmin": false,
       "githubLink": "https://github.com/Shera87/Infinite-Loop.git",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791443146288_a08xrtr"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_10",
+          "problemId": "ps_webapp_1791309924414_10",
+          "domain": "Web & Mobile Development",
+          "title": "AyurSutra - Panchakarma Patient Management and Therapy Scheduling Software",
+          "problemTitle": "AyurSutra - Panchakarma Patient Management and Therapy Scheduling Software",
+          "problem": "Panchakarma therapy centers need a specialized way to manage patient records, treatment plans, and therapy scheduling, which generic healthcare software doesn't handle well.",
+          "expectedSolution": "A specialized patient management and therapy-scheduling web app tailored to Panchakarma/Ayurvedic treatment workflows, covering treatment plans, appointments, and records. Suggested tech: React/Angular, Node.js/Django backend, PostgreSQL.",
+          "description": "Problem:\nPanchakarma therapy centers need a specialized way to manage patient records, treatment plans, and therapy scheduling, which generic healthcare software doesn't handle well.\n\nExpected Solution:\nA specialized patient management and therapy-scheduling web app tailored to Panchakarma/Ayurvedic treatment workflows, covering treatment plans, appointments, and records. Suggested tech: React/Angular, Node.js/Django backend, PostgreSQL.",
+          "problemDescription": "Problem:\nPanchakarma therapy centers need a specialized way to manage patient records, treatment plans, and therapy scheduling, which generic healthcare software doesn't handle well.\n\nExpected Solution:\nA specialized patient management and therapy-scheduling web app tailored to Panchakarma/Ayurvedic treatment workflows, covering treatment plans, appointments, and records. Suggested tech: React/Angular, Node.js/Django backend, PostgreSQL.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "HealthTech",
+            "React",
+            "Angular",
+            "Node.js",
+            "PostgreSQL",
+            "Scheduling"
+          ],
+          "spunAt": "2026-10-08T07:06:24.690Z"
+        }
+      ]
     },
     {
       "id": 63,
@@ -5283,12 +5308,35 @@
       "utr": "954769623494",
       "isAdmin": false,
       "githubLink": "https://github.com/Akash-T-aiml/The-Horizon-Chasers",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442070408_bs3ycwi"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_9",
+          "problemId": "ps_aiml_1791310333026_9",
+          "domain": "Artificial Intelligence & ML",
+          "title": "Real-time traffic congestion predictor",
+          "problemTitle": "Real-time traffic congestion predictor",
+          "problem": "Drivers and commuters often lack advance warning of traffic congestion, leading to wasted time and inefficient route choices.",
+          "expectedSolution": "A system that uses time-series forecasting on historical and live traffic data to predict congestion levels on key routes and display them through a web/mobile interface. Suggested tech: Python, time-series ML (LSTM/Prophet), React/Flutter interface, cloud data pipeline.",
+          "description": "Problem:\nDrivers and commuters often lack advance warning of traffic congestion, leading to wasted time and inefficient route choices.\n\nExpected Solution:\nA system that uses time-series forecasting on historical and live traffic data to predict congestion levels on key routes and display them through a web/mobile interface. Suggested tech: Python, time-series ML (LSTM/Prophet), React/Flutter interface, cloud data pipeline.",
+          "problemDescription": "Problem:\nDrivers and commuters often lack advance warning of traffic congestion, leading to wasted time and inefficient route choices.\n\nExpected Solution:\nA system that uses time-series forecasting on historical and live traffic data to predict congestion levels on key routes and display them through a web/mobile interface. Suggested tech: Python, time-series ML (LSTM/Prophet), React/Flutter interface, cloud data pipeline.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "Smart Automation",
+            "Time-series ML",
+            "LSTM",
+            "Prophet",
+            "Forecasting"
+          ],
+          "spunAt": "2026-10-08T07:06:27.368Z"
+        }
+      ]
     },
     {
       "id": 93,
