@@ -2247,11 +2247,37 @@
       "members": "Varshitha M, Chandru M, Gnanakrishnan P",
       "utr": "T2609271913319112206149",
       "isAdmin": false,
-      "githubLink": "",
-      "hasEntered": false,
+      "githubLink": "https://github.com/srinithii2007-wq/TECHTITANS.git",
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791443615990_qwgmgqx"
+      ],
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_7",
+          "problemId": "ps_webapp_1791309924414_7",
+          "domain": "Web & Mobile Development",
+          "title": "Emotional Well-being Tracker Using Web/App Development",
+          "problemTitle": "Emotional Well-being Tracker Using Web/App Development",
+          "problem": "People often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.",
+          "expectedSolution": "A web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "description": "Problem:\nPeople often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.\n\nExpected Solution:\nA web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "problemDescription": "Problem:\nPeople often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.\n\nExpected Solution:\nA web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "difficulty": "Beginner",
+          "problemDifficulty": "Beginner",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "HealthTech",
+            "React",
+            "Flutter",
+            "Node.js",
+            "Data Visualization"
+          ],
+          "spunAt": "2026-10-08T07:17:35.114Z"
+        }
+      ]
     },
     {
       "id": 15,
@@ -2618,12 +2644,35 @@
       "utr": "627273996759",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791443448295_i3yluf0"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_20",
+          "problemId": "ps_aiml_1791310333026_20",
+          "domain": "Artificial Intelligence & ML",
+          "title": "Automated canonical place name extraction from text",
+          "problemTitle": "Automated canonical place name extraction from text",
+          "problem": "Text documents such as news reports and records often reference place names inconsistently (abbreviations, variants, misspellings), which makes it hard to standardize location data.",
+          "expectedSolution": "An NLP-based tool that uses Named Entity Recognition (NER) to extract place names from text and map them to their canonical, standardized form. Suggested tech: Python, NER models (spaCy/Transformers), cloud database, API for standardized lookups.",
+          "description": "Problem:\nText documents such as news reports and records often reference place names inconsistently (abbreviations, variants, misspellings), which makes it hard to standardize location data.\n\nExpected Solution:\nAn NLP-based tool that uses Named Entity Recognition (NER) to extract place names from text and map them to their canonical, standardized form. Suggested tech: Python, NER models (spaCy/Transformers), cloud database, API for standardized lookups.",
+          "problemDescription": "Problem:\nText documents such as news reports and records often reference place names inconsistently (abbreviations, variants, misspellings), which makes it hard to standardize location data.\n\nExpected Solution:\nAn NLP-based tool that uses Named Entity Recognition (NER) to extract place names from text and map them to their canonical, standardized form. Suggested tech: Python, NER models (spaCy/Transformers), cloud database, API for standardized lookups.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "NLP",
+            "Named Entity Recognition",
+            "NER",
+            "spaCy",
+            "Transformers"
+          ],
+          "spunAt": "2026-10-08T07:12:22.698Z"
+        }
+      ]
     },
     {
       "id": 24,
