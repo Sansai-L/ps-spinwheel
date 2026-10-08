@@ -4404,12 +4404,37 @@
       "utr": "627764277408",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442460618_237n48z"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_8",
+          "problemId": "ps_webapp_1791309924414_8",
+          "domain": "Web & Mobile Development",
+          "title": "Smart Community Health Monitoring and Early Warning System for Water-Borne Diseases",
+          "problemTitle": "Smart Community Health Monitoring and Early Warning System for Water-Borne Diseases",
+          "problem": "Water-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.",
+          "expectedSolution": "A data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
+          "description": "Problem:\nWater-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.\n\nExpected Solution:\nA data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
+          "problemDescription": "Problem:\nWater-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.\n\nExpected Solution:\nA data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "HealthTech",
+            "Flutter",
+            "React Native",
+            "Node.js",
+            "Python",
+            "Predictive Analytics"
+          ],
+          "spunAt": "2026-10-08T06:55:13.982Z"
+        }
+      ]
     },
     {
       "id": 77,
@@ -5139,10 +5164,12 @@
       "members": "ANDIAPPAN K, Dharshan s",
       "utr": "251714940734",
       "isAdmin": false,
-      "githubLink": "",
+      "githubLink": "https://github.com/andiappan2406/codienych-0096.git",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442508276_snom8pl"
+      ],
       "spins": []
     },
     {
