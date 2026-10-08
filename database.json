@@ -2440,12 +2440,36 @@
       "utr": "sabithashreebk-2@okaxis",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441908606_hm30055"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_9",
+          "problemId": "ps_webapp_1791309924414_9",
+          "domain": "Web & Mobile Development",
+          "title": "Telemedicine Access for Rural Healthcare",
+          "problemTitle": "Telemedicine Access for Rural Healthcare",
+          "problem": "Rural populations often lack access to doctors and specialists, and traveling to healthcare facilities can be costly or impractical.",
+          "expectedSolution": "A web platform enabling secure video consultations between rural patients and doctors, with integrated digital health records. Suggested tech: React, WebRTC for video calling, Node.js/Django backend, encrypted health record storage.",
+          "description": "Problem:\nRural populations often lack access to doctors and specialists, and traveling to healthcare facilities can be costly or impractical.\n\nExpected Solution:\nA web platform enabling secure video consultations between rural patients and doctors, with integrated digital health records. Suggested tech: React, WebRTC for video calling, Node.js/Django backend, encrypted health record storage.",
+          "problemDescription": "Problem:\nRural populations often lack access to doctors and specialists, and traveling to healthcare facilities can be costly or impractical.\n\nExpected Solution:\nA web platform enabling secure video consultations between rural patients and doctors, with integrated digital health records. Suggested tech: React, WebRTC for video calling, Node.js/Django backend, encrypted health record storage.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "tags": [
+            "Web & Mobile Development",
+            "HealthTech",
+            "React",
+            "WebRTC",
+            "Node.js",
+            "Healthcare",
+            "Security"
+          ],
+          "spunAt": "2026-10-08T06:46:33.680Z"
+        }
+      ]
     },
     {
       "id": 28,
@@ -2762,12 +2786,37 @@
       "utr": "130331446287",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441955740_1x493mj"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_1",
+          "problemId": "ps_webapp_1791309924414_1",
+          "domain": "Web & Mobile Development",
+          "title": "Conversational Image Recognition Chatbot",
+          "problemTitle": "Conversational Image Recognition Chatbot",
+          "problem": "Users often need quick answers about objects or scenes they encounter, but typing out detailed text queries is slow and doesn't always capture what they're looking at.",
+          "expectedSolution": "A chatbot that accepts both images and natural-language queries, combining image recognition with conversational AI to identify objects/scenes and answer follow-up questions. Suggested tech: Python, computer vision models, NLP/LLM APIs, web/mobile chat interface.",
+          "description": "Problem:\nUsers often need quick answers about objects or scenes they encounter, but typing out detailed text queries is slow and doesn't always capture what they're looking at.\n\nExpected Solution:\nA chatbot that accepts both images and natural-language queries, combining image recognition with conversational AI to identify objects/scenes and answer follow-up questions. Suggested tech: Python, computer vision models, NLP/LLM APIs, web/mobile chat interface.",
+          "problemDescription": "Problem:\nUsers often need quick answers about objects or scenes they encounter, but typing out detailed text queries is slow and doesn't always capture what they're looking at.\n\nExpected Solution:\nA chatbot that accepts both images and natural-language queries, combining image recognition with conversational AI to identify objects/scenes and answer follow-up questions. Suggested tech: Python, computer vision models, NLP/LLM APIs, web/mobile chat interface.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "Python",
+            "Computer Vision",
+            "NLP",
+            "LLM",
+            "Chatbot"
+          ],
+          "spunAt": "2026-10-08T06:46:35.212Z"
+        }
+      ]
     },
     {
       "id": 42,
@@ -4123,12 +4172,36 @@
       "utr": "627794304094",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441659924_2ymm7g7"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_iot_1791378299925_8",
+          "problemId": "ps_iot_1791378299925_8",
+          "domain": "Internet of Things (IoT)",
+          "title": "Smart Classroom Automation",
+          "problemTitle": "Smart Classroom Automation",
+          "problem": "Save electricity in classrooms. A PIR sensor detects occupancy and an LDR measures room brightness. The ESP32 switches lights and fans through relays.",
+          "expectedSolution": "Lights and fans run only when the room is occupied and needed, cutting energy waste automatically.",
+          "description": "Problem:\nSave electricity in classrooms. A PIR sensor detects occupancy and an LDR measures room brightness. The ESP32 switches lights and fans through relays.\n\nExpected Solution:\nLights and fans run only when the room is occupied and needed, cutting energy waste automatically.",
+          "problemDescription": "Problem:\nSave electricity in classrooms. A PIR sensor detects occupancy and an LDR measures room brightness. The ESP32 switches lights and fans through relays.\n\nExpected Solution:\nLights and fans run only when the room is occupied and needed, cutting energy waste automatically.",
+          "difficulty": "Beginner",
+          "problemDifficulty": "Beginner",
+          "tags": [
+            "Internet of Things (IoT)",
+            "ESP32",
+            "PIR Sensor",
+            "LDR",
+            "Automation",
+            "Energy Saving",
+            "Smart Building"
+          ],
+          "spunAt": "2026-10-08T06:46:29.037Z"
+        }
+      ]
     },
     {
       "id": 90,
