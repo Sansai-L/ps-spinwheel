@@ -2106,7 +2106,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791441588434_i2d12q2"
+      ],
       "spins": []
     },
     {
@@ -4019,12 +4021,37 @@
       "isAdmin": false,
       "isCustom": true,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": "2026-10-07T13:25:32.564Z",
       "sessionTokens": [
         "sess_1791441580516_ito7ot3"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_5",
+          "problemId": "ps_webapp_1791309924414_5",
+          "domain": "Web & Mobile Development",
+          "title": "Tyre Maintenance and Operation App for Dumpers",
+          "problemTitle": "Tyre Maintenance and Operation App for Dumpers",
+          "problem": "Dumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.",
+          "expectedSolution": "A mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
+          "description": "Problem:\nDumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.\n\nExpected Solution:\nA mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
+          "problemDescription": "Problem:\nDumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.\n\nExpected Solution:\nA mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "React Native",
+            "Flutter",
+            "Node.js",
+            "Cloud Database",
+            "Analytics"
+          ],
+          "spunAt": "2026-10-08T06:39:57.642Z"
+        }
+      ]
     },
     {
       "id": "custom_1791379740744_pn9o",
