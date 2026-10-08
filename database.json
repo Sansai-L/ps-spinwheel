@@ -3028,12 +3028,37 @@
       "utr": "EZE0222899@CUB",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441796346_k31deka"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_5",
+          "problemId": "ps_webapp_1791309924414_5",
+          "domain": "Web & Mobile Development",
+          "title": "Tyre Maintenance and Operation App for Dumpers",
+          "problemTitle": "Tyre Maintenance and Operation App for Dumpers",
+          "problem": "Dumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.",
+          "expectedSolution": "A mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
+          "description": "Problem:\nDumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.\n\nExpected Solution:\nA mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
+          "problemDescription": "Problem:\nDumper trucks used in mining and construction often suffer tyre-related breakdowns due to a lack of systematic maintenance tracking, increasing downtime and costs.\n\nExpected Solution:\nA mobile app for operators and maintenance teams to log tyre condition, usage, and service schedules, with a dashboard that flags tyres due for maintenance or replacement. Suggested tech: React Native/Flutter, Node.js backend, cloud database, analytics dashboard.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "React Native",
+            "Flutter",
+            "Node.js",
+            "Cloud Database",
+            "Analytics"
+          ],
+          "spunAt": "2026-10-08T06:43:38.196Z"
+        }
+      ]
     },
     {
       "id": 56,
@@ -4031,10 +4056,34 @@
       "utr": "627787612242",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_7",
+          "problemId": "ps_webapp_1791309924414_7",
+          "domain": "Web & Mobile Development",
+          "title": "Emotional Well-being Tracker Using Web/App Development",
+          "problemTitle": "Emotional Well-being Tracker Using Web/App Development",
+          "problem": "People often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.",
+          "expectedSolution": "A web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "description": "Problem:\nPeople often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.\n\nExpected Solution:\nA web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "problemDescription": "Problem:\nPeople often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.\n\nExpected Solution:\nA web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "difficulty": "Beginner",
+          "problemDifficulty": "Beginner",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "HealthTech",
+            "React",
+            "Flutter",
+            "Node.js",
+            "Data Visualization"
+          ],
+          "spunAt": "2026-10-08T06:43:33.601Z"
+        }
+      ]
     },
     {
       "id": 92,
