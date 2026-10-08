@@ -2693,12 +2693,37 @@
       "utr": "664055314260",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442186163_3dxb4cq"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_15",
+          "problemId": "ps_webapp_1791309924414_15",
+          "domain": "Web & Mobile Development",
+          "title": "Disaster Preparedness and Response Education System for Schools and Colleges",
+          "problemTitle": "Disaster Preparedness and Response Education System for Schools and Colleges",
+          "problem": "Students and staff in schools and colleges often lack structured training on how to prepare for and respond to disasters.",
+          "expectedSolution": "An e-learning system tailored for schools and colleges that delivers disaster preparedness lessons, drills, and scenario simulations through a web/mobile interface. Suggested tech: React/Next.js (PWA), React Native/Flutter, Node.js backend, cloud content delivery.",
+          "description": "Problem:\nStudents and staff in schools and colleges often lack structured training on how to prepare for and respond to disasters.\n\nExpected Solution:\nAn e-learning system tailored for schools and colleges that delivers disaster preparedness lessons, drills, and scenario simulations through a web/mobile interface. Suggested tech: React/Next.js (PWA), React Native/Flutter, Node.js backend, cloud content delivery.",
+          "problemDescription": "Problem:\nStudents and staff in schools and colleges often lack structured training on how to prepare for and respond to disasters.\n\nExpected Solution:\nAn e-learning system tailored for schools and colleges that delivers disaster preparedness lessons, drills, and scenario simulations through a web/mobile interface. Suggested tech: React/Next.js (PWA), React Native/Flutter, Node.js backend, cloud content delivery.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Disaster Management",
+            "React",
+            "Next.js",
+            "PWA",
+            "Flutter",
+            "E-learning"
+          ],
+          "spunAt": "2026-10-08T06:49:56.020Z"
+        }
+      ]
     },
     {
       "id": 35,
@@ -4403,7 +4428,7 @@
             "React",
             "Cloud Database"
           ],
-          "spunAt": "2026-10-08T06:49:52.918Z"
+          "spunAt": "2026-10-08T06:49:57.763Z"
         }
       ]
     },
