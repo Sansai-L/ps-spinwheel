@@ -1853,13 +1853,38 @@
       "utr": "626658236508",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442271957_wnauykb",
         "sess_1791442861859_b0fxzno"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_9",
+          "problemId": "ps_webapp_1791309924414_9",
+          "domain": "Web & Mobile Development",
+          "title": "Telemedicine Access for Rural Healthcare",
+          "problemTitle": "Telemedicine Access for Rural Healthcare",
+          "problem": "Rural populations often lack access to doctors and specialists, and traveling to healthcare facilities can be costly or impractical.",
+          "expectedSolution": "A web platform enabling secure video consultations between rural patients and doctors, with integrated digital health records. Suggested tech: React, WebRTC for video calling, Node.js/Django backend, encrypted health record storage.",
+          "description": "Problem:\nRural populations often lack access to doctors and specialists, and traveling to healthcare facilities can be costly or impractical.\n\nExpected Solution:\nA web platform enabling secure video consultations between rural patients and doctors, with integrated digital health records. Suggested tech: React, WebRTC for video calling, Node.js/Django backend, encrypted health record storage.",
+          "problemDescription": "Problem:\nRural populations often lack access to doctors and specialists, and traveling to healthcare facilities can be costly or impractical.\n\nExpected Solution:\nA web platform enabling secure video consultations between rural patients and doctors, with integrated digital health records. Suggested tech: React, WebRTC for video calling, Node.js/Django backend, encrypted health record storage.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "HealthTech",
+            "React",
+            "WebRTC",
+            "Node.js",
+            "Healthcare",
+            "Security"
+          ],
+          "spunAt": "2026-10-08T07:01:47.545Z"
+        }
+      ]
     },
     {
       "id": 4,
