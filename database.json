@@ -5195,10 +5195,36 @@
       "utr": "627702989234",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791442407229_186lp81"
+      ],
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_16",
+          "problemId": "ps_webapp_1791309924414_16",
+          "domain": "Web & Mobile Development",
+          "title": "Gamified Cybersecurity Awareness Web/Mobile Application",
+          "problemTitle": "Gamified Cybersecurity Awareness Web/Mobile Application",
+          "problem": "Many users lack awareness of basic cybersecurity practices, making them vulnerable to phishing, scams, and other common threats.",
+          "expectedSolution": "A gamified web/mobile app that teaches cybersecurity best practices through interactive challenges, simulated phishing scenarios, and quizzes with rewards. Suggested tech: React/Flutter, gamification engine, Node.js backend, cloud database.",
+          "description": "Problem:\nMany users lack awareness of basic cybersecurity practices, making them vulnerable to phishing, scams, and other common threats.\n\nExpected Solution:\nA gamified web/mobile app that teaches cybersecurity best practices through interactive challenges, simulated phishing scenarios, and quizzes with rewards. Suggested tech: React/Flutter, gamification engine, Node.js backend, cloud database.",
+          "problemDescription": "Problem:\nMany users lack awareness of basic cybersecurity practices, making them vulnerable to phishing, scams, and other common threats.\n\nExpected Solution:\nA gamified web/mobile app that teaches cybersecurity best practices through interactive challenges, simulated phishing scenarios, and quizzes with rewards. Suggested tech: React/Flutter, gamification engine, Node.js backend, cloud database.",
+          "difficulty": "Beginner",
+          "problemDifficulty": "Beginner",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Cybersecurity",
+            "React",
+            "Flutter",
+            "Gamification",
+            "Security Awareness"
+          ],
+          "spunAt": "2026-10-08T06:56:26.939Z"
+        }
+      ]
     },
     {
       "id": 96,
