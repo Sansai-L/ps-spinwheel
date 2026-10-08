@@ -2964,10 +2964,37 @@
       "utr": "627411831506",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791444179342_rkym19z"
+      ],
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_4",
+          "problemId": "ps_webapp_1791309924414_4",
+          "domain": "Web & Mobile Development",
+          "title": "Online Issuance of Caste and Other Certificates with Real-Time Monitoring",
+          "problemTitle": "Online Issuance of Caste and Other Certificates with Real-Time Monitoring",
+          "problem": "Applying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.",
+          "expectedSolution": "A web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
+          "description": "Problem:\nApplying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.\n\nExpected Solution:\nA web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
+          "problemDescription": "Problem:\nApplying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.\n\nExpected Solution:\nA web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "React",
+            "Next.js",
+            "Node.js",
+            "PostgreSQL",
+            "e-Sign"
+          ],
+          "spunAt": "2026-10-08T07:23:16.330Z"
+        }
+      ]
     },
     {
       "id": 33,
@@ -4902,12 +4929,36 @@
       "utr": "664332847251",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791444141724_3xbuy95"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_4",
+          "problemId": "ps_webapp_1791309924414_4",
+          "domain": "Web & Mobile Development",
+          "title": "Online Issuance of Caste and Other Certificates with Real-Time Monitoring",
+          "problemTitle": "Online Issuance of Caste and Other Certificates with Real-Time Monitoring",
+          "problem": "Applying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.",
+          "expectedSolution": "A web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
+          "description": "Problem:\nApplying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.\n\nExpected Solution:\nA web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
+          "problemDescription": "Problem:\nApplying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.\n\nExpected Solution:\nA web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "React",
+            "Next.js",
+            "Node.js",
+            "PostgreSQL",
+            "e-Sign"
+          ],
+          "spunAt": "2026-10-08T07:23:16.864Z"
+        }
+      ]
     },
     {
       "id": 80,
