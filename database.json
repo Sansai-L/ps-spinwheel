@@ -2287,12 +2287,36 @@
       "utr": "627112634309",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442338181_lwf3nau"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_5",
+          "problemId": "ps_aiml_1791310333026_5",
+          "domain": "Artificial Intelligence & ML",
+          "title": "Early symptom prediction system for chronic diseases",
+          "problemTitle": "Early symptom prediction system for chronic diseases",
+          "problem": "Chronic diseases such as diabetes and heart disease are often diagnosed late because early, subtle symptoms go unnoticed or unreported.",
+          "expectedSolution": "A system that applies classification algorithms to patient-reported symptoms and health data to predict the likelihood of a chronic disease and recommend early medical consultation. Suggested tech: Python, Scikit-learn/TensorFlow classification models, web/mobile input interface, cloud database.",
+          "description": "Problem:\nChronic diseases such as diabetes and heart disease are often diagnosed late because early, subtle symptoms go unnoticed or unreported.\n\nExpected Solution:\nA system that applies classification algorithms to patient-reported symptoms and health data to predict the likelihood of a chronic disease and recommend early medical consultation. Suggested tech: Python, Scikit-learn/TensorFlow classification models, web/mobile input interface, cloud database.",
+          "problemDescription": "Problem:\nChronic diseases such as diabetes and heart disease are often diagnosed late because early, subtle symptoms go unnoticed or unreported.\n\nExpected Solution:\nA system that applies classification algorithms to patient-reported symptoms and health data to predict the likelihood of a chronic disease and recommend early medical consultation. Suggested tech: Python, Scikit-learn/TensorFlow classification models, web/mobile input interface, cloud database.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "MedTech",
+            "Python",
+            "Classification",
+            "TensorFlow",
+            "Scikit-learn"
+          ],
+          "spunAt": "2026-10-08T06:52:54.318Z"
+        }
+      ]
     },
     {
       "id": 18,
@@ -4264,12 +4288,36 @@
       "utr": "627751697719",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442134670_jkubk3h"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_5",
+          "problemId": "ps_aiml_1791310333026_5",
+          "domain": "Artificial Intelligence & ML",
+          "title": "Early symptom prediction system for chronic diseases",
+          "problemTitle": "Early symptom prediction system for chronic diseases",
+          "problem": "Chronic diseases such as diabetes and heart disease are often diagnosed late because early, subtle symptoms go unnoticed or unreported.",
+          "expectedSolution": "A system that applies classification algorithms to patient-reported symptoms and health data to predict the likelihood of a chronic disease and recommend early medical consultation. Suggested tech: Python, Scikit-learn/TensorFlow classification models, web/mobile input interface, cloud database.",
+          "description": "Problem:\nChronic diseases such as diabetes and heart disease are often diagnosed late because early, subtle symptoms go unnoticed or unreported.\n\nExpected Solution:\nA system that applies classification algorithms to patient-reported symptoms and health data to predict the likelihood of a chronic disease and recommend early medical consultation. Suggested tech: Python, Scikit-learn/TensorFlow classification models, web/mobile input interface, cloud database.",
+          "problemDescription": "Problem:\nChronic diseases such as diabetes and heart disease are often diagnosed late because early, subtle symptoms go unnoticed or unreported.\n\nExpected Solution:\nA system that applies classification algorithms to patient-reported symptoms and health data to predict the likelihood of a chronic disease and recommend early medical consultation. Suggested tech: Python, Scikit-learn/TensorFlow classification models, web/mobile input interface, cloud database.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "MedTech",
+            "Python",
+            "Classification",
+            "TensorFlow",
+            "Scikit-learn"
+          ],
+          "spunAt": "2026-10-08T06:52:55.256Z"
+        }
+      ]
     },
     {
       "id": 73,
@@ -4331,7 +4379,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442376903_58q5cx7"
+      ],
       "spins": []
     },
     {
