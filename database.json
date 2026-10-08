@@ -3268,12 +3268,37 @@
       "utr": "877919508165",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442509278_5iwiwcd"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_iot_1791378299925_7",
+          "problemId": "ps_iot_1791378299925_7",
+          "domain": "Internet of Things (IoT)",
+          "title": "Fall Detection Band",
+          "problemTitle": "Fall Detection Band",
+          "problem": "Protect elderly people living alone. An MPU6050 detects a sudden fall from acceleration changes, and an SOS button allows manual help calls.",
+          "expectedSolution": "Fall or SOS triggers a buzzer and an alert message to the caregiver, enabling faster help.",
+          "description": "Problem:\nProtect elderly people living alone. An MPU6050 detects a sudden fall from acceleration changes, and an SOS button allows manual help calls.\n\nExpected Solution:\nFall or SOS triggers a buzzer and an alert message to the caregiver, enabling faster help.",
+          "problemDescription": "Problem:\nProtect elderly people living alone. An MPU6050 detects a sudden fall from acceleration changes, and an SOS button allows manual help calls.\n\nExpected Solution:\nFall or SOS triggers a buzzer and an alert message to the caregiver, enabling faster help.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+          "tags": [
+            "Internet of Things (IoT)",
+            "ESP32",
+            "MPU6050",
+            "Accelerometer",
+            "Healthcare",
+            "Wearable",
+            "Elderly Care"
+          ],
+          "spunAt": "2026-10-08T06:56:35.948Z"
+        }
+      ]
     },
     {
       "id": 47,
@@ -4362,7 +4387,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442597407_f5mh6ix"
+      ],
       "spins": []
     },
     {
