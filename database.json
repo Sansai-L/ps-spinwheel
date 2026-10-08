@@ -2025,10 +2025,37 @@
       "utr": "663544325944",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791442201937_oc6kjui"
+      ],
+      "spins": [
+        {
+          "id": "ps_iot_1791378299925_10",
+          "problemId": "ps_iot_1791378299925_10",
+          "domain": "Internet of Things (IoT)",
+          "title": "Smart Door Security",
+          "problemTitle": "Smart Door Security",
+          "problem": "Secure a home or lab. A keypad arms and disarms the system, a PIR and door switch detect intrusion, and a siren sounds on a breach.",
+          "expectedSolution": "Siren and push alert on unauthorised entry, with password-controlled arming and a simple event log.",
+          "description": "Problem:\nSecure a home or lab. A keypad arms and disarms the system, a PIR and door switch detect intrusion, and a siren sounds on a breach.\n\nExpected Solution:\nSiren and push alert on unauthorised entry, with password-controlled arming and a simple event log.",
+          "problemDescription": "Problem:\nSecure a home or lab. A keypad arms and disarms the system, a PIR and door switch detect intrusion, and a siren sounds on a breach.\n\nExpected Solution:\nSiren and push alert on unauthorised entry, with password-controlled arming and a simple event log.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+          "tags": [
+            "Internet of Things (IoT)",
+            "ESP32",
+            "Keypad",
+            "PIR",
+            "Door Security",
+            "Intrusion Detection",
+            "Home Security"
+          ],
+          "spunAt": "2026-10-08T06:50:13.937Z"
+        }
+      ]
     },
     {
       "id": 12,
@@ -2458,7 +2485,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442216418_v5j6svn"
+      ],
       "spins": []
     },
     {
@@ -4183,12 +4212,35 @@
       "utr": "710814424886",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442200608_dknu418"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_cyber_1791310849090_2",
+          "problemId": "ps_cyber_1791310849090_2",
+          "domain": "Cybersecurity & Privacy",
+          "title": "Adversarial AI Attack Defense Firewall for Large Language Models",
+          "problemTitle": "Adversarial AI Attack Defense Firewall for Large Language Models",
+          "problem": "An inline containerized security proxy that inspects enterprise user queries for prompt-injections and jailbreaks, neutralizing adversarial inputs before passing them to the main LLM.",
+          "expectedSolution": "Adversarial inputs neutralized without adding latency to the main LLM pipeline.",
+          "description": "Problem:\nAn inline containerized security proxy that inspects enterprise user queries for prompt-injections and jailbreaks, neutralizing adversarial inputs before passing them to the main LLM.\n\nExpected Solution:\nAdversarial inputs neutralized without adding latency to the main LLM pipeline.",
+          "problemDescription": "Problem:\nAn inline containerized security proxy that inspects enterprise user queries for prompt-injections and jailbreaks, neutralizing adversarial inputs before passing them to the main LLM.\n\nExpected Solution:\nAdversarial inputs neutralized without adding latency to the main LLM pipeline.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+          "tags": [
+            "Cybersecurity & Privacy",
+            "LLM Security",
+            "Prompt Injection",
+            "WAF",
+            "Adversarial Defense"
+          ],
+          "spunAt": "2026-10-08T06:50:14.785Z"
+        }
+      ]
     },
     {
       "id": 79,
