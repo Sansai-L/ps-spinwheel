@@ -4203,12 +4203,37 @@
       "utr": "130675610651",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442429219_6clbkty"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_iot_1791378299924_3",
+          "problemId": "ps_iot_1791378299924_3",
+          "domain": "Internet of Things (IoT)",
+          "title": "Urban Flood Early Warning",
+          "problemTitle": "Urban Flood Early Warning",
+          "problem": "Warn people before streets flood. An HC-SR04 ultrasonic sensor measures water level and a potentiometer simulates rainfall intensity. The ESP32 grades the risk and publishes data over MQTT.",
+          "expectedSolution": "Graded flood alerts (normal, watch, danger) with LED/buzzer output and a live water-level dashboard for early evacuation decisions.",
+          "description": "Problem:\nWarn people before streets flood. An HC-SR04 ultrasonic sensor measures water level and a potentiometer simulates rainfall intensity. The ESP32 grades the risk and publishes data over MQTT.\n\nExpected Solution:\nGraded flood alerts (normal, watch, danger) with LED/buzzer output and a live water-level dashboard for early evacuation decisions.",
+          "problemDescription": "Problem:\nWarn people before streets flood. An HC-SR04 ultrasonic sensor measures water level and a potentiometer simulates rainfall intensity. The ESP32 grades the risk and publishes data over MQTT.\n\nExpected Solution:\nGraded flood alerts (normal, watch, danger) with LED/buzzer output and a live water-level dashboard for early evacuation decisions.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+          "tags": [
+            "Internet of Things (IoT)",
+            "ESP32",
+            "HC-SR04",
+            "Ultrasonic",
+            "MQTT",
+            "Flood Warning",
+            "Smart City"
+          ],
+          "spunAt": "2026-10-08T06:57:13.930Z"
+        }
+      ]
     },
     {
       "id": 70,
@@ -4661,12 +4686,37 @@
       "utr": "664370376118",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442541958_u145xs3"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_iot_1791378299924_3",
+          "problemId": "ps_iot_1791378299924_3",
+          "domain": "Internet of Things (IoT)",
+          "title": "Urban Flood Early Warning",
+          "problemTitle": "Urban Flood Early Warning",
+          "problem": "Warn people before streets flood. An HC-SR04 ultrasonic sensor measures water level and a potentiometer simulates rainfall intensity. The ESP32 grades the risk and publishes data over MQTT.",
+          "expectedSolution": "Graded flood alerts (normal, watch, danger) with LED/buzzer output and a live water-level dashboard for early evacuation decisions.",
+          "description": "Problem:\nWarn people before streets flood. An HC-SR04 ultrasonic sensor measures water level and a potentiometer simulates rainfall intensity. The ESP32 grades the risk and publishes data over MQTT.\n\nExpected Solution:\nGraded flood alerts (normal, watch, danger) with LED/buzzer output and a live water-level dashboard for early evacuation decisions.",
+          "problemDescription": "Problem:\nWarn people before streets flood. An HC-SR04 ultrasonic sensor measures water level and a potentiometer simulates rainfall intensity. The ESP32 grades the risk and publishes data over MQTT.\n\nExpected Solution:\nGraded flood alerts (normal, watch, danger) with LED/buzzer output and a live water-level dashboard for early evacuation decisions.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+          "tags": [
+            "Internet of Things (IoT)",
+            "ESP32",
+            "HC-SR04",
+            "Ultrasonic",
+            "MQTT",
+            "Flood Warning",
+            "Smart City"
+          ],
+          "spunAt": "2026-10-08T06:57:12.631Z"
+        }
+      ]
     },
     {
       "id": 82,
