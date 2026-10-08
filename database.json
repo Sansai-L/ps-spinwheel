@@ -1774,7 +1774,7 @@
       "members": "Mayukasri s, Deepaka p, Indhumathi m",
       "utr": "130061965577",
       "isAdmin": false,
-      "githubLink": "https://github.com/mahalakshmi-73",
+      "githubLink": "",
       "hasEntered": true,
       "registeredAt": "2026-10-05T08:58:17.819Z",
       "sessionTokens": [
@@ -2580,7 +2580,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442104899_qv5tun2"
+      ],
       "spins": []
     },
     {
@@ -4365,7 +4367,7 @@
       "members": "JAI SHREE P B, ARAVIND S, ASHWANTH N",
       "utr": "954769623494",
       "isAdmin": false,
-      "githubLink": "",
+      "githubLink": "https://github.com/Akash-T-aiml/The-Horizon-Chasers",
       "hasEntered": false,
       "registeredAt": null,
       "sessionTokens": [
@@ -4660,12 +4662,36 @@
       "isAdmin": false,
       "isCustom": true,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": "2026-10-07T13:15:01.317Z",
       "sessionTokens": [
         "sess_1791442078367_blsls59"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_6",
+          "problemId": "ps_webapp_1791309924414_6",
+          "domain": "Web & Mobile Development",
+          "title": "Web/App Platform Integrating Diverse Services to Enhance Urban Living",
+          "problemTitle": "Web/App Platform Integrating Diverse Services to Enhance Urban Living",
+          "problem": "City residents often need to navigate multiple disconnected platforms for different municipal and urban services, creating friction and confusion.",
+          "expectedSolution": "A unified web/app platform that integrates diverse urban services (e.g. utility payments, civic complaints, local information) into a single, easy-to-use interface. Suggested tech: React/Next.js, React Native/Flutter, microservices backend (Node.js/Django), API gateway.",
+          "description": "Problem:\nCity residents often need to navigate multiple disconnected platforms for different municipal and urban services, creating friction and confusion.\n\nExpected Solution:\nA unified web/app platform that integrates diverse urban services (e.g. utility payments, civic complaints, local information) into a single, easy-to-use interface. Suggested tech: React/Next.js, React Native/Flutter, microservices backend (Node.js/Django), API gateway.",
+          "problemDescription": "Problem:\nCity residents often need to navigate multiple disconnected platforms for different municipal and urban services, creating friction and confusion.\n\nExpected Solution:\nA unified web/app platform that integrates diverse urban services (e.g. utility payments, civic complaints, local information) into a single, easy-to-use interface. Suggested tech: React/Next.js, React Native/Flutter, microservices backend (Node.js/Django), API gateway.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "React",
+            "Next.js",
+            "Flutter",
+            "Microservices",
+            "API Gateway"
+          ],
+          "spunAt": "2026-10-08T06:48:22.805Z"
+        }
+      ]
     },
     {
       "id": "custom_1791379269845_ue0f",
