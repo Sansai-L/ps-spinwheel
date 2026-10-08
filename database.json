@@ -2603,12 +2603,35 @@
       "utr": "578232582746",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442104899_qv5tun2"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_12",
+          "problemId": "ps_aiml_1791310333026_12",
+          "domain": "Artificial Intelligence & ML",
+          "title": "AI-based traffic management and adaptive signal control",
+          "problemTitle": "AI-based traffic management and adaptive signal control",
+          "problem": "Fixed-timing traffic signals can't adapt to real-time traffic conditions, which leads to congestion and inefficient flow.",
+          "expectedSolution": "A reinforcement-learning-based system that analyzes real-time traffic data feeds and adaptively controls signal timing to optimize flow, with a monitoring dashboard for traffic authorities. Suggested tech: Python, reinforcement learning frameworks, FastAPI backend, React dashboard.",
+          "description": "Problem:\nFixed-timing traffic signals can't adapt to real-time traffic conditions, which leads to congestion and inefficient flow.\n\nExpected Solution:\nA reinforcement-learning-based system that analyzes real-time traffic data feeds and adaptively controls signal timing to optimize flow, with a monitoring dashboard for traffic authorities. Suggested tech: Python, reinforcement learning frameworks, FastAPI backend, React dashboard.",
+          "problemDescription": "Problem:\nFixed-timing traffic signals can't adapt to real-time traffic conditions, which leads to congestion and inefficient flow.\n\nExpected Solution:\nA reinforcement-learning-based system that analyzes real-time traffic data feeds and adaptively controls signal timing to optimize flow, with a monitoring dashboard for traffic authorities. Suggested tech: Python, reinforcement learning frameworks, FastAPI backend, React dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "Smart Automation",
+            "Reinforcement Learning",
+            "Adaptive Control",
+            "FastAPI"
+          ],
+          "spunAt": "2026-10-08T06:49:39.616Z"
+        }
+      ]
     },
     {
       "id": 32,
@@ -2688,7 +2711,7 @@
       "members": "Ashmita s a, Hajira Banu H, HARINI A",
       "utr": "627420596800",
       "isAdmin": false,
-      "githubLink": "https://github.com/AshmitaArumugam/Nexora-repo.git",
+      "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
       "sessionTokens": [
@@ -4211,7 +4234,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442179669_g6qym8q"
+      ],
       "spins": []
     },
     {
