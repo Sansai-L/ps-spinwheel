@@ -3049,12 +3049,37 @@
       "utr": "664277809346",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441469912_pqb9e6s"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_2",
+          "problemId": "ps_webapp_1791309924414_2",
+          "domain": "Web & Mobile Development",
+          "title": "AI-based Traffic Management System",
+          "problemTitle": "AI-based Traffic Management System",
+          "problem": "Fixed-timing traffic signals can't adapt to real-time traffic conditions, which leads to congestion and inefficient flow.",
+          "expectedSolution": "An AI-based system that analyzes live traffic data and dynamically adjusts signal timing to optimize flow, with a monitoring dashboard for traffic authorities. Suggested tech: Python, computer vision/reinforcement learning, FastAPI backend, React dashboard.",
+          "description": "Problem:\nFixed-timing traffic signals can't adapt to real-time traffic conditions, which leads to congestion and inefficient flow.\n\nExpected Solution:\nAn AI-based system that analyzes live traffic data and dynamically adjusts signal timing to optimize flow, with a monitoring dashboard for traffic authorities. Suggested tech: Python, computer vision/reinforcement learning, FastAPI backend, React dashboard.",
+          "problemDescription": "Problem:\nFixed-timing traffic signals can't adapt to real-time traffic conditions, which leads to congestion and inefficient flow.\n\nExpected Solution:\nAn AI-based system that analyzes live traffic data and dynamically adjusts signal timing to optimize flow, with a monitoring dashboard for traffic authorities. Suggested tech: Python, computer vision/reinforcement learning, FastAPI backend, React dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "Python",
+            "Computer Vision",
+            "FastAPI",
+            "React",
+            "Dashboard"
+          ],
+          "spunAt": "2026-10-08T06:39:34.653Z"
+        }
+      ]
     },
     {
       "id": 62,
