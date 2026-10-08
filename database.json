@@ -4718,10 +4718,36 @@
       "utr": "130718164469",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791442415233_94xb3sg"
+      ],
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_8",
+          "problemId": "ps_aiml_1791310333026_8",
+          "domain": "Artificial Intelligence & ML",
+          "title": "Deep Learning web application to automate tree enumeration in forest areas",
+          "problemTitle": "Deep Learning web application to automate tree enumeration in forest areas",
+          "problem": "Manually counting and enumerating trees across large forest areas is slow, labor-intensive, and hard to scale.",
+          "expectedSolution": "A deep-learning web application that uses image segmentation on aerial or satellite imagery to automatically detect and count trees across forest areas. Suggested tech: Python, deep-learning segmentation models (U-Net/Mask R-CNN), React web app, cloud image processing.",
+          "description": "Problem:\nManually counting and enumerating trees across large forest areas is slow, labor-intensive, and hard to scale.\n\nExpected Solution:\nA deep-learning web application that uses image segmentation on aerial or satellite imagery to automatically detect and count trees across forest areas. Suggested tech: Python, deep-learning segmentation models (U-Net/Mask R-CNN), React web app, cloud image processing.",
+          "problemDescription": "Problem:\nManually counting and enumerating trees across large forest areas is slow, labor-intensive, and hard to scale.\n\nExpected Solution:\nA deep-learning web application that uses image segmentation on aerial or satellite imagery to automatically detect and count trees across forest areas. Suggested tech: Python, deep-learning segmentation models (U-Net/Mask R-CNN), React web app, cloud image processing.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "Environment",
+            "Deep Learning",
+            "Image Segmentation",
+            "U-Net",
+            "Mask R-CNN"
+          ],
+          "spunAt": "2026-10-08T06:54:30.438Z"
+        }
+      ]
     },
     {
       "id": 87,
