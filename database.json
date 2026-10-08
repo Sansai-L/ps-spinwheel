@@ -3185,12 +3185,37 @@
       "utr": "627642301778",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441526992_avdjrs0"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_13",
+          "problemId": "ps_webapp_1791309924414_13",
+          "domain": "Web & Mobile Development",
+          "title": "Digital Platform for Centralized Alumni Data Management and Engagement",
+          "problemTitle": "Digital Platform for Centralized Alumni Data Management and Engagement",
+          "problem": "Institutions often struggle to maintain updated alumni records and keep alumni engaged with the institution and current students.",
+          "expectedSolution": "A web platform that centralizes alumni data and enables ongoing engagement through directories, events, mentorship matching, and networking features. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL.",
+          "description": "Problem:\nInstitutions often struggle to maintain updated alumni records and keep alumni engaged with the institution and current students.\n\nExpected Solution:\nA web platform that centralizes alumni data and enables ongoing engagement through directories, events, mentorship matching, and networking features. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL.",
+          "problemDescription": "Problem:\nInstitutions often struggle to maintain updated alumni records and keep alumni engaged with the institution and current students.\n\nExpected Solution:\nA web platform that centralizes alumni data and enables ongoing engagement through directories, events, mentorship matching, and networking features. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Education",
+            "React",
+            "Next.js",
+            "Node.js",
+            "PostgreSQL",
+            "Networking"
+          ],
+          "spunAt": "2026-10-08T06:39:42.726Z"
+        }
+      ]
     },
     {
       "id": 67,
@@ -3231,7 +3256,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791441583833_1uaeles"
+      ],
       "spins": []
     },
     {
