@@ -2558,10 +2558,34 @@
       "utr": "9894490247@kotakbank",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_iot_1791378299925_6",
+          "problemId": "ps_iot_1791378299925_6",
+          "domain": "Internet of Things (IoT)",
+          "title": "Smart Parking System",
+          "problemTitle": "Smart Parking System",
+          "problem": "Help drivers find free slots. Several HC-SR04 sensors detect whether each slot is occupied, and a servo operates the entry gate based on availability.",
+          "expectedSolution": "Live free-slot count, gate opens only when space is available, and less time spent searching for parking.",
+          "description": "Problem:\nHelp drivers find free slots. Several HC-SR04 sensors detect whether each slot is occupied, and a servo operates the entry gate based on availability.\n\nExpected Solution:\nLive free-slot count, gate opens only when space is available, and less time spent searching for parking.",
+          "problemDescription": "Problem:\nHelp drivers find free slots. Several HC-SR04 sensors detect whether each slot is occupied, and a servo operates the entry gate based on availability.\n\nExpected Solution:\nLive free-slot count, gate opens only when space is available, and less time spent searching for parking.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+          "tags": [
+            "Internet of Things (IoT)",
+            "ESP32",
+            "HC-SR04",
+            "Servo Motor",
+            "Smart Parking",
+            "Smart City"
+          ],
+          "spunAt": "2026-10-08T06:52:25.075Z"
+        }
+      ]
     },
     {
       "id": 26,
@@ -4147,12 +4171,35 @@
       "utr": "664265961429",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442302763_yqd8nyb"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_7",
+          "problemId": "ps_aiml_1791310333026_7",
+          "domain": "Artificial Intelligence & ML",
+          "title": "AI/ML based system for deriving value added parameters using satellite",
+          "problemTitle": "AI/ML based system for deriving value added parameters using satellite",
+          "problem": "Raw satellite imagery is difficult for non-experts to interpret directly, limiting its usefulness for agriculture, urban planning, and environmental monitoring.",
+          "expectedSolution": "A computer-vision-based system that processes raw satellite imagery to automatically derive value-added parameters (e.g. vegetation index, land-use classification) and presents them through a usable interface. Suggested tech: Python, OpenCV/deep-learning models, cloud processing pipeline, web dashboard.",
+          "description": "Problem:\nRaw satellite imagery is difficult for non-experts to interpret directly, limiting its usefulness for agriculture, urban planning, and environmental monitoring.\n\nExpected Solution:\nA computer-vision-based system that processes raw satellite imagery to automatically derive value-added parameters (e.g. vegetation index, land-use classification) and presents them through a usable interface. Suggested tech: Python, OpenCV/deep-learning models, cloud processing pipeline, web dashboard.",
+          "problemDescription": "Problem:\nRaw satellite imagery is difficult for non-experts to interpret directly, limiting its usefulness for agriculture, urban planning, and environmental monitoring.\n\nExpected Solution:\nA computer-vision-based system that processes raw satellite imagery to automatically derive value-added parameters (e.g. vegetation index, land-use classification) and presents them through a usable interface. Suggested tech: Python, OpenCV/deep-learning models, cloud processing pipeline, web dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "SpaceTech",
+            "Computer Vision",
+            "OpenCV",
+            "Deep Learning",
+            "Satellite Imagery"
+          ],
+          "spunAt": "2026-10-08T06:52:22.351Z"
+        }
+      ]
     },
     {
       "id": 71,
@@ -5071,12 +5118,36 @@
       "utr": "T2610042219026658368719",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442192927_ex020iq"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_20",
+          "problemId": "ps_webapp_1791309924414_20",
+          "domain": "Web & Mobile Development",
+          "title": "Real-Time Public Transport Tracking for Small Cities",
+          "problemTitle": "Real-Time Public Transport Tracking for Small Cities",
+          "problem": "Commuters in small cities often lack reliable, real-time visibility into public transport arrival times, leading to wasted waiting time.",
+          "expectedSolution": "A GPS-integrated mobile app tailored for smaller transit systems that shows commuters real-time bus/transport locations and estimated arrival times. Suggested tech: React Native/Flutter, GPS/live location APIs, Node.js backend, WebSockets.",
+          "description": "Problem:\nCommuters in small cities often lack reliable, real-time visibility into public transport arrival times, leading to wasted waiting time.\n\nExpected Solution:\nA GPS-integrated mobile app tailored for smaller transit systems that shows commuters real-time bus/transport locations and estimated arrival times. Suggested tech: React Native/Flutter, GPS/live location APIs, Node.js backend, WebSockets.",
+          "problemDescription": "Problem:\nCommuters in small cities often lack reliable, real-time visibility into public transport arrival times, leading to wasted waiting time.\n\nExpected Solution:\nA GPS-integrated mobile app tailored for smaller transit systems that shows commuters real-time bus/transport locations and estimated arrival times. Suggested tech: React Native/Flutter, GPS/live location APIs, Node.js backend, WebSockets.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "tags": [
+            "Web & Mobile Development",
+            "Transportation",
+            "React Native",
+            "Flutter",
+            "GPS",
+            "WebSockets",
+            "Node.js"
+          ],
+          "spunAt": "2026-10-08T06:52:26.885Z"
+        }
+      ]
     },
     {
       "id": 100,
