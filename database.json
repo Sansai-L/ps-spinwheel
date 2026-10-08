@@ -4610,10 +4610,12 @@
       "utr": "",
       "isAdmin": false,
       "isCustom": true,
-      "githubLink": "",
+      "githubLink": "https://github.com/kavin-46/Techtitans",
       "hasEntered": false,
       "registeredAt": "2026-10-07T13:38:56.577Z",
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791441930362_7v1f3m9"
+      ],
       "spins": []
     },
     {
