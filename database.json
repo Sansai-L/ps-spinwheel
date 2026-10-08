@@ -2039,12 +2039,36 @@
       "utr": "627067820744",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441686218_7nhzpj2"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_16",
+          "problemId": "ps_aiml_1791310333026_16",
+          "domain": "Artificial Intelligence & ML",
+          "title": "ML model to predict and mitigate natural disaster risks",
+          "problemTitle": "ML model to predict and mitigate natural disaster risks",
+          "problem": "Disaster-prone regions often lack timely, data-driven risk assessments to guide preparedness and mitigation planning.",
+          "expectedSolution": "A machine learning model that performs spatial data analysis on historical disaster and geographic data to predict risk zones and suggest mitigation measures, presented through an interactive map-based dashboard. Suggested tech: Python, spatial ML/GIS libraries, PostGIS, React/Mapbox dashboard.",
+          "description": "Problem:\nDisaster-prone regions often lack timely, data-driven risk assessments to guide preparedness and mitigation planning.\n\nExpected Solution:\nA machine learning model that performs spatial data analysis on historical disaster and geographic data to predict risk zones and suggest mitigation measures, presented through an interactive map-based dashboard. Suggested tech: Python, spatial ML/GIS libraries, PostGIS, React/Mapbox dashboard.",
+          "problemDescription": "Problem:\nDisaster-prone regions often lack timely, data-driven risk assessments to guide preparedness and mitigation planning.\n\nExpected Solution:\nA machine learning model that performs spatial data analysis on historical disaster and geographic data to predict risk zones and suggest mitigation measures, presented through an interactive map-based dashboard. Suggested tech: Python, spatial ML/GIS libraries, PostGIS, React/Mapbox dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "Disaster Management",
+            "Spatial ML",
+            "GIS",
+            "PostGIS",
+            "Risk Assessment"
+          ],
+          "spunAt": "2026-10-08T06:41:44.133Z"
+        }
+      ]
     },
     {
       "id": 14,
@@ -3112,12 +3136,37 @@
       "utr": "130658771171",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441693225_71s97zu"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_9",
+          "problemId": "ps_webapp_1791309924414_9",
+          "domain": "Web & Mobile Development",
+          "title": "Telemedicine Access for Rural Healthcare",
+          "problemTitle": "Telemedicine Access for Rural Healthcare",
+          "problem": "Rural populations often lack access to doctors and specialists, and traveling to healthcare facilities can be costly or impractical.",
+          "expectedSolution": "A web platform enabling secure video consultations between rural patients and doctors, with integrated digital health records. Suggested tech: React, WebRTC for video calling, Node.js/Django backend, encrypted health record storage.",
+          "description": "Problem:\nRural populations often lack access to doctors and specialists, and traveling to healthcare facilities can be costly or impractical.\n\nExpected Solution:\nA web platform enabling secure video consultations between rural patients and doctors, with integrated digital health records. Suggested tech: React, WebRTC for video calling, Node.js/Django backend, encrypted health record storage.",
+          "problemDescription": "Problem:\nRural populations often lack access to doctors and specialists, and traveling to healthcare facilities can be costly or impractical.\n\nExpected Solution:\nA web platform enabling secure video consultations between rural patients and doctors, with integrated digital health records. Suggested tech: React, WebRTC for video calling, Node.js/Django backend, encrypted health record storage.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "HealthTech",
+            "React",
+            "WebRTC",
+            "Node.js",
+            "Healthcare",
+            "Security"
+          ],
+          "spunAt": "2026-10-08T06:41:40.809Z"
+        }
+      ]
     },
     {
       "id": 61,
