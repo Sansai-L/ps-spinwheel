@@ -4365,7 +4365,7 @@
       "members": "JAI SHREE P B, ARAVIND S, ASHWANTH N",
       "utr": "954769623494",
       "isAdmin": false,
-      "githubLink": "https://github.com/Akash-T-aiml/The-Horizon-Chasers",
+      "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
       "sessionTokens": [
@@ -4632,10 +4632,12 @@
       "utr": "",
       "isAdmin": false,
       "isCustom": true,
-      "githubLink": "",
+      "githubLink": "https://github.com/Luckshmitha-P/Code-Crew",
       "hasEntered": false,
       "registeredAt": "2026-10-07T13:15:01.317Z",
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442078367_blsls59"
+      ],
       "spins": []
     },
     {
