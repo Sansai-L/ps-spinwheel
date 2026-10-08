@@ -1774,7 +1774,7 @@
       "members": "Mayukasri s, Deepaka p, Indhumathi m",
       "utr": "130061965577",
       "isAdmin": false,
-      "githubLink": "",
+      "githubLink": "https://github.com/mahalakshmi-73",
       "hasEntered": true,
       "registeredAt": "2026-10-05T08:58:17.819Z",
       "sessionTokens": [
@@ -4435,10 +4435,37 @@
       "utr": "627701315226",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791441675255_duha3j3"
+      ],
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_14",
+          "problemId": "ps_webapp_1791309924414_14",
+          "domain": "Web & Mobile Development",
+          "title": "Crisis Management and Relief Platform Using a Web/App Platform",
+          "problemTitle": "Crisis Management and Relief Platform Using a Web/App Platform",
+          "problem": "During crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.",
+          "expectedSolution": "A web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
+          "description": "Problem:\nDuring crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.\n\nExpected Solution:\nA web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
+          "problemDescription": "Problem:\nDuring crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.\n\nExpected Solution:\nA web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Disaster Management",
+            "React",
+            "Next.js",
+            "WebSockets",
+            "Node.js",
+            "Real-time"
+          ],
+          "spunAt": "2026-10-08T06:48:01.382Z"
+        }
+      ]
     },
     {
       "id": 95,
@@ -4632,7 +4659,7 @@
       "utr": "",
       "isAdmin": false,
       "isCustom": true,
-      "githubLink": "https://github.com/Luckshmitha-P/Code-Crew",
+      "githubLink": "",
       "hasEntered": false,
       "registeredAt": "2026-10-07T13:15:01.317Z",
       "sessionTokens": [
