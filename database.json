@@ -4077,10 +4077,12 @@
       "members": "Vandhana B, Shreya, Manikandan V",
       "utr": "627614889973",
       "isAdmin": false,
-      "githubLink": "",
+      "githubLink": "https://github.com/Shera87/Infinite-Loop.git",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791443146288_a08xrtr"
+      ],
       "spins": []
     },
     {
