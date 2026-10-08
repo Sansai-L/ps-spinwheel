@@ -4385,12 +4385,34 @@
       "utr": "130686068124",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442597407_f5mh6ix"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_cyber_1791310849091_10",
+          "problemId": "ps_cyber_1791310849091_10",
+          "domain": "Cybersecurity & Privacy",
+          "title": "Encrypted Database Search Engine using Homomorphic Cryptography",
+          "problemTitle": "Encrypted Database Search Engine using Homomorphic Cryptography",
+          "problem": "A database middleware proxy proof-of-concept that enables applications to perform complex text search queries directly on remote databases.",
+          "expectedSolution": "Search results returned while fields remain fully encrypted at rest and in transit.",
+          "description": "Problem:\nA database middleware proxy proof-of-concept that enables applications to perform complex text search queries directly on remote databases.\n\nExpected Solution:\nSearch results returned while fields remain fully encrypted at rest and in transit.",
+          "problemDescription": "Problem:\nA database middleware proxy proof-of-concept that enables applications to perform complex text search queries directly on remote databases.\n\nExpected Solution:\nSearch results returned while fields remain fully encrypted at rest and in transit.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+          "tags": [
+            "Cybersecurity & Privacy",
+            "Homomorphic Encryption",
+            "Database Security",
+            "Privacy-Preserving Search"
+          ],
+          "spunAt": "2026-10-08T06:56:53.738Z"
+        }
+      ]
     },
     {
       "id": 75,
