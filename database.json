@@ -2254,7 +2254,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442193544_ypnc71q"
+      ],
       "spins": []
     },
     {
@@ -3908,10 +3910,34 @@
       "utr": "664289620600",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_8",
+          "problemId": "ps_webapp_1791309924414_8",
+          "domain": "Web & Mobile Development",
+          "title": "Smart Community Health Monitoring and Early Warning System for Water-Borne Diseases",
+          "problemTitle": "Smart Community Health Monitoring and Early Warning System for Water-Borne Diseases",
+          "problem": "Water-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.",
+          "expectedSolution": "A data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
+          "description": "Problem:\nWater-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.\n\nExpected Solution:\nA data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
+          "problemDescription": "Problem:\nWater-borne disease outbreaks in communities often go undetected until they've already spread widely, due to a lack of systematic case data collection and analysis.\n\nExpected Solution:\nA data-collection app for health workers to log symptoms and cases, feeding an analytics engine that detects early outbreak patterns and alerts health authorities. Suggested tech: Flutter/React Native, Node.js/Django backend, predictive analytics (Python/ML), web dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "tags": [
+            "Web & Mobile Development",
+            "HealthTech",
+            "Flutter",
+            "React Native",
+            "Node.js",
+            "Python",
+            "Predictive Analytics"
+          ],
+          "spunAt": "2026-10-08T06:49:54.453Z"
+        }
+      ]
     },
     {
       "id": 72,
@@ -4349,12 +4375,37 @@
       "utr": "627794438990",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442175761_8i10tvp"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_3",
+          "problemId": "ps_webapp_1791309924414_3",
+          "domain": "Web & Mobile Development",
+          "title": "Dynamic Route Rationalization Model Using AI/ML",
+          "problemTitle": "Dynamic Route Rationalization Model Using AI/ML",
+          "problem": "Transit and delivery routes are often static and don't adapt to changing demand or traffic patterns, causing inefficiency.",
+          "expectedSolution": "An AI/ML model that analyzes demand and traffic data to dynamically rationalize and recommend optimal routes. Suggested tech: Python, optimization/ML libraries (OR-Tools, Scikit-learn), React dashboard, cloud database.",
+          "description": "Problem:\nTransit and delivery routes are often static and don't adapt to changing demand or traffic patterns, causing inefficiency.\n\nExpected Solution:\nAn AI/ML model that analyzes demand and traffic data to dynamically rationalize and recommend optimal routes. Suggested tech: Python, optimization/ML libraries (OR-Tools, Scikit-learn), React dashboard, cloud database.",
+          "problemDescription": "Problem:\nTransit and delivery routes are often static and don't adapt to changing demand or traffic patterns, causing inefficiency.\n\nExpected Solution:\nAn AI/ML model that analyzes demand and traffic data to dynamically rationalize and recommend optimal routes. Suggested tech: Python, optimization/ML libraries (OR-Tools, Scikit-learn), React dashboard, cloud database.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "Python",
+            "OR-Tools",
+            "Scikit-learn",
+            "React",
+            "Cloud Database"
+          ],
+          "spunAt": "2026-10-08T06:49:52.918Z"
+        }
+      ]
     },
     {
       "id": 89,
@@ -4690,7 +4741,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442192927_ex020iq"
+      ],
       "spins": []
     },
     {
