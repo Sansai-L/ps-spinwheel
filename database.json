@@ -2042,12 +2042,36 @@
       "utr": "130234865689",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791444726804_hl12gbw"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_18",
+          "problemId": "ps_aiml_1791310333026_18",
+          "domain": "Artificial Intelligence & ML",
+          "title": "Smart transportation route optimization for agri-produce",
+          "problemTitle": "Smart transportation route optimization for agri-produce",
+          "problem": "Agricultural produce often spoils or loses value in transit due to inefficient routing from farms to markets.",
+          "expectedSolution": "A routing system that applies graph algorithms to optimize the transportation of produce from farms to markets, minimizing time and spoilage. Suggested tech: Python, graph/routing algorithms (Dijkstra/OR-Tools), Google Maps API, web dashboard.",
+          "description": "Problem:\nAgricultural produce often spoils or loses value in transit due to inefficient routing from farms to markets.\n\nExpected Solution:\nA routing system that applies graph algorithms to optimize the transportation of produce from farms to markets, minimizing time and spoilage. Suggested tech: Python, graph/routing algorithms (Dijkstra/OR-Tools), Google Maps API, web dashboard.",
+          "problemDescription": "Problem:\nAgricultural produce often spoils or loses value in transit due to inefficient routing from farms to markets.\n\nExpected Solution:\nA routing system that applies graph algorithms to optimize the transportation of produce from farms to markets, minimizing time and spoilage. Suggested tech: Python, graph/routing algorithms (Dijkstra/OR-Tools), Google Maps API, web dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "Agriculture",
+            "Graph Algorithms",
+            "Dijkstra",
+            "OR-Tools",
+            "Supply Chain"
+          ],
+          "spunAt": "2026-10-08T07:32:50.426Z"
+        }
+      ]
     },
     {
       "id": 9,
