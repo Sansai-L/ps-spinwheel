@@ -2617,7 +2617,7 @@
       "members": "LIHASH L B, SALINI N, LAKSHANA S, MOHAMMED SUHAIL A R, ROSHAN R",
       "utr": "627273996759",
       "isAdmin": false,
-      "githubLink": "https://github.com/MSuhail2007/axiom.git",
+      "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
       "sessionTokens": [
@@ -2800,10 +2800,36 @@
       "utr": "663939455325",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791443366132_s1z4mf5"
+      ],
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_16",
+          "problemId": "ps_webapp_1791309924414_16",
+          "domain": "Web & Mobile Development",
+          "title": "Gamified Cybersecurity Awareness Web/Mobile Application",
+          "problemTitle": "Gamified Cybersecurity Awareness Web/Mobile Application",
+          "problem": "Many users lack awareness of basic cybersecurity practices, making them vulnerable to phishing, scams, and other common threats.",
+          "expectedSolution": "A gamified web/mobile app that teaches cybersecurity best practices through interactive challenges, simulated phishing scenarios, and quizzes with rewards. Suggested tech: React/Flutter, gamification engine, Node.js backend, cloud database.",
+          "description": "Problem:\nMany users lack awareness of basic cybersecurity practices, making them vulnerable to phishing, scams, and other common threats.\n\nExpected Solution:\nA gamified web/mobile app that teaches cybersecurity best practices through interactive challenges, simulated phishing scenarios, and quizzes with rewards. Suggested tech: React/Flutter, gamification engine, Node.js backend, cloud database.",
+          "problemDescription": "Problem:\nMany users lack awareness of basic cybersecurity practices, making them vulnerable to phishing, scams, and other common threats.\n\nExpected Solution:\nA gamified web/mobile app that teaches cybersecurity best practices through interactive challenges, simulated phishing scenarios, and quizzes with rewards. Suggested tech: React/Flutter, gamification engine, Node.js backend, cloud database.",
+          "difficulty": "Beginner",
+          "problemDifficulty": "Beginner",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Cybersecurity",
+            "React",
+            "Flutter",
+            "Gamification",
+            "Security Awareness"
+          ],
+          "spunAt": "2026-10-08T07:09:52.691Z"
+        }
+      ]
     },
     {
       "id": 30,
@@ -4318,12 +4344,37 @@
       "utr": "664273518375",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
-        "sess_1791442129851_b2lug03"
+        "sess_1791442129851_b2lug03",
+        "sess_1791443501947_84g42ld"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_iot_1791378299924_4",
+          "problemId": "ps_iot_1791378299924_4",
+          "domain": "Internet of Things (IoT)",
+          "title": "Peak Load Controller",
+          "problemTitle": "Peak Load Controller",
+          "problem": "Reduce demand charges by controlling peak electricity load. A potentiometer simulates load current. When it crosses a limit, the ESP32 sheds non-critical loads through relays.",
+          "expectedSolution": "Automatic load shedding above the threshold, restoration when load drops, and an OLED/dashboard showing load and relay status.",
+          "description": "Problem:\nReduce demand charges by controlling peak electricity load. A potentiometer simulates load current. When it crosses a limit, the ESP32 sheds non-critical loads through relays.\n\nExpected Solution:\nAutomatic load shedding above the threshold, restoration when load drops, and an OLED/dashboard showing load and relay status.",
+          "problemDescription": "Problem:\nReduce demand charges by controlling peak electricity load. A potentiometer simulates load current. When it crosses a limit, the ESP32 sheds non-critical loads through relays.\n\nExpected Solution:\nAutomatic load shedding above the threshold, restoration when load drops, and an OLED/dashboard showing load and relay status.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+          "tags": [
+            "Internet of Things (IoT)",
+            "ESP32",
+            "Energy Management",
+            "Load Shedding",
+            "Relays",
+            "Smart Grid"
+          ],
+          "spunAt": "2026-10-08T07:11:57.418Z"
+        }
+      ]
     },
     {
       "id": 68,
@@ -5012,7 +5063,8 @@
       "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
-        "sess_1791442185569_kn1b95q"
+        "sess_1791442185569_kn1b95q",
+        "sess_1791443286146_793s5ux"
       ],
       "spins": [
         {
