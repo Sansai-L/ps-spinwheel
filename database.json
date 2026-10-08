@@ -3468,32 +3468,8 @@
         "sess_1791442171029_fh4y4m3",
         "sess_1791456982236_nmvr393"
       ],
-      "spins": [
-        {
-          "id": "ps_webapp_1791309924414_3",
-          "problemId": "ps_webapp_1791309924414_3",
-          "domain": "Web & Mobile Development",
-          "title": "Dynamic Route Rationalization Model Using AI/ML",
-          "problemTitle": "Dynamic Route Rationalization Model Using AI/ML",
-          "problem": "Transit and delivery routes are often static and don't adapt to changing demand or traffic patterns, causing inefficiency.",
-          "expectedSolution": "An AI/ML model that analyzes demand and traffic data to dynamically rationalize and recommend optimal routes. Suggested tech: Python, optimization/ML libraries (OR-Tools, Scikit-learn), React dashboard, cloud database.",
-          "description": "Problem:\nTransit and delivery routes are often static and don't adapt to changing demand or traffic patterns, causing inefficiency.\n\nExpected Solution:\nAn AI/ML model that analyzes demand and traffic data to dynamically rationalize and recommend optimal routes. Suggested tech: Python, optimization/ML libraries (OR-Tools, Scikit-learn), React dashboard, cloud database.",
-          "problemDescription": "Problem:\nTransit and delivery routes are often static and don't adapt to changing demand or traffic patterns, causing inefficiency.\n\nExpected Solution:\nAn AI/ML model that analyzes demand and traffic data to dynamically rationalize and recommend optimal routes. Suggested tech: Python, optimization/ML libraries (OR-Tools, Scikit-learn), React dashboard, cloud database.",
-          "difficulty": "Advanced",
-          "problemDifficulty": "Advanced",
-          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
-          "tags": [
-            "Web & Mobile Development",
-            "Smart Automation",
-            "Python",
-            "OR-Tools",
-            "Scikit-learn",
-            "React",
-            "Cloud Database"
-          ],
-          "spunAt": "2026-10-08T06:50:26.813Z"
-        }
-      ]
+      "spins": [],
+      "spinResetAt": "2026-10-08T10:59:15.652Z"
     },
     {
       "id": 44,
@@ -6395,7 +6371,8 @@
     "adm.YWRtaW46MTc5MTE5Mzc1Mjc0OQ.ad565ddf3e504ff3fda0a9a4dea6f531417d6027c1d02e7d6d160b0090daaab0",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NTg.970137b4028e3993363b17be46bc1591213b1a51e1963fa678503c5117c058b7",
     "adm.Y29kaWVueWNoLWFkbWluOjE3OTExOTM3NTI3NjU.3091a723a4961e52a5c560655b49d09df472447fb73dfe3f0f846d59c9bade37",
-    "adm.YWRtaW46MTc5MTM4NTIwNzUyMw.d06e86b7fd9723124f94cc6cdc6ddbd2910ea85a4b5864370179059c91607453"
+    "adm.YWRtaW46MTc5MTM4NTIwNzUyMw.d06e86b7fd9723124f94cc6cdc6ddbd2910ea85a4b5864370179059c91607453",
+    "adm.YWRtaW46MTc5MTQ1NzEzODA1OA.b777c7a46b62e1172a16689f480661be64ee8b68321257b81246dca7e00e4625"
   ],
   "customTeams": [
     {
