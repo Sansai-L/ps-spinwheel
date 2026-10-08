@@ -2871,10 +2871,34 @@
       "utr": "130611835133",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_18",
+          "problemId": "ps_aiml_1791310333026_18",
+          "domain": "Artificial Intelligence & ML",
+          "title": "Smart transportation route optimization for agri-produce",
+          "problemTitle": "Smart transportation route optimization for agri-produce",
+          "problem": "Agricultural produce often spoils or loses value in transit due to inefficient routing from farms to markets.",
+          "expectedSolution": "A routing system that applies graph algorithms to optimize the transportation of produce from farms to markets, minimizing time and spoilage. Suggested tech: Python, graph/routing algorithms (Dijkstra/OR-Tools), Google Maps API, web dashboard.",
+          "description": "Problem:\nAgricultural produce often spoils or loses value in transit due to inefficient routing from farms to markets.\n\nExpected Solution:\nA routing system that applies graph algorithms to optimize the transportation of produce from farms to markets, minimizing time and spoilage. Suggested tech: Python, graph/routing algorithms (Dijkstra/OR-Tools), Google Maps API, web dashboard.",
+          "problemDescription": "Problem:\nAgricultural produce often spoils or loses value in transit due to inefficient routing from farms to markets.\n\nExpected Solution:\nA routing system that applies graph algorithms to optimize the transportation of produce from farms to markets, minimizing time and spoilage. Suggested tech: Python, graph/routing algorithms (Dijkstra/OR-Tools), Google Maps API, web dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "Agriculture",
+            "Graph Algorithms",
+            "Dijkstra",
+            "OR-Tools",
+            "Supply Chain"
+          ],
+          "spunAt": "2026-10-08T06:42:53.859Z"
+        }
+      ]
     },
     {
       "id": 51,
@@ -4219,10 +4243,35 @@
       "utr": "627704307925",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_iot_1791378299924_1",
+          "problemId": "ps_iot_1791378299924_1",
+          "domain": "Internet of Things (IoT)",
+          "title": "Gas Leak Detection System",
+          "problemTitle": "Gas Leak Detection System",
+          "problem": "Detect hazardous gas leaks in homes, kitchens or labs. An ESP32 reads a gas sensor (simulated with a potentiometer or MQ-2 part), classifies the level as safe, warning or danger, and drives LEDs, a buzzer and an OLED display.",
+          "expectedSolution": "Three-level alert system with instant local alarm and live gas reading on the display. Optional cloud alert when the danger level is crossed.",
+          "description": "Problem:\nDetect hazardous gas leaks in homes, kitchens or labs. An ESP32 reads a gas sensor (simulated with a potentiometer or MQ-2 part), classifies the level as safe, warning or danger, and drives LEDs, a buzzer and an OLED display.\n\nExpected Solution:\nThree-level alert system with instant local alarm and live gas reading on the display. Optional cloud alert when the danger level is crossed.",
+          "problemDescription": "Problem:\nDetect hazardous gas leaks in homes, kitchens or labs. An ESP32 reads a gas sensor (simulated with a potentiometer or MQ-2 part), classifies the level as safe, warning or danger, and drives LEDs, a buzzer and an OLED display.\n\nExpected Solution:\nThree-level alert system with instant local alarm and live gas reading on the display. Optional cloud alert when the danger level is crossed.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "IoT Hackathon: 10 Problem Statements (ESP32).pdf",
+          "tags": [
+            "Internet of Things (IoT)",
+            "ESP32",
+            "MQ-2",
+            "Gas Sensor",
+            "OLED",
+            "Buzzer",
+            "Safety"
+          ],
+          "spunAt": "2026-10-08T06:42:54.463Z"
+        }
+      ]
     },
     {
       "id": 101,
