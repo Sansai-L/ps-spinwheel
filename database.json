@@ -1910,7 +1910,7 @@
       "members": "Rihan jaith s, Jumana Haseen a m, Shameena s p, Pradhiksha R, Dharshini s",
       "utr": "663391812476",
       "isAdmin": false,
-      "githubLink": "https://github.com/mubeena-tech",
+      "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
       "sessionTokens": [
@@ -2264,10 +2264,35 @@
       "utr": "627119410834",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_14",
+          "problemId": "ps_webapp_1791309924414_14",
+          "domain": "Web & Mobile Development",
+          "title": "Crisis Management and Relief Platform Using a Web/App Platform",
+          "problemTitle": "Crisis Management and Relief Platform Using a Web/App Platform",
+          "problem": "During crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.",
+          "expectedSolution": "A web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
+          "description": "Problem:\nDuring crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.\n\nExpected Solution:\nA web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
+          "problemDescription": "Problem:\nDuring crises, coordinating relief efforts, resources, and information across agencies and affected communities is often slow and fragmented.\n\nExpected Solution:\nA web/app platform that centralizes crisis reporting, resource coordination, and relief updates, connecting authorities, relief workers, and affected communities in real time. Suggested tech: React/Next.js, React Native/Flutter, Node.js backend, real-time messaging (WebSockets), cloud database.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Disaster Management",
+            "React",
+            "Next.js",
+            "WebSockets",
+            "Node.js",
+            "Real-time"
+          ],
+          "spunAt": "2026-10-08T06:44:37.760Z"
+        }
+      ]
     },
     {
       "id": 22,
@@ -2663,10 +2688,36 @@
       "utr": "664177666103",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791441848288_vg6qzw8"
+      ],
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_7",
+          "problemId": "ps_aiml_1791310333026_7",
+          "domain": "Artificial Intelligence & ML",
+          "title": "AI/ML based system for deriving value added parameters using satellite",
+          "problemTitle": "AI/ML based system for deriving value added parameters using satellite",
+          "problem": "Raw satellite imagery is difficult for non-experts to interpret directly, limiting its usefulness for agriculture, urban planning, and environmental monitoring.",
+          "expectedSolution": "A computer-vision-based system that processes raw satellite imagery to automatically derive value-added parameters (e.g. vegetation index, land-use classification) and presents them through a usable interface. Suggested tech: Python, OpenCV/deep-learning models, cloud processing pipeline, web dashboard.",
+          "description": "Problem:\nRaw satellite imagery is difficult for non-experts to interpret directly, limiting its usefulness for agriculture, urban planning, and environmental monitoring.\n\nExpected Solution:\nA computer-vision-based system that processes raw satellite imagery to automatically derive value-added parameters (e.g. vegetation index, land-use classification) and presents them through a usable interface. Suggested tech: Python, OpenCV/deep-learning models, cloud processing pipeline, web dashboard.",
+          "problemDescription": "Problem:\nRaw satellite imagery is difficult for non-experts to interpret directly, limiting its usefulness for agriculture, urban planning, and environmental monitoring.\n\nExpected Solution:\nA computer-vision-based system that processes raw satellite imagery to automatically derive value-added parameters (e.g. vegetation index, land-use classification) and presents them through a usable interface. Suggested tech: Python, OpenCV/deep-learning models, cloud processing pipeline, web dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "SpaceTech",
+            "Computer Vision",
+            "OpenCV",
+            "Deep Learning",
+            "Satellite Imagery"
+          ],
+          "spunAt": "2026-10-08T06:44:37.861Z"
+        }
+      ]
     },
     {
       "id": 41,
@@ -2728,7 +2779,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791441881636_3qhowt2"
+      ],
       "spins": []
     },
     {
