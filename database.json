@@ -1774,7 +1774,7 @@
       "members": "Mayukasri s, Deepaka p, Indhumathi m",
       "utr": "130061965577",
       "isAdmin": false,
-      "githubLink": "",
+      "githubLink": "https://github.com/mahalakshmi-73",
       "hasEntered": true,
       "registeredAt": "2026-10-05T08:58:17.819Z",
       "sessionTokens": [
@@ -1783,7 +1783,8 @@
         "sess_1791192345825_tg6ptqi",
         "sess_1791277849694_5s6mu8t",
         "sess_1791277849735_d4812q1",
-        "sess_1791385110313_z6okgqn"
+        "sess_1791385110313_z6okgqn",
+        "sess_1791442012646_jo00ouo"
       ],
       "spins": [],
       "spinResetAt": "2026-10-08T03:12:47.612Z"
@@ -3891,10 +3892,34 @@
       "utr": "T2610041134164195516455",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_3",
+          "problemId": "ps_aiml_1791310333026_3",
+          "domain": "Artificial Intelligence & ML",
+          "title": "Telemedicine chatbot for rural clinics",
+          "problemTitle": "Telemedicine chatbot for rural clinics",
+          "problem": "Rural clinics often face a shortage of doctors and language barriers, making it hard for patients to get timely medical guidance.",
+          "expectedSolution": "A conversational AI chatbot for rural clinics that uses NLP to triage patient queries, answer common health questions, and connect patients with clinic staff or telemedicine services when needed. Suggested tech: Python, NLP/conversational AI (LLM APIs), web/mobile chat interface, multilingual support.",
+          "description": "Problem:\nRural clinics often face a shortage of doctors and language barriers, making it hard for patients to get timely medical guidance.\n\nExpected Solution:\nA conversational AI chatbot for rural clinics that uses NLP to triage patient queries, answer common health questions, and connect patients with clinic staff or telemedicine services when needed. Suggested tech: Python, NLP/conversational AI (LLM APIs), web/mobile chat interface, multilingual support.",
+          "problemDescription": "Problem:\nRural clinics often face a shortage of doctors and language barriers, making it hard for patients to get timely medical guidance.\n\nExpected Solution:\nA conversational AI chatbot for rural clinics that uses NLP to triage patient queries, answer common health questions, and connect patients with clinic staff or telemedicine services when needed. Suggested tech: Python, NLP/conversational AI (LLM APIs), web/mobile chat interface, multilingual support.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "MedTech",
+            "Python",
+            "NLP",
+            "Conversational AI",
+            "LLM",
+            "Multilingual"
+          ],
+          "spunAt": "2026-10-08T06:46:51.813Z"
+        }
+      ]
     },
     {
       "id": 78,
