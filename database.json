@@ -2982,7 +2982,6 @@
           "problemDescription": "Problem:\nApplying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.\n\nExpected Solution:\nA web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
           "difficulty": "Intermediate",
           "problemDifficulty": "Intermediate",
-          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
           "tags": [
             "Web & Mobile Development",
             "Smart Automation",
@@ -2992,7 +2991,7 @@
             "PostgreSQL",
             "e-Sign"
           ],
-          "spunAt": "2026-10-08T07:23:16.330Z"
+          "spunAt": "2026-10-08T07:23:50.763Z"
         }
       ]
     },
@@ -3012,10 +3011,37 @@
       "utr": "127640719385",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791444376383_z7xfugl"
+      ],
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_17",
+          "problemId": "ps_webapp_1791309924414_17",
+          "domain": "Web & Mobile Development",
+          "title": "Smart Tourist Safety Monitoring & Incident Response System",
+          "problemTitle": "Smart Tourist Safety Monitoring & Incident Response System",
+          "problem": "Tourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to monitor tourist safety and respond quickly to incidents.",
+          "expectedSolution": "A mobile app for tourists with safety monitoring and SOS alerts, paired with a web dashboard for authorities to track incidents and coordinate rapid response. Suggested tech: React Native/Flutter, geofencing APIs, Node.js backend, React dashboard.",
+          "description": "Problem:\nTourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to monitor tourist safety and respond quickly to incidents.\n\nExpected Solution:\nA mobile app for tourists with safety monitoring and SOS alerts, paired with a web dashboard for authorities to track incidents and coordinate rapid response. Suggested tech: React Native/Flutter, geofencing APIs, Node.js backend, React dashboard.",
+          "problemDescription": "Problem:\nTourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to monitor tourist safety and respond quickly to incidents.\n\nExpected Solution:\nA mobile app for tourists with safety monitoring and SOS alerts, paired with a web dashboard for authorities to track incidents and coordinate rapid response. Suggested tech: React Native/Flutter, geofencing APIs, Node.js backend, React dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Travel & Tourism",
+            "React Native",
+            "Flutter",
+            "Geofencing",
+            "Node.js",
+            "Dashboard"
+          ],
+          "spunAt": "2026-10-08T07:26:50.564Z"
+        }
+      ]
     },
     {
       "id": 34,
@@ -4326,7 +4352,8 @@
       "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
-        "sess_1791443157377_q26a635"
+        "sess_1791443157377_q26a635",
+        "sess_1791444329052_n9eaanu"
       ],
       "spins": [
         {
