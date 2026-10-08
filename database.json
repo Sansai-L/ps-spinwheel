@@ -4852,12 +4852,35 @@
       "utr": "615348450472",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442185569_kn1b95q"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_cyber_1791310849090_1",
+          "problemId": "ps_cyber_1791310849090_1",
+          "domain": "Cybersecurity & Privacy",
+          "title": "Real-Time Deepfake Video and Audio Detector for Public Grievance Portals",
+          "problemTitle": "Real-Time Deepfake Video and Audio Detector for Public Grievance Portals",
+          "problem": "A high-throughput, low-latency API and web dashboard that concurrently analyzes video/audio inputs and detects deepfakes.",
+          "expectedSolution": "Confidence score, manipulated region highlight, and audio spectral analysis.",
+          "description": "Problem:\nA high-throughput, low-latency API and web dashboard that concurrently analyzes video/audio inputs and detects deepfakes.\n\nExpected Solution:\nConfidence score, manipulated region highlight, and audio spectral analysis.",
+          "problemDescription": "Problem:\nA high-throughput, low-latency API and web dashboard that concurrently analyzes video/audio inputs and detects deepfakes.\n\nExpected Solution:\nConfidence score, manipulated region highlight, and audio spectral analysis.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026 Problem Statements — Cybersecurity Track (Top 20 Challenges).pdf",
+          "tags": [
+            "Cybersecurity & Privacy",
+            "Deepfake Detection",
+            "Computer Vision",
+            "Audio Spectral Analysis",
+            "API Security"
+          ],
+          "spunAt": "2026-10-08T07:00:33.521Z"
+        }
+      ]
     },
     {
       "id": 86,
