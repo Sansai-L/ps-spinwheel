@@ -1805,12 +1805,37 @@
       "utr": "626676234759",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
-        "sess_1791277849765_zs09830"
+        "sess_1791277849765_zs09830",
+        "sess_1791442233156_viry0je"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_11",
+          "problemId": "ps_aiml_1791310333026_11",
+          "domain": "Artificial Intelligence & ML",
+          "title": "Dynamic route rationalization model for public transit",
+          "problemTitle": "Dynamic route rationalization model for public transit",
+          "problem": "Public transit routes are often static and don't adapt to changing demand patterns, leading to inefficiency — overcrowding on some routes and underuse on others.",
+          "expectedSolution": "A software model that applies optimization algorithms to ridership and traffic data to dynamically rationalize and suggest transit routes for better efficiency and coverage. Suggested tech: Python, optimization libraries (OR-Tools), React dashboard, cloud database.",
+          "description": "Problem:\nPublic transit routes are often static and don't adapt to changing demand patterns, leading to inefficiency — overcrowding on some routes and underuse on others.\n\nExpected Solution:\nA software model that applies optimization algorithms to ridership and traffic data to dynamically rationalize and suggest transit routes for better efficiency and coverage. Suggested tech: Python, optimization libraries (OR-Tools), React dashboard, cloud database.",
+          "problemDescription": "Problem:\nPublic transit routes are often static and don't adapt to changing demand patterns, leading to inefficiency — overcrowding on some routes and underuse on others.\n\nExpected Solution:\nA software model that applies optimization algorithms to ridership and traffic data to dynamically rationalize and suggest transit routes for better efficiency and coverage. Suggested tech: Python, optimization libraries (OR-Tools), React dashboard, cloud database.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "Smart Automation",
+            "Optimization",
+            "OR-Tools",
+            "Public Transit",
+            "Route Planning"
+          ],
+          "spunAt": "2026-10-08T06:51:12.421Z"
+        }
+      ]
     },
     {
       "id": 3,
@@ -1830,7 +1855,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442271957_wnauykb"
+      ],
       "spins": []
     },
     {
@@ -3231,10 +3258,34 @@
       "utr": "627563909462",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_7",
+          "problemId": "ps_webapp_1791309924414_7",
+          "domain": "Web & Mobile Development",
+          "title": "Emotional Well-being Tracker Using Web/App Development",
+          "problemTitle": "Emotional Well-being Tracker Using Web/App Development",
+          "problem": "People often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.",
+          "expectedSolution": "A web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "description": "Problem:\nPeople often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.\n\nExpected Solution:\nA web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "problemDescription": "Problem:\nPeople often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.\n\nExpected Solution:\nA web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "difficulty": "Beginner",
+          "problemDifficulty": "Beginner",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "HealthTech",
+            "React",
+            "Flutter",
+            "Node.js",
+            "Data Visualization"
+          ],
+          "spunAt": "2026-10-08T06:51:13.391Z"
+        }
+      ]
     },
     {
       "id": 49,
