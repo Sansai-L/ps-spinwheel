@@ -4178,7 +4178,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442429219_6clbkty"
+      ],
       "spins": []
     },
     {
@@ -4644,12 +4646,36 @@
       "utr": "005568584022",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442179669_g6qym8q"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_4",
+          "problemId": "ps_webapp_1791309924414_4",
+          "domain": "Web & Mobile Development",
+          "title": "Online Issuance of Caste and Other Certificates with Real-Time Monitoring",
+          "problemTitle": "Online Issuance of Caste and Other Certificates with Real-Time Monitoring",
+          "problem": "Applying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.",
+          "expectedSolution": "A web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
+          "description": "Problem:\nApplying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.\n\nExpected Solution:\nA web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
+          "problemDescription": "Problem:\nApplying for caste and other government certificates through manual processes is slow, opaque, and hard for applicants to track.\n\nExpected Solution:\nA web platform for citizens to apply for certificates online, with real-time status monitoring and an admin dashboard for officials to process and verify applications. Suggested tech: React/Next.js, Node.js/Django backend, PostgreSQL, e-Sign integration.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "React",
+            "Next.js",
+            "Node.js",
+            "PostgreSQL",
+            "e-Sign"
+          ],
+          "spunAt": "2026-10-08T06:53:46.688Z"
+        }
+      ]
     },
     {
       "id": 85,
@@ -5505,12 +5531,35 @@
       "isAdmin": false,
       "isCustom": true,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": "2026-10-07T13:35:56.797Z",
       "sessionTokens": [
         "sess_1791442368825_wjfu0bi"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_iot_1791378299924_4",
+          "problemId": "ps_iot_1791378299924_4",
+          "domain": "Internet of Things (IoT)",
+          "title": "Peak Load Controller",
+          "problemTitle": "Peak Load Controller",
+          "problem": "Reduce demand charges by controlling peak electricity load. A potentiometer simulates load current. When it crosses a limit, the ESP32 sheds non-critical loads through relays.",
+          "expectedSolution": "Automatic load shedding above the threshold, restoration when load drops, and an OLED/dashboard showing load and relay status.",
+          "description": "Problem:\nReduce demand charges by controlling peak electricity load. A potentiometer simulates load current. When it crosses a limit, the ESP32 sheds non-critical loads through relays.\n\nExpected Solution:\nAutomatic load shedding above the threshold, restoration when load drops, and an OLED/dashboard showing load and relay status.",
+          "problemDescription": "Problem:\nReduce demand charges by controlling peak electricity load. A potentiometer simulates load current. When it crosses a limit, the ESP32 sheds non-critical loads through relays.\n\nExpected Solution:\nAutomatic load shedding above the threshold, restoration when load drops, and an OLED/dashboard showing load and relay status.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "tags": [
+            "Internet of Things (IoT)",
+            "ESP32",
+            "Energy Management",
+            "Load Shedding",
+            "Relays",
+            "Smart Grid"
+          ],
+          "spunAt": "2026-10-08T06:53:49.926Z"
+        }
+      ]
     },
     {
       "id": "custom_1791380336577_2q4v",
