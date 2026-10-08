@@ -1774,7 +1774,7 @@
       "members": "Mayukasri s, Deepaka p, Indhumathi m",
       "utr": "130061965577",
       "isAdmin": false,
-      "githubLink": "https://github.com/mahalakshmi-73",
+      "githubLink": "",
       "hasEntered": true,
       "registeredAt": "2026-10-05T08:58:17.819Z",
       "sessionTokens": [
@@ -3212,7 +3212,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442028986_fsx09vx"
+      ],
       "spins": []
     },
     {
