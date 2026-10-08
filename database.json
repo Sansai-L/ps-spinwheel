@@ -2617,10 +2617,12 @@
       "members": "LIHASH L B, SALINI N, LAKSHANA S, MOHAMMED SUHAIL A R, ROSHAN R",
       "utr": "627273996759",
       "isAdmin": false,
-      "githubLink": "",
+      "githubLink": "https://github.com/MSuhail2007/axiom.git",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791443448295_i3yluf0"
+      ],
       "spins": []
     },
     {
