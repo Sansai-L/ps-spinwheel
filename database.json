@@ -2243,10 +2243,36 @@
       "utr": "627158713963",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
-      "spins": []
+      "sessionTokens": [
+        "sess_1791441915722_jgerbni"
+      ],
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_6",
+          "problemId": "ps_aiml_1791310333026_6",
+          "domain": "Artificial Intelligence & ML",
+          "title": "Smart Tourist Safety Monitoring & Incident Response System using AI and Geo-Fencing",
+          "problemTitle": "Smart Tourist Safety Monitoring & Incident Response System using AI and Geo-Fencing",
+          "problem": "Tourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to detect unusual situations and respond quickly.",
+          "expectedSolution": "An AI system that applies anomaly detection to tourist location and activity data within geo-fenced zones, alerting authorities to potential incidents for rapid response. Suggested tech: Python, anomaly detection models, geofencing APIs, mobile app, cloud backend.",
+          "description": "Problem:\nTourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to detect unusual situations and respond quickly.\n\nExpected Solution:\nAn AI system that applies anomaly detection to tourist location and activity data within geo-fenced zones, alerting authorities to potential incidents for rapid response. Suggested tech: Python, anomaly detection models, geofencing APIs, mobile app, cloud backend.",
+          "problemDescription": "Problem:\nTourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to detect unusual situations and respond quickly.\n\nExpected Solution:\nAn AI system that applies anomaly detection to tourist location and activity data within geo-fenced zones, alerting authorities to potential incidents for rapid response. Suggested tech: Python, anomaly detection models, geofencing APIs, mobile app, cloud backend.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "Travel & Tourism",
+            "Python",
+            "Anomaly Detection",
+            "Geofencing",
+            "Mobile App"
+          ],
+          "spunAt": "2026-10-08T06:45:35.561Z"
+        }
+      ]
     },
     {
       "id": 21,
@@ -4564,7 +4590,7 @@
       "utr": "",
       "isAdmin": false,
       "isCustom": true,
-      "githubLink": "https://github.com/Dharshini678-R",
+      "githubLink": "",
       "hasEntered": false,
       "registeredAt": "2026-10-07T13:32:30.548Z",
       "sessionTokens": [
@@ -4610,7 +4636,7 @@
       "utr": "",
       "isAdmin": false,
       "isCustom": true,
-      "githubLink": "https://github.com/kavin-46/Techtitans",
+      "githubLink": "",
       "hasEntered": false,
       "registeredAt": "2026-10-07T13:38:56.577Z",
       "sessionTokens": [
