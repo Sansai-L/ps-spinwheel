@@ -4548,12 +4548,36 @@
       "utr": "Senthil76392@okicici",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442145233_u9e4ap5"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_7",
+          "problemId": "ps_webapp_1791309924414_7",
+          "domain": "Web & Mobile Development",
+          "title": "Emotional Well-being Tracker Using Web/App Development",
+          "problemTitle": "Emotional Well-being Tracker Using Web/App Development",
+          "problem": "People often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.",
+          "expectedSolution": "A web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "description": "Problem:\nPeople often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.\n\nExpected Solution:\nA web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "problemDescription": "Problem:\nPeople often lack a simple, consistent way to track their emotional well-being over time, making it hard to notice patterns or seek help early.\n\nExpected Solution:\nA web/mobile app where users log their mood and emotional state regularly, with visualizations of trends over time and gentle prompts to seek support when patterns suggest concern. Suggested tech: React/Flutter, Node.js backend, cloud database, data visualization libraries.",
+          "difficulty": "Beginner",
+          "problemDifficulty": "Beginner",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "HealthTech",
+            "React",
+            "Flutter",
+            "Node.js",
+            "Data Visualization"
+          ],
+          "spunAt": "2026-10-08T06:50:11.240Z"
+        }
+      ]
     },
     {
       "id": 91,
