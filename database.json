@@ -1856,7 +1856,8 @@
       "hasEntered": false,
       "registeredAt": null,
       "sessionTokens": [
-        "sess_1791442271957_wnauykb"
+        "sess_1791442271957_wnauykb",
+        "sess_1791442861859_b0fxzno"
       ],
       "spins": []
     },
@@ -1876,12 +1877,37 @@
       "utr": "130102152843",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791442803211_ghko44m"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_17",
+          "problemId": "ps_webapp_1791309924414_17",
+          "domain": "Web & Mobile Development",
+          "title": "Smart Tourist Safety Monitoring & Incident Response System",
+          "problemTitle": "Smart Tourist Safety Monitoring & Incident Response System",
+          "problem": "Tourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to monitor tourist safety and respond quickly to incidents.",
+          "expectedSolution": "A mobile app for tourists with safety monitoring and SOS alerts, paired with a web dashboard for authorities to track incidents and coordinate rapid response. Suggested tech: React Native/Flutter, geofencing APIs, Node.js backend, React dashboard.",
+          "description": "Problem:\nTourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to monitor tourist safety and respond quickly to incidents.\n\nExpected Solution:\nA mobile app for tourists with safety monitoring and SOS alerts, paired with a web dashboard for authorities to track incidents and coordinate rapid response. Suggested tech: React Native/Flutter, geofencing APIs, Node.js backend, React dashboard.",
+          "problemDescription": "Problem:\nTourists in unfamiliar areas face safety risks, and authorities often lack real-time visibility to monitor tourist safety and respond quickly to incidents.\n\nExpected Solution:\nA mobile app for tourists with safety monitoring and SOS alerts, paired with a web dashboard for authorities to track incidents and coordinate rapid response. Suggested tech: React Native/Flutter, geofencing APIs, Node.js backend, React dashboard.",
+          "difficulty": "Advanced",
+          "problemDifficulty": "Advanced",
+          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
+          "tags": [
+            "Web & Mobile Development",
+            "Travel & Tourism",
+            "React Native",
+            "Flutter",
+            "Geofencing",
+            "Node.js",
+            "Dashboard"
+          ],
+          "spunAt": "2026-10-08T07:00:50.668Z"
+        }
+      ]
     },
     {
       "id": 5,
