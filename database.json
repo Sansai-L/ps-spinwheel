@@ -1785,31 +1785,8 @@
         "sess_1791277849735_d4812q1",
         "sess_1791385110313_z6okgqn"
       ],
-      "spins": [
-        {
-          "id": "ps_webapp_1791309924414_19",
-          "problemId": "ps_webapp_1791309924414_19",
-          "domain": "Web & Mobile Development",
-          "title": "Smart Crop Advisory System for Small and Marginal Farmers",
-          "problemTitle": "Smart Crop Advisory System for Small and Marginal Farmers",
-          "problem": "Small and marginal farmers often lack timely, localized crop advisory guidance suited to their limited resources and local conditions.",
-          "expectedSolution": "A mobile app that delivers simple, localized crop advisory guidance based on soil, weather, and market conditions, designed for low-literacy and low-connectivity contexts. Suggested tech: Flutter/React Native, offline-first architecture, Bhashini API (for local languages), cloud sync backend.",
-          "description": "Problem:\nSmall and marginal farmers often lack timely, localized crop advisory guidance suited to their limited resources and local conditions.\n\nExpected Solution:\nA mobile app that delivers simple, localized crop advisory guidance based on soil, weather, and market conditions, designed for low-literacy and low-connectivity contexts. Suggested tech: Flutter/React Native, offline-first architecture, Bhashini API (for local languages), cloud sync backend.",
-          "problemDescription": "Problem:\nSmall and marginal farmers often lack timely, localized crop advisory guidance suited to their limited resources and local conditions.\n\nExpected Solution:\nA mobile app that delivers simple, localized crop advisory guidance based on soil, weather, and market conditions, designed for low-literacy and low-connectivity contexts. Suggested tech: Flutter/React Native, offline-first architecture, Bhashini API (for local languages), cloud sync backend.",
-          "difficulty": "Intermediate",
-          "problemDifficulty": "Intermediate",
-          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
-          "tags": [
-            "Web & Mobile Development",
-            "Agriculture",
-            "Flutter",
-            "React Native",
-            "Offline-first",
-            "Bhashini API"
-          ],
-          "spunAt": "2026-10-07T15:01:11.452Z"
-        }
-      ]
+      "spins": [],
+      "spinResetAt": "2026-10-08T03:12:47.612Z"
     },
     {
       "id": 2,
