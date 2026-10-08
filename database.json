@@ -3114,7 +3114,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791441693225_71s97zu"
+      ],
       "spins": []
     },
     {
@@ -3220,7 +3222,6 @@
           "problemDescription": "Problem:\nSmall and marginal farmers often lack timely, localized crop advisory guidance suited to their limited resources and local conditions.\n\nExpected Solution:\nA mobile app that delivers simple, localized crop advisory guidance based on soil, weather, and market conditions, designed for low-literacy and low-connectivity contexts. Suggested tech: Flutter/React Native, offline-first architecture, Bhashini API (for local languages), cloud sync backend.",
           "difficulty": "Intermediate",
           "problemDifficulty": "Intermediate",
-          "source": "SIH 2026: Top 20 Web/App Problem Statements.pdf",
           "tags": [
             "Web & Mobile Development",
             "Agriculture",
@@ -3229,7 +3230,7 @@
             "Offline-first",
             "Bhashini API"
           ],
-          "spunAt": "2026-10-08T06:41:15.582Z"
+          "spunAt": "2026-10-08T06:41:32.774Z"
         }
       ]
     },
