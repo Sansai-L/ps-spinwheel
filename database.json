@@ -3260,7 +3260,9 @@
       "githubLink": "",
       "hasEntered": true,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442160262_27phpdg"
+      ],
       "spins": [
         {
           "id": "ps_webapp_1791309924414_7",
@@ -3303,10 +3305,34 @@
       "utr": "samiselvam8028@okhdfcbank",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_webapp_1791309924414_1",
+          "problemId": "ps_webapp_1791309924414_1",
+          "domain": "Web & Mobile Development",
+          "title": "Conversational Image Recognition Chatbot",
+          "problemTitle": "Conversational Image Recognition Chatbot",
+          "problem": "Users often need quick answers about objects or scenes they encounter, but typing out detailed text queries is slow and doesn't always capture what they're looking at.",
+          "expectedSolution": "A chatbot that accepts both images and natural-language queries, combining image recognition with conversational AI to identify objects/scenes and answer follow-up questions. Suggested tech: Python, computer vision models, NLP/LLM APIs, web/mobile chat interface.",
+          "description": "Problem:\nUsers often need quick answers about objects or scenes they encounter, but typing out detailed text queries is slow and doesn't always capture what they're looking at.\n\nExpected Solution:\nA chatbot that accepts both images and natural-language queries, combining image recognition with conversational AI to identify objects/scenes and answer follow-up questions. Suggested tech: Python, computer vision models, NLP/LLM APIs, web/mobile chat interface.",
+          "problemDescription": "Problem:\nUsers often need quick answers about objects or scenes they encounter, but typing out detailed text queries is slow and doesn't always capture what they're looking at.\n\nExpected Solution:\nA chatbot that accepts both images and natural-language queries, combining image recognition with conversational AI to identify objects/scenes and answer follow-up questions. Suggested tech: Python, computer vision models, NLP/LLM APIs, web/mobile chat interface.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "tags": [
+            "Web & Mobile Development",
+            "Smart Automation",
+            "Python",
+            "Computer Vision",
+            "NLP",
+            "LLM",
+            "Chatbot"
+          ],
+          "spunAt": "2026-10-08T06:51:25.379Z"
+        }
+      ]
     },
     {
       "id": 50,
