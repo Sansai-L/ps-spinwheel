@@ -1899,7 +1899,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442369975_sllsi4g"
+      ],
       "spins": []
     },
     {
@@ -5455,7 +5457,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": "2026-10-07T13:35:56.797Z",
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791442368825_wjfu0bi"
+      ],
       "spins": []
     },
     {
