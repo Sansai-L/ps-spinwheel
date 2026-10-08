@@ -3325,12 +3325,37 @@
       "utr": "priyanka.gisp@okhdfcbank",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
-        "sess_1791442070313_j5rtuwx"
+        "sess_1791442070313_j5rtuwx",
+        "sess_1791443045523_867ago0"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_19",
+          "problemId": "ps_aiml_1791310333026_19",
+          "domain": "Artificial Intelligence & ML",
+          "title": "AI-powered personalized student study plan generator",
+          "problemTitle": "AI-powered personalized student study plan generator",
+          "problem": "Students learn at different paces and have different strengths, but most study plans are generic and don't adapt to individual needs.",
+          "expectedSolution": "An app that uses clustering and generative AI to analyze a student's performance and learning style, then generates a personalized study plan. Suggested tech: Python, generative AI/LLM APIs, clustering algorithms, web/mobile app.",
+          "description": "Problem:\nStudents learn at different paces and have different strengths, but most study plans are generic and don't adapt to individual needs.\n\nExpected Solution:\nAn app that uses clustering and generative AI to analyze a student's performance and learning style, then generates a personalized study plan. Suggested tech: Python, generative AI/LLM APIs, clustering algorithms, web/mobile app.",
+          "problemDescription": "Problem:\nStudents learn at different paces and have different strengths, but most study plans are generic and don't adapt to individual needs.\n\nExpected Solution:\nAn app that uses clustering and generative AI to analyze a student's performance and learning style, then generates a personalized study plan. Suggested tech: Python, generative AI/LLM APIs, clustering algorithms, web/mobile app.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "EdTech",
+            "Clustering",
+            "Generative AI",
+            "LLM",
+            "Personalized Learning"
+          ],
+          "spunAt": "2026-10-08T07:04:41.323Z"
+        }
+      ]
     },
     {
       "id": 46,
