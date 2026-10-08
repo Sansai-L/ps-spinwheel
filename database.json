@@ -5171,10 +5171,12 @@
       "members": "Kavin b, Pradeepa M, Mahilnethra SK, Rohith R, Jeevitha S",
       "utr": "664327678258",
       "isAdmin": false,
-      "githubLink": "",
+      "githubLink": "https://github.com/nanthishvaran17/Vision_ai.git",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791446907427_8bof5c3"
+      ],
       "spins": []
     },
     {
