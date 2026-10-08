@@ -2417,7 +2417,9 @@
       "githubLink": "",
       "hasEntered": false,
       "registeredAt": null,
-      "sessionTokens": [],
+      "sessionTokens": [
+        "sess_1791441908606_hm30055"
+      ],
       "spins": []
     },
     {
@@ -4535,7 +4537,7 @@
       "utr": "",
       "isAdmin": false,
       "isCustom": true,
-      "githubLink": "https://github.com/Dharshini678-R",
+      "githubLink": "",
       "hasEntered": false,
       "registeredAt": "2026-10-07T13:32:30.548Z",
       "sessionTokens": [
