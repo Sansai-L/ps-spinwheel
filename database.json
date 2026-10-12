@@ -3833,12 +3833,35 @@
       "utr": "615242653279",
       "isAdmin": false,
       "githubLink": "",
-      "hasEntered": false,
+      "hasEntered": true,
       "registeredAt": null,
       "sessionTokens": [
         "sess_1791441580708_oxmoxu4"
       ],
-      "spins": []
+      "spins": [
+        {
+          "id": "ps_aiml_1791310333026_10",
+          "problemId": "ps_aiml_1791310333026_10",
+          "domain": "Artificial Intelligence & ML",
+          "title": "AI-powered building maintenance system",
+          "problemTitle": "AI-powered building maintenance system",
+          "problem": "Building maintenance issues are often identified reactively, after equipment fails, leading to higher repair costs and downtime.",
+          "expectedSolution": "An AI-powered system that applies predictive analytics to building sensor/maintenance-log data to forecast equipment issues before they occur and schedule preventive maintenance. Suggested tech: Python, predictive analytics/ML models, web dashboard, cloud database.",
+          "description": "Problem:\nBuilding maintenance issues are often identified reactively, after equipment fails, leading to higher repair costs and downtime.\n\nExpected Solution:\nAn AI-powered system that applies predictive analytics to building sensor/maintenance-log data to forecast equipment issues before they occur and schedule preventive maintenance. Suggested tech: Python, predictive analytics/ML models, web dashboard, cloud database.",
+          "problemDescription": "Problem:\nBuilding maintenance issues are often identified reactively, after equipment fails, leading to higher repair costs and downtime.\n\nExpected Solution:\nAn AI-powered system that applies predictive analytics to building sensor/maintenance-log data to forecast equipment issues before they occur and schedule preventive maintenance. Suggested tech: Python, predictive analytics/ML models, web dashboard, cloud database.",
+          "difficulty": "Intermediate",
+          "problemDifficulty": "Intermediate",
+          "source": "SIH 2026: Top 20 Software AI/ML Challenges.pdf",
+          "tags": [
+            "Artificial Intelligence & ML",
+            "Smart Automation",
+            "Predictive Analytics",
+            "Maintenance",
+            "Sensor Data"
+          ],
+          "spunAt": "2026-10-12T06:13:28.299Z"
+        }
+      ]
     },
     {
       "id": 54,
